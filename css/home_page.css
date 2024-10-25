@@ -121,24 +121,55 @@ section{
     align-items: center;
     justify-content: flex-start;
 }
+.about_content{
+    display: flex;
+}
+
+.leftSide{
+    width: 85%;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+}
+.rightSide{
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin-top: -180px;
+}
+
+.rightSide img {
+    max-height: 870px;
+}
 
 .ftSecLogo {
     margin-top: 30px;
-    max-height: 150px;
+    max-height: 130px;
+    margin-bottom: 10px;
+    padding-right: 520px;
+
 }
 .about_title{
-    font-family: 'Poppins';
+    font-family: 'Archivo Black';
     font-size: 28px;
     color: #003c25;
     margin-bottom: 20px;
+    margin-top: 15px;
+    text-align: justify;
+    text-indent: 16rem;
+
 }
 
 .about_description {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-family: 'Roboto Slab';
     color: #011a10;
     text-align: justify;
     letter-spacing: 1px;
     text-indent: 3rem;
-    width: 90%;
+    width: 70%;
 }
