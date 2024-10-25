@@ -2,7 +2,6 @@
     font-family: 'Open Sans Regular';
     src: url(font/OpenSans.ttf);
 }
-
 @font-face {
     font-family: 'Archivo Black';
     src: url(font/ArchivoBlack-Regular.ttf);
@@ -31,11 +30,13 @@
     font-family: 'Roboto Slab';
     src: url(font/RobotoSlab.ttf);
 }
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 html{
     scroll-behavior: smooth;
 }

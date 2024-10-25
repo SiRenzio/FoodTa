@@ -11,5 +11,15 @@
             }
         }
         
+        function retrieveStores(){
+            $stores = array();
+
+            $sql = mysqli_query($this->db, "SELECT * FROM store");
+
+            while($row = mysqli_fetch_object($sql)){
+                $stores[] = $row;
+            }
+            return $stores;
+        }
     }
 ?>
