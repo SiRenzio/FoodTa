@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2024 at 04:16 PM
+-- Generation Time: Oct 29, 2024 at 03:11 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,20 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ar_payment`
---
-
-CREATE TABLE `ar_payment` (
-  `payment_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
-  `due_date` date NOT NULL,
-  `amount` decimal(10,0) NOT NULL,
-  `sales_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `card_payment`
 --
 
@@ -49,6 +35,31 @@ CREATE TABLE `card_payment` (
   `bank_name` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `sales_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cod`
+--
+
+CREATE TABLE `cod` (
+  `payment_id` int(11) NOT NULL,
+  `ref_no` int(11) NOT NULL,
+  `amount` float NOT NULL,
+  `sales_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `crew`
+--
+
+CREATE TABLE `crew` (
+  `crew_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -125,39 +136,23 @@ CREATE TABLE `online_payments` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sales_details`
+-- Table structure for table `order`
 --
 
-CREATE TABLE `sales_details` (
-  `detail_id` int(11) NOT NULL,
-  `item_id` int(11) DEFAULT NULL,
-  `qty` int(11) DEFAULT NULL,
-  `price` decimal(10,0) DEFAULT NULL,
-  `discount` decimal(10,0) DEFAULT NULL,
-  `subtotal` decimal(10,0) DEFAULT NULL,
-  `sales_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sales_summary`
---
-
-CREATE TABLE `sales_summary` (
+CREATE TABLE `order` (
   `sales_id` int(11) NOT NULL,
-  `invoice_no` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `deliveryPerson_id` int(11) NOT NULL,
-  `tstamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `gross` int(11) NOT NULL,
-  `net` int(11) NOT NULL,
-  `tax` int(11) NOT NULL,
-  `gcash` int(11) NOT NULL,
-  `online` int(11) NOT NULL,
-  `card` int(11) NOT NULL,
-  `accounts_receivable` int(11) NOT NULL
+  `item_id` int(11) NOT NULL,
+  `pickup_Time` time NOT NULL,
+  `dropoff_Time` time NOT NULL,
+  `date` date NOT NULL,
+  `subtotal` float NOT NULL,
+  `delivery_fee` float NOT NULL,
+  `discount` float NOT NULL,
+  `tax` float NOT NULL,
+  `net` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -189,19 +184,27 @@ INSERT INTO `store` (`store_id`, `store_name`, `store_address`, `contact_no`, `o
 --
 
 --
--- Indexes for table `ar_payment`
---
-ALTER TABLE `ar_payment`
-  ADD PRIMARY KEY (`payment_id`),
-  ADD KEY `sales_id` (`sales_id`);
-
---
 -- Indexes for table `card_payment`
 --
 ALTER TABLE `card_payment`
   ADD PRIMARY KEY (`payment_id`),
   ADD UNIQUE KEY `ref_no` (`ref_no`),
+  ADD UNIQUE KEY `ref_no_2` (`ref_no`),
   ADD KEY `sales_id` (`sales_id`);
+
+--
+-- Indexes for table `cod`
+--
+ALTER TABLE `cod`
+  ADD PRIMARY KEY (`payment_id`),
+  ADD KEY `sales_id` (`sales_id`);
+
+--
+-- Indexes for table `crew`
+--
+ALTER TABLE `crew`
+  ADD PRIMARY KEY (`crew_id`),
+  ADD KEY `store_id` (`store_id`);
 
 --
 -- Indexes for table `customer`
@@ -228,21 +231,18 @@ ALTER TABLE `inventory`
 ALTER TABLE `online_payments`
   ADD PRIMARY KEY (`payment_id`),
   ADD UNIQUE KEY `ref_no` (`ref_no`),
+  ADD UNIQUE KEY `ref_no_2` (`ref_no`),
   ADD KEY `sales_id` (`sales_id`);
 
 --
--- Indexes for table `sales_details`
+-- Indexes for table `order`
 --
-ALTER TABLE `sales_details`
-  ADD PRIMARY KEY (`detail_id`),
-  ADD KEY `sales_id` (`sales_id`);
-
---
--- Indexes for table `sales_summary`
---
-ALTER TABLE `sales_summary`
+ALTER TABLE `order`
   ADD PRIMARY KEY (`sales_id`),
-  ADD UNIQUE KEY `invoice_no` (`invoice_no`);
+  ADD KEY `store_id` (`store_id`,`customer_id`,`deliveryPerson_id`),
+  ADD KEY `sales_summary_ibfk_3` (`customer_id`),
+  ADD KEY `sales_summary_ibfk_4` (`deliveryPerson_id`),
+  ADD KEY `item_id` (`item_id`);
 
 --
 -- Indexes for table `store`
@@ -255,16 +255,22 @@ ALTER TABLE `store`
 --
 
 --
--- AUTO_INCREMENT for table `ar_payment`
---
-ALTER TABLE `ar_payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `card_payment`
 --
 ALTER TABLE `card_payment`
   MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cod`
+--
+ALTER TABLE `cod`
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `crew`
+--
+ALTER TABLE `crew`
+  MODIFY `crew_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -291,15 +297,9 @@ ALTER TABLE `online_payments`
   MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `sales_details`
+-- AUTO_INCREMENT for table `order`
 --
-ALTER TABLE `sales_details`
-  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `sales_summary`
---
-ALTER TABLE `sales_summary`
+ALTER TABLE `order`
   MODIFY `sales_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -313,16 +313,22 @@ ALTER TABLE `store`
 --
 
 --
--- Constraints for table `ar_payment`
---
-ALTER TABLE `ar_payment`
-  ADD CONSTRAINT `ar_payment_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `sales_summary` (`sales_id`);
-
---
 -- Constraints for table `card_payment`
 --
 ALTER TABLE `card_payment`
-  ADD CONSTRAINT `sales_id_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `sales_summary` (`sales_id`);
+  ADD CONSTRAINT `sales_id_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `order` (`sales_id`);
+
+--
+-- Constraints for table `cod`
+--
+ALTER TABLE `cod`
+  ADD CONSTRAINT `cod_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `order` (`sales_id`);
+
+--
+-- Constraints for table `crew`
+--
+ALTER TABLE `crew`
+  ADD CONSTRAINT `crew_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`);
 
 --
 -- Constraints for table `inventory`
@@ -334,13 +340,16 @@ ALTER TABLE `inventory`
 -- Constraints for table `online_payments`
 --
 ALTER TABLE `online_payments`
-  ADD CONSTRAINT `online_payments_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `sales_summary` (`sales_id`);
+  ADD CONSTRAINT `online_payments_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `order` (`sales_id`);
 
 --
--- Constraints for table `sales_details`
+-- Constraints for table `order`
 --
-ALTER TABLE `sales_details`
-  ADD CONSTRAINT `sales_details_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `sales_summary` (`sales_id`);
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
+  ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
+  ADD CONSTRAINT `order_ibfk_4` FOREIGN KEY (`deliveryPerson_id`) REFERENCES `delivery` (`deliveryPerson_id`),
+  ADD CONSTRAINT `order_ibfk_5` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
