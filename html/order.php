@@ -5,31 +5,34 @@
     <link rel="stylesheet" href="css/order.css">
 </head>
 <body>
-    <table>
-        <?php
-            foreach($stores as $storeData=>$storeTable){
-                $storeRating = $storeTable->rating;
-                echo "<div id = container>";
-                    echo "<td><a href='index.php?command=storeDetails&id=$storeTable->store_id'>" . $storeTable->store_name . "</a>";
-                        echo getRating($storeRating) . "(" . $storeTable->rating . ")";
-                        echo "<div id = location>Location: ";
-                            echo $storeTable->store_address;
-                        echo "</div>";
-                        echo "<button>Order Now</button>";
-                    echo "</td>";
-                echo "</div>";
-            }
+    <div class="container"> <!-- Add a container div around the table -->
+        <table>
+            <?php
+                foreach($stores as $storeData=>$storeTable){
+                    $storeRating = $storeTable->rating;
+                    echo "<tr class='store-row'>"; // Replace div with tr to make table structure correct
+                        echo "<td><img class='coverphoto' src='data:image/jpeg;base64," . base64_encode($storeTable->coverphoto) . "'>";
+                        echo "<br><a href='index.php?command=storeDetails&id=$storeTable->store_id'>" . $storeTable->store_name . "</a>";
+                            echo getRating($storeRating) . " (" . $storeTable->rating . ")";
+                            echo "<div class='location'>Location: ";
+                                echo $storeTable->store_address;
+                            echo "</div>";
+                            echo "<button>Order Now</button>";
+                        echo "</td>";
+                    echo "</tr>";
+                }
 
-            function getRating($storeRating){
-                for ($i = 0; $i < 5; $i++) {
-                    if ($i < $storeRating) {
-                        echo "<span class='star'>&#9733;</span>"; // Filled star
-                    } else {
-                        echo "<span class='star'>&#9734;</span>"; // Empty star
+                function getRating($storeRating){
+                    for ($i = 0; $i < 5; $i++) {
+                        if ($i < $storeRating) {
+                            echo "<span class='star'>&#9733;</span>"; // Filled star
+                        } else {
+                            echo "<span class='star'>&#9734;</span>"; // Empty star
+                        }
                     }
                 }
-            }
-        ?>
-    </table>
+            ?>
+        </table>
+    </div>
 </body>
 </html>
