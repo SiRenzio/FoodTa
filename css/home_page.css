@@ -117,6 +117,7 @@ section{
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    height: 50em;
 }
 .about_content{
     display: flex;
@@ -183,6 +184,7 @@ section{
     align-items: center;
     background-position: center center;
     scroll-snap-align: start;
+    height: 50em;
 }
 .serviceSecLogo {
     margin-top: 30px;

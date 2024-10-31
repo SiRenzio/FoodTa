@@ -27,3 +27,15 @@ a {
     height: 10em;
     margin-right: 10px;
 }
+
+.orderBtn{
+    background-color: #003c25;
+    color: white;
+    padding: 0.5em;
+    border-radius: 1em;
+    transition: 0.5s;
+}
+
+.orderBtn:hover{
+    background-color: #007347;
+}

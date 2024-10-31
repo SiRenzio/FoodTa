@@ -24,6 +24,11 @@ class Controller
                 $stores=$this->db->retrieveStores();
                 include('html/order.php');
                 break;
+            case 'storeDetails':
+                $store_id = $_GET['store_id'];
+                $items=$this->db->retrieveStoreItems($store_id);
+                include('html/storedetails.php');
+                break;
             default:
 			{
                 include('html/home_page.html');

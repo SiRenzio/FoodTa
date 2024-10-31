@@ -11,14 +11,16 @@
                 foreach($stores as $storeData=>$storeTable){
                     $storeRating = $storeTable->rating;
                     echo "<tr class='store-row'>"; // Replace div with tr to make table structure correct
+
                         echo "<td><img class='coverphoto' src='data:image/jpeg;base64," . base64_encode($storeTable->coverphoto) . "'>";
-                        echo "<br><a href='index.php?command=storeDetails&id=$storeTable->store_id'>" . $storeTable->store_name . "</a>";
+                        echo "<br>" . $storeTable->store_name . "</a>";
                             echo getRating($storeRating) . " (" . $storeTable->rating . ")";
                             echo "<div class='location'>Location: ";
                                 echo $storeTable->store_address;
                             echo "</div>";
-                            echo "<button>Order Now</button>";
+                            echo "<a href='index.php?command=storeDetails&&store_id=$storeTable->store_id' class = orderBtn>Order Now</a>";
                         echo "</td>";
+
                     echo "</tr>";
                 }
 
