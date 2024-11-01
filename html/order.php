@@ -5,7 +5,9 @@
     <link rel="stylesheet" href="css/order.css">
 </head>
 <body>
-    <div class="container"> <!-- Add a container div around the table -->
+    <section class="container"> <!-- Add a container div around the table -->
+        <image class="ftSecLogo" src="images/foodTaSectionLogo(Green).png"></image>
+        <h1 class="serTitle">FOOD TA! Restaurants</h1>
         <table>
             <?php
                 foreach($stores as $storeData=>$storeTable){
@@ -35,6 +37,6 @@
                 }
             ?>
         </table>
-    </div>
+    </section>
 </body>
 </html>

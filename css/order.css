@@ -1,3 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Sergio Trendy', sans-serif;
+    background-color: beige;
+    padding-top: 60px;
+    padding-bottom: 40px;
+    background-image: url("../images/foodTaBrandBG.png");
+    background-attachment: fixed;
+    background-position: center;
+    height: auto;
+}
+
+section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/*Branch display*/
+
+
+.ftSecLogo {
+    max-height: 130px;
+
+}
+
+.serTitle{
+    font-family: 'Archivo Black';
+    color: #003c25;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/*-------------------------------- */
+
 .container {
     margin: 2em;
 }
