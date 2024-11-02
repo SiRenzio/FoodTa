@@ -1,33 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel=stylesheet href='css/storedetails.css'>
+    <link rel="stylesheet" href="css/storedetails.css">
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th width = 12.5% align="center">Image</th>
-                <th width = 12.5% align="center">Name</th>
-                <th width = 12.5% align="center">Price</th>
-                <th width = 12.5% align="center"></th>
-            </tr>
-        </thead>
-        <tfoot>
-        <tbody>
-            <tr>
-                <?php
-                    foreach($items as $storeItems){
-                        echo "<tr id = row>";
-                            echo "<td><img class=item_img src='data:image/jpeg;base64," . base64_encode($storeItems->item_img) . "'>";
-                            echo "<td>". $storeItems->item_name ."</td>";
-                            echo "<td>₱". $storeItems->price ."</td>";
-                            echo "<td>Add to Cart</td>";
-                        echo "</tr>";
-                    }
-                ?>
-            </tr>
-        </tbody>
-    </table>
+    <section class="storeProducts">
+        <?php 
+        foreach ($items as $storeItems) {
+            echo '<div class="productDisplay">';
+                echo '<div class="product-image">';
+                    echo '<img src="data:image/jpeg;base64,' . base64_encode($storeItems->item_img) . '" alt="' . htmlspecialchars($storeItems->item_name) . '">';
+                echo '</div>';
+                echo '<div class="product-details">';
+                    echo '<h3>' . htmlspecialchars($storeItems->item_name) . '</h3>';
+                    echo '<p>₱' . htmlspecialchars($storeItems->price) . '</p>';
+                    echo '<a href="#" class="add-to-cart">Add to Cart</a>';
+                echo '</div>';
+            echo '</div>';
+        }
+        ?>
+    </section>
 </body>
 </html>

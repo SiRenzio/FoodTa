@@ -73,7 +73,7 @@ section{
 
 /* Home Page CSS */
 #home {
-    background-image: url("../images/homeBackground.jpg");
+    background-image: url("../images/homebackground2.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -97,23 +97,17 @@ section{
     text-align: center;
 }
 .mainTitle{
-    font-family: 'Poppins';
-    font-size: 4.3rem;
-    color: #003c25;
+    font-family: 'Poppins ExtraBold';
+    font-style: italic;
+    font-size: 4rem;
+    color: #ffffef;
     margin-bottom: -30px;
 }
 .subTitle{
-    font-family: 'Poppins SemiBold';
-    font-size: 2rem;
-    color: #003c25;
-}
-
-.tagline {
-    font-family: 'Roboto Slab';
-    margin-top: 10px;
-    text-align: center;
-    font-size: 1rem;
-    color: #011a10;
+    font-family: 'Poppins';
+    font-style: italic;
+    font-size: 1.8rem;
+    color: #ffffef;
 }
 
 
@@ -155,7 +149,7 @@ section{
 
 .ftSecLogo {
     margin-top: 30px;
-    max-height: 130px;
+    max-height: 150px;
     margin-bottom: 10px;
     padding-right: 520px;
 
@@ -165,7 +159,6 @@ section{
     font-size: 28px;
     color: #003c25;
     margin-bottom: 20px;
-    margin-top: 15px;
     text-align: justify;
     text-indent: 16rem;
 
@@ -197,7 +190,7 @@ section{
 }
 .serviceSecLogo {
     margin-top: 30px;
-    max-height: 130px;
+    max-height: 150px;
     margin-bottom: 10px;
 
 }
