@@ -32,7 +32,6 @@ class Controller
 
                     $this->db->checkLogInInfo($username, $password);
                 }
-                
                 //Check if Logged in
                 if($_SESSION['logInCheck'] === true){
                     if(isset($_SESSION['logState'])){

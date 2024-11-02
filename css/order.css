@@ -15,7 +15,7 @@ body {
     height: auto;
 }
 
-section {
+.container {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -23,61 +23,114 @@ section {
     flex-direction: column;
 }
 
-/*Branch display*/
-
-
 .ftSecLogo {
     max-height: 130px;
-
 }
 
-.serTitle{
+.serTitle {
     font-family: 'Archivo Black';
     color: #003c25;
     font-size: 1.8em;
     margin-bottom: 20px;
 }
 
-/*-------------------------------- */
-
-.container {
-    margin: 2em;
+.store-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
 
-.store-row td {
-    padding: 3em 3em;
-    box-shadow: 10px 10px 10px rgb(128, 128, 128);
-    border-radius: 1.25em;
-    background: white; 
+.store-box {
+    position: relative;
+    width: 280px;
+    height: 380px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.2s;
 }
 
-a {
-    text-decoration: none;
-    color: black;
+.store-box:hover {
+    transform: scale(1.05);
+}
+
+.image-section {
+    height: 65%;
+}
+
+.coverphoto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.details-section {
+    height: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+}
+
+.details-section h2 {
+    margin-bottom: 5px;
+}
+
+.details-section .location {
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: rgb(87, 89, 90);
+}
+
+.rating-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    justify-content: center;
 }
 
 .star {
     color: gold;
+    margin-right: 3px;
 }
 
-.location {
-    margin: 1em 0em;
-    width: 10em;
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.coverphoto {
-    height: 10em;
-    margin-right: 10px;
+.store-box:hover .overlay {
+    opacity: 1;
 }
 
-.orderBtn{
+.order-container {
+    display: block;
+    text-align: center;
+}
+
+.orderBtn {
+    padding: 10px 35px;
     background-color: #003c25;
     color: white;
-    padding: 0.5em;
-    border-radius: 1em;
-    transition: 0.5s;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
-.orderBtn:hover{
-    background-color: #007347;
+.orderBtn:hover {
+    background-color: #005e40;
 }

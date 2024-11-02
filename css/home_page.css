@@ -48,7 +48,6 @@ body {
     background-color: #1c0d08;
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
-    height: 190vh;
 }
 section{
     scroll-snap-align: start;
@@ -58,17 +57,6 @@ section{
     padding: 30px 50px;
     height: 100vh;
 
-}
-
-#container{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-#LogIn{
-    height: 10em;
-    background-color: black;
 }
 
 /* Home Page CSS */
@@ -120,7 +108,6 @@ section{
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 50em;
 }
 .about_content{
     display: flex;
@@ -148,8 +135,7 @@ section{
 }
 
 .ftSecLogo {
-    margin-top: 30px;
-    max-height: 150px;
+    max-height: 130px;
     margin-bottom: 10px;
     padding-right: 520px;
 
@@ -186,7 +172,6 @@ section{
     align-items: center;
     background-position: center center;
     scroll-snap-align: start;
-    height: 50em;
 }
 .serviceSecLogo {
     margin-top: 30px;
