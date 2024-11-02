@@ -47,7 +47,7 @@ class Controller
 
             case 'logout':
                 $_SESSION["isLoggedIn"] = false;
-                include('html/home_page.html');
+                include('html/home_page.php');
                 break;
 
             case 'storeDetails':
