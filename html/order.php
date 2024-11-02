@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="css/order.css">
 </head>
 <body>
-    <div class="container"> <!-- Add a container div around the table -->
+    <div class="container">
         <table>
             <?php
                 foreach($stores as $storeData=>$storeTable){

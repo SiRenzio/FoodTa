@@ -60,7 +60,16 @@ section{
 
 }
 
+#container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
 
+#LogIn{
+    height: 10em;
+    background-color: black;
+}
 
 /* Home Page CSS */
 #home {

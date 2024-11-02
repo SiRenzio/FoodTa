@@ -18,7 +18,7 @@ class Controller
 
         switch ($command) {
             case 'home':
-                include('html/home_page.html');
+                include('html/home_page.php');
                 break;
             case 'order':
                 $stores=$this->db->retrieveStores();
@@ -31,7 +31,7 @@ class Controller
                 break;
             default:
 			{
-                include('html/home_page.html');
+                include('html/home_page.php');
                 break;
 			}
         }

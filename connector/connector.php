@@ -33,5 +33,9 @@
             return $items;
         }
 
+        function addToCart($user_id, $item_id, $quantity){
+            $stmt = $this->db->prepare("SELECT * FROM cart WHERE user_id = $user_id AND item_quantity");
+        }
+
     }
 ?>

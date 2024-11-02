@@ -12,15 +12,27 @@
     <title>Koppiii</title>
 </head>
 <body>
-
-    <section class="home" id="home">
-        <image class="ktHomeLogo" src="images/kaonTaLogo(Green).png"></image>
-        <div class="brandname">
-            <h1 class="mainTitle">FOOD TA!</h1>
-            <h3 class="subTitle">Bistro Cafe</h3>
-            <p class="tagline">Where flavor meets satisfaction, one delicious moment at a time.</p>  
-        </div>
-             
+    <div id="container">
+        <section class="home" id="home">
+            <image class="ktHomeLogo" src="images/kaonTaLogo(Green).png"></image>
+            <div class="brandname">
+                <h1 class="mainTitle">FOOD TA!</h1>
+                <h3 class="subTitle">Bistro Cafe</h3>
+                <p class="tagline">Where flavor meets satisfaction, one delicious moment at a time.</p>  
+            </div>
+            
+        <?php
+            // CLA
+            // if logged in = show log-in section.
+            // if not = don't show. 
+            $loggedIn = true;
+            if ($loggedIn == false){
+                echo "<section id = LogIn>";
+                    echo "Hello";
+                echo "</section>";
+            }
+        ?>
+    </div>
     </section>
         
     <section class="sec_about" id="sec_about">
