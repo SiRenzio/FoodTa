@@ -2,6 +2,14 @@
 
 require('html/session.php');
 
+if(!isset($_SESSION['logState'])){
+    $_SESSION['logState'] = false;
+}
+
+if(!isset($_SESSION['logInCheck'])){
+    $_SESSION['logInCheck'] = false;
+}
+
 class Controller
 {
     public $db = null;
@@ -35,13 +43,11 @@ class Controller
                 
                 //Check if Logged in
                 if($_SESSION['logInCheck'] === true){
-                    if(isset($_SESSION['logState'])){
-                        $_SESSION['logState'] = true;
-                    }
+                    $_SESSION['logState'] = true;
                 }
 
                 //Proceed to LogIn page
-                if($_SESSION['logState'] == false){
+                if($_SESSION['logState'] === false){
                     include('html/login_page.php');
                 }
 
