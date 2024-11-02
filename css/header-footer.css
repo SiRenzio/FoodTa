@@ -44,10 +44,9 @@ html{
 body {
     font-family: 'Poppins SemiBold';
     line-height: 1.6;
-    padding-top: 60px;
-    padding-bottom: 40px;
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
+    height: fit-content;
 }
 
 .Header {

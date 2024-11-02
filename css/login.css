@@ -1,41 +1,45 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+html, body {
+    overflow: hidden;
     font-family: 'Sergio Trendy', sans-serif;
+    height: 100vh;
 }
 
-.container{
+.logInPage {
+    background-image: url('../images/foodTaBrandBG.png');
+    background-attachment: fixed;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     min-height: 100vh;
-    background-color: #ffff;
 }
 
-.wrapper{
+.wrapper {
     width: 420px;
     background-color: #003c25;
     border-radius: 12px;
     padding: 30px 40px;
 }
 
-.wrapper h1{
+.wrapper h1 {
     font-size: 36px;
     text-align: center;
-    color: #ffff;
+    color: #fff;
 }
 
-.wrapper .input-field{
+.wrapper .input-field {
     width: 100%;
     height: 50px;
     margin: 30px 0;
 }
 
-.input-field input{
+.input-field input {
     width: 100%;
     height: 100%;
     background: transparent;
@@ -44,21 +48,21 @@ body{
     border: 2px solid rgba(255, 255, 255, .2);
     border-radius: 40px;
     font-size: 16px;
-    color: #ffff;
+    color: #fff;
     padding: 20px 45px 20px 20px;
 }
 
-.input-field input::placeholder{
-    color: #ffff;
-    transition: opacity 0.3 ease;
+.input-field input::placeholder {
+    color: #fff;
+    transition: opacity 0.3s ease;
     opacity: 1;
 }
 
-.input-field input:focus::placeholder{
+.input-field input:focus::placeholder {
     opacity: 0;
 }
 
-.wrapper .btn{
+.wrapper .btn {
     width: 100%;
     height: 45px;
     background: #fdfdfd;
@@ -70,14 +74,14 @@ body{
     font-weight: 600;
 }
 
-.wrapper .register{
+.wrapper .register {
     font-size: 14px;
     text-align: center;
     margin-top: 20px;
 }
 
-.register p{
-    color: #ffff;
+.register p {
+    color: #fff;
 }
 
 .register p a {
@@ -85,6 +89,6 @@ body{
     font-weight: 600;
 }
 
-.register p a:hover{
+.register p a:hover {
     text-decoration: underline;
 }
