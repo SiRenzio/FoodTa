@@ -1,4 +1,5 @@
 <?php
+
     class Connector{
         public $db = null;
 
@@ -35,6 +36,17 @@
 
         function addToCart($user_id, $item_id, $quantity){
             $stmt = $this->db->prepare("SELECT * FROM cart WHERE user_id = $user_id AND item_quantity");
+        }
+
+        function checkLoginInfo($username, $password){
+            $sql = mysqli_query($this->db, "SELECT * FROM customer WHERE username = '$username' AND password = '$password'");
+
+            if($sql->num_rows>0){
+                $_SESSION['logInCheck'] = true;
+            }
+            else{
+                echo "error";
+            }
         }
 
     }

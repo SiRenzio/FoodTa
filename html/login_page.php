@@ -6,9 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    <?php
-        $_SESSION["isLoggedIn"] = false;
-        echo "<a class='order' href='index.php?command=order&LoggedIn=true'>Log In</a>";
-    ?>
+    <div class="container">
+        <form action="index.php?command=order" method="post">
+            <h1>Login</h1>
+            <div class="input-field">
+                <input type="text" placeholder="Username" name="user" required>
+            </div>
+            <div class="input-field">
+                <input type="password" placeholder="Password" name="pass" required>
+            </div>
+            <button class="btn">Login</button>
+        </form>
+    </div>
 </body>
 </html>

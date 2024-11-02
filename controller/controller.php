@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require('html/session.php');
 
 class Controller
 {
@@ -24,15 +24,24 @@ class Controller
                 include('html/home_page.php');
                 break;
             case 'order':
-                $LogInCheck = isset($_GET['LoggedIn']);
+                if($_POST){
+                    $username = $_POST['user'];
+                    $password = $_POST['pass'];
+                    $_SESSION['username'] = $username;
+                    $_SESSION['password'] = $password;
 
+                    $this->db->checkLogInInfo($username, $password);
+                }
+                
                 //Check if Logged in
-                if($LogInCheck === true){
-                    $_SESSION["isLoggedIn"] = true;
+                if($_SESSION['logInCheck'] === true){
+                    if(isset($_SESSION['logState'])){
+                        $_SESSION['logState'] = true;
+                    }
                 }
 
                 //Proceed to LogIn page
-                if($_SESSION["isLoggedIn"] == false){
+                if($_SESSION['logState'] == false){
                     include('html/login_page.php');
                 }
 
@@ -46,7 +55,8 @@ class Controller
                 break;
 
             case 'logout':
-                $_SESSION["isLoggedIn"] = false;
+                $_SESSION['logState'] = false;
+                $_SESSION['logInCheck'] = false;
                 include('html/home_page.php');
                 break;
 
