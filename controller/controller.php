@@ -6,10 +6,6 @@ if(!isset($_SESSION['logState'])){
     $_SESSION['logState'] = false;
 }
 
-if(!isset($_SESSION['logInCheck'])){
-    $_SESSION['logInCheck'] = false;
-}
-
 class Controller
 {
     public $db = null;
@@ -32,6 +28,7 @@ class Controller
                 include('html/home_page.php');
                 break;
             case 'order':
+                //input from login form
                 if($_POST){
                     $username = $_POST['user'];
                     $password = $_POST['pass'];
@@ -39,10 +36,6 @@ class Controller
                     $_SESSION['password'] = $password;
 
                     $this->db->checkLogInInfo($username, $password);
-                }
-                //Check if Logged in
-                if($_SESSION['logInCheck'] === true){
-                    $_SESSION['logState'] = true;
                 }
 
                 //Proceed to LogIn page
@@ -61,7 +54,6 @@ class Controller
 
             case 'logout':
                 $_SESSION['logState'] = false;
-                $_SESSION['logInCheck'] = false;
                 include('html/home_page.php');
                 break;
 

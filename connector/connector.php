@@ -42,7 +42,7 @@
             $sql = mysqli_query($this->db, "SELECT * FROM customer WHERE username = '$username' AND password = '$password'");
 
             if($sql->num_rows>0){
-                $_SESSION['logInCheck'] = true;
+                $_SESSION['logState'] = true;
             }
             else{
                 echo "error";

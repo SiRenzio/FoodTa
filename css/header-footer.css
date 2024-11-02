@@ -48,7 +48,6 @@ body {
     padding-bottom: 40px;
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
-    height: 190vh;
 }
 
 .Header {
