@@ -18,24 +18,26 @@
 
                         // Image at the top
                         echo "<div class='image-section'>";
-                        echo "<img class='coverphoto' src='data:image/jpeg;base64," . base64_encode($storeTable->coverphoto) . "' alt='Store Cover'>";
+                            echo "<img class='coverphoto' src='data:image/jpeg;base64," . base64_encode($storeTable->coverphoto) . "' alt='Store Cover'>";
                         echo "</div>";
 
                         // Details at the bottom
                         echo "<div class='details-section'>";
-                        echo "<h2 class='storeName'>" . $storeTable->store_name . "</h2>";
+                            echo "<h2 class='storeName'>" . $storeTable->store_name . "</h2>";
                         echo "<div class='rating-container'>";
+
                         getRating($storeRating);
+
                         echo " (" . $storeTable->rating . ")";
                         echo "</div>";
-                        echo "<p class='location'>Location: " . $storeTable->store_address . "</p>";
+                            echo "<p class='location'>Location: " . $storeTable->store_address . "</p>";
                         echo "</div>";
 
                         // Overlay for hover effect
                         echo "<div class='overlay'>";
-                        echo "<div class='order-container'>";
-                        echo "<a href='index.php?command=storeDetails&&store_id=$storeTable->store_id' class='orderBtn'>Order Now</a>";
-                        echo "</div>";
+                            echo "<div class='order-container'>";
+                                echo "<a href='index.php?command=storeDetails&&store_id=$storeTable->store_id' class='orderBtn'>Order Now</a>";
+                            echo "</div>";
                         echo "</div>";
 
                     echo "</div>";

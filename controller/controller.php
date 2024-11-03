@@ -62,11 +62,13 @@ class Controller
                 $items=$this->db->retrieveStoreItems($store_id);
                 include('html/storedetails.php');
                 break;
+            
+            case 'register':
+                include('html/register_page.php');
+                break;
             default:
-			{
                 include('html/home_page.php');
                 break;
-			}
         }
     }
 }
