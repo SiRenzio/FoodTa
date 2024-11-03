@@ -18,7 +18,7 @@
                     </div>
                     <button class="btn">Login</button>
                     <div class="register">
-                        <p>Don't have an account? <a href="#">Register</a></p>
+                        <p>Don't have an account? <a href="index.php?command=register">Register</a></p>
                     </div>
                 </form>
             </div>
