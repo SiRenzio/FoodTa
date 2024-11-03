@@ -101,7 +101,7 @@ section{
 
 /*about Page Section*/
 .sec_about {
-    background-image: url('../images/foodTaSectionBG\(Beige\).png');
+    background-image: url('../images/foodTaDeliveryBG.png');
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;

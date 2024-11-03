@@ -10,7 +10,7 @@
     <section class="logInPage">
             <div class="wrapper">
                 <form action="index.php?command=order" method="post">
-                    <h1>Login</h1>
+                    <h1>Log In</h1>
                     <div class="input-field">
                         <input type="text" placeholder="Username" name="user" autocomplete="off" required>
                     </div>
