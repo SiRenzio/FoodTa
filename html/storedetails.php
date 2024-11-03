@@ -23,36 +23,36 @@
 
             if(isset($_POST['quantity'])){
                 $quantity = $_POST['quantity'];
-                addToCart($storeItems->item_id, $quantity, $storeItems->name, $storeItems->price);
+                // addToCart($storeItems->item_id, $quantity, $storeItems->name, $storeItems->price);
             }
 
         }
         
-        function addToCart($item_id, $quantity, $name, $price){
-            session_start();
+        // function addToCart($item_id, $quantity, $name, $price){
+        //     session_start();
 
-            if (!isset($_SESSION['cart'])){
-                $_SESSION['cart'] = [];
-            }
+        //     if (!isset($_SESSION['cart'])){
+        //         $_SESSION['cart'] = [];
+        //     }
 
-            $itemExists = false;
+        //     $itemExists = false;
 
-            foreach($_SESSION['cart'] as $items){
-                if ($items['id'] == $item_id){
-                    $items['quantity'] += $quantity;
-                    $itemExists = true;
-                }
-            }
+        //     foreach($_SESSION['cart'] as $items){
+        //         if ($items['id'] == $item_id){
+        //             $items['quantity'] += $quantity;
+        //             $itemExists = true;
+        //         }
+        //     }
 
-            if (!$itemExists){
-                $_SESSION['cart'][] = [
-                    'id' => $item_id,
-                    'name' => $name,
-                    'price' => $price,
-                    'quantity' => $quantity
-                ];
-            }
-        }
+        //     if (!$itemExists){
+        //         $_SESSION['cart'][] = [
+        //             'id' => $item_id,
+        //             'name' => $name,
+        //             'price' => $price,
+        //             'quantity' => $quantity
+        //         ];
+        //     }
+        // }
         ?>
     </section>
 </body>

@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
     <section class="logInPage">
             <div class="wrapper">
                 <form action="index.php?command=order" method="post">
-                    <h1>Log In</h1>
+                    <h1>Login</h1>
                     <div class="input-field">
                         <input type="text" placeholder="Username" name="user" autocomplete="off" required>
                     </div>

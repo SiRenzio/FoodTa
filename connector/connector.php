@@ -49,5 +49,9 @@
             }
         }
 
+        function createAccount($account_type, $username, $password){
+            $sql = mysqli_query($this->db, "INSERT INTO '$account_type'(username, password) VALUES ()");
+        }
+
     }
 ?>

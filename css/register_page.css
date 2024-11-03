@@ -1,0 +1,47 @@
+html, body {
+    overflow: hidden;
+    font-family: 'Sergio Trendy', sans-serif;
+    height: 100vh;
+    margin-top: 5em;
+}
+
+body{
+    background-image: url('../images/foodTaBrandBG.png');
+    background-attachment: fixed;
+}
+
+#selection {
+    text-align: center;
+}
+
+button {
+    padding: 10em 10em;
+    cursor: pointer;
+}
+
+#customerRegister, #storeRegister {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#customerForm {
+    display: flex;
+    flex-direction: column;
+    padding: 10em;
+    background-color: #003c25;
+}
+
+.customerTxt {
+    background-color: white;
+    border-radius: 1em;
+    height: 3em;
+    width: 25em;
+}
+
+
