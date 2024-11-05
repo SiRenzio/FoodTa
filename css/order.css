@@ -1,3 +1,35 @@
+@font-face {
+    font-family: 'Open Sans Regular';
+    src: url(font/OpenSans.ttf);
+}
+@font-face {
+    font-family: 'Archivo Black';
+    src: url(font/ArchivoBlack-Regular.ttf);
+}
+@font-face {
+    font-family: 'Sergio Trendy';
+    src: url(font/serge.ttf);
+}
+@font-face {
+    font-family: 'Poppins Bold';
+    src: url(font/Poppins-Bold.ttf);
+}
+@font-face {
+    font-family: 'Poppins ExtraBold';
+    src: url(font/Poppins-ExtraBold.ttf);
+}
+@font-face {
+    font-family: 'Poppins Medium';
+    src: url(font/Poppins-Medium.ttf);
+}
+@font-face {
+    font-family: 'Poppins SemiBold';
+    src: url(font/Poppins-SemiBold.ttf);
+}
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url(font/RobotoSlab.ttf);
+}
 * {
     margin: 0;
     padding: 0;
@@ -22,7 +54,24 @@ body {
     align-items: center;
     flex-direction: column;
 }
+.logOutBTN {
+    position: absolute;
+    top: 90px;
+    right: 30px;
+    padding: 10px 20px;
+    background-color: #003c25;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
 
+.logOutBTN:hover {
+    background-color: #005e40;
+    transform: scale(1.05);
+}
 .ftSecLogo {
     max-height: 130px;
 }
@@ -133,4 +182,5 @@ body {
 
 .orderBtn:hover {
     background-color: #005e40;
+    
 }

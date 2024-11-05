@@ -8,6 +8,7 @@
 </head>
 <body>
     <section class="container">
+        <a class='logOutBTN' href='index.php?command=logout'>Log Out</a>
         <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <h1 class="serTitle">FOOD TA! Restaurants</h1>
         <div class="store-list">
@@ -23,7 +24,7 @@
 
                         // Details at the bottom
                         echo "<div class='details-section'>";
-                            echo "<h2 class='storeName'>" . $storeTable->store_name . "</h2>";
+                            echo "<h2 class='storeName'>". $storeTable->store_name . "</h2>";
                         echo "<div class='rating-container'>";
 
                         getRating($storeRating);

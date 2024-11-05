@@ -47,7 +47,6 @@ class Controller
                 else{
                     $stores=$this->db->retrieveStores();
                     include('html/order.php');
-                    echo "<a class='order' href='index.php?command=logout'>Log Out</a>";
                 }
                 
                 break;
