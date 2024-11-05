@@ -57,6 +57,12 @@ section {
 .ftSecLogo {
     max-height: 120px;
 }
+.storeName{
+    font-size: 1.9em;
+    font-family: 'Poppins';
+    color: #003c25;
+    margin-bottom: 20px;
+}
 .productDisplay {
     display: flex;
     flex-wrap: wrap;

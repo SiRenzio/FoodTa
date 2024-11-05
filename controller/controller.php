@@ -59,6 +59,7 @@ class Controller
             case 'storeDetails':
                 $store_id = $_GET['store_id'];
                 $items=$this->db->retrieveStoreItems($store_id);
+                $stores=$this->db->retrieveStores();
                 include('html/storedetails.php');
                 break;
             

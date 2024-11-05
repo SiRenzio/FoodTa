@@ -7,6 +7,10 @@
     <section class="storeProducts">
     <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <?php 
+        foreach ($stores as $storeTable) {
+            echo "<h2 class='storeName'>Welcome to ". $storeTable->store_name . "</h2>";
+        }
+
         foreach ($items as $storeItems) {
             echo '<div class="productDisplay">';
                 echo '<div class="productCard">';
