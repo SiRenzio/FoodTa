@@ -33,15 +33,54 @@ button {
 #customerForm {
     display: flex;
     flex-direction: column;
-    padding: 10em;
+    align-items: center;
+    padding: 8em 5.5em;
     background-color: #003c25;
 }
 
-.customerTxt {
-    background-color: white;
-    border-radius: 1em;
-    height: 3em;
-    width: 25em;
+#formHeader {
+    font-family: 'Poppins ExtraBold';
+    font-style: italic;
+    font-size: 4em;
+    color: white;
 }
+
+.formTxt {
+    width: 75%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 13px;
+    color: #fff;
+    padding: 1em 2em;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.formBtn {
+    margin-top: 2em;
+    width: 50%;
+    height: 45px;
+    background: #fdfdfd;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#storeForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8em 5.5em;
+    background-color: #003c25;
+}
+
+
+
 
 

@@ -11,22 +11,33 @@
         <button id = "storeBtn" onclick="displayStoreForm()">Sell food!</button>
 
         <div id = "customerRegister">
-            <form method="POST" id = "customerForm">
-                <input type="text" placeholder="Username" name="user" class = "customerTxt" autocomplete="off" required>
-                <input type="password" placeholder="Password" name="pass" class = "customerTxt" autocomplete="off" required>
-                <input type="text" placeholder="Location" name="loc" class = "customerTxt" autocomplete="off" required>
-                <input type="text" placeholder="Contact" name="contact" class = "customerTxt" autocomplete="off" required>
-                <button type="submit">Sign Up</button>
+            <form action = 'index.php?command=checkRegister&&accType=customer' method = "POST" id = "customerForm">
+                <h1 id = "formHeader">Ready to order food?</h1>
+
+                <input type="text" placeholder="Full Name" name="fullname" class = "formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Username" name="user" class = "formTxt" autocomplete="off" required>
+                <input type="password" placeholder="Password" name="pass" class = "formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Location" name="loc" class = "formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Contact No." name="contact" class = "formTxt" autocomplete="off" required>
+
+                <input type="submit" value = "Sign up" class = "formBtn">
             </form>
         </div>
         
         <div id = "storeRegister">
-            <form method="POST">
-                    
+            <form action = 'index.php?command=checkRegister&&accType=store' method = "POST" id = "storeForm">
+                <h1 id = "formHeader">Ready to sell food?</h1>
+
+                <input type="text" placeholder="Full Name" name="fullname" class = "formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Store Name" name="storename" class = "formTxt" autocomplete="off" required>
+                <input type="password" placeholder="Password" name="pass" class = "formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Location" name="loc" class = "formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Contact No." name="contact" class = "formTxt" autocomplete="off" required>
+                
+                <input type="submit" value = "Sign up" class = "formBtn">
             </form>
         </div>
-    </div>
-
-    <script src="js/index.js"></script>
+    </div>  
+    <script src ='js/index.js'></script>
 </body>
 </html>

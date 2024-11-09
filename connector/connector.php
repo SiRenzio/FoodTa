@@ -48,6 +48,10 @@
                 echo "error";
             }
         }
+        
+        function checkSignUpInfo($account_type, $credential, $credential_value){
+            $sql = mysqli_query($this->db, "SELECT * FROM '$account_type' WHERE '$credential' = '$credential_value'");
+        }
 
         function createAccount($account_type, $username, $password){
             $sql = mysqli_query($this->db, "INSERT INTO '$account_type'(username, password) VALUES ()");

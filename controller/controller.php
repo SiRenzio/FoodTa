@@ -27,6 +27,7 @@ class Controller
             case 'home':
                 include('html/home_page.php');
                 break;
+
             case 'order':
                 //input from login form
                 if($_POST){
@@ -51,7 +52,7 @@ class Controller
                 
                 break;
 
-            case 'logout':
+            case 'logout': 
                 $_SESSION['logState'] = false;
                 include('html/home_page.php');
                 break;
@@ -66,6 +67,29 @@ class Controller
             case 'register':
                 include('html/register_page.php');
                 break;
+            
+            case 'checkRegister':
+                $credential = null;
+                $credential_value = null;
+
+                $fullname = $_POST['fullname'];
+                $password = $_POST['password'];
+                $location = $_POST['location'];
+                $contact = $_POST['contact'];
+                $account_type = $_POST['accType'];
+
+                switch($account_type){
+                    case 'customer':
+                        $credential = 'username';
+                        $credential_value = $_POST['username'];
+                        break;
+                    case 'store':
+                        $credential = 'store_name';
+                        $credential_value = $_POST['storename'];
+                        break;
+                    default:
+                        break;
+                }
             default:
                 include('html/home_page.php');
                 break;
