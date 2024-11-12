@@ -23,6 +23,17 @@
             return $stores;
         }
 
+        function getStoreName($store_id){
+            $items = array();
+
+            $sql = mysqli_query($this->db, "SELECT * FROM store WHERE store_id = '$store_id'");
+
+            while($row = mysqli_fetch_object($sql)){
+                $items[] = $row;
+            }
+            return $items;
+        }
+
         function retrieveStoreItems($store_id){
             $items = array();
 

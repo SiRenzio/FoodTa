@@ -44,37 +44,33 @@ body {
     background-image: url("../images/foodTaBrandBG.png");
     background-attachment: fixed;
     background-position: center;
-    height: auto;
 }
 
-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.ftSecLogo {
-    max-height: 120px;
-}
-.storeName{
-    font-size: 1.9em;
-    font-family: 'Poppins';
-    color: #003c25;
-    margin-bottom: 20px;
-}
-.productDisplay {
+.storeProducts {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
     padding: 20px;
-    margin-bottom: 40px;
+    height: auto;
+}
+
+.ftSecLogo {
+    max-height: 120px;
+
+}
+
+.storeName {
+    font-size: 1.9em;
+    font-family: 'Poppins';
+    color: #003c25;
+    text-align: center;
+    width: 100%;
 }
 
 .productCard {
-    position: relative;
-    width: 250px;
+    flex: 1 1 250px;
+    max-width: 250px;
     height: 350px;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -82,27 +78,41 @@ section {
     overflow: hidden;
     transition: transform 0.3s ease;
 }
+
 .productCard:hover {
     transform: translateY(-10px);
 }
+
 .product-image img {
     width: 100%;
     height: 65%;
     object-fit: cover;
 }
-.product-details{
+
+.product-details {
     padding-top: 10px;
     text-align: center;
 }
-.product-details h3{
-   font-size: 1.3rem;
-   font-family: 'Poppins';
+
+.product-details h3 {
+    font-size: 1.3rem;
+    font-family: 'Poppins';
 }
-.product-details p{
+
+.product-details p {
     font-size: 1.4rem;
     font-family: 'Poppins';
- }
- .product-details button{
+}
+
+.product-details .quantity {
+    width: 40%;
+    padding: 5px;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.product-details .addToCart {
     width: 80%;
     padding: 5px 10px;
     font-size: 1rem;
@@ -111,4 +121,4 @@ section {
     border: none;
     background-color: #003c25;
     color: white;
- }
+}

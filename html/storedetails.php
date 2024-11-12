@@ -7,24 +7,22 @@
     <section class="storeProducts">
     <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <?php 
-        foreach ($stores as $storeTable) {
-            echo "<h2 class='storeName'>Welcome to ". $storeTable->store_name . "</h2>";
+        if ($storeName && count($storeName) > 0) {
+            echo "<h2 class='storeName'>Welcome to " . htmlspecialchars($storeName[0]->store_name) . "</h2>";
         }
 
         foreach ($items as $storeItems) {
-            echo '<div class="productDisplay">';
-                echo '<div class="productCard">';
-                    echo '<div class="product-image">';
-                        echo '<img src="data:image/jpeg;base64,' . base64_encode($storeItems->item_img) . '" alt="' . htmlspecialchars($storeItems->item_name) . '">';
-                    echo '</div>';
+            echo '<div class="productCard">';
+                echo '<div class="product-image">';
+                    echo '<img src="data:image/jpeg;base64,' . base64_encode($storeItems->item_img) . '" alt="' . htmlspecialchars($storeItems->item_name) . '">';
+                echo '</div>';
 
-                    echo '<div class="product-details">';
-                        echo '<h3>' . htmlspecialchars($storeItems->item_name) . '</h3>';
-                        echo '<p>₱' . htmlspecialchars($storeItems->price) . '</p>';
-                        echo '<form method="POST" action ="">';
-                            echo '<button type = "submit" name = "addToCart" value = 1 class = "addToCart">Add to Cart</button>';
-                        echo '</form>'; 
-                    echo '</div>';
+                echo '<div class="product-details">';
+                    echo '<h3>' . htmlspecialchars($storeItems->item_name) . '</h3>';
+                    echo '<p>₱' . htmlspecialchars($storeItems->price) . '</p>';
+                    echo '<form method="POST" action ="">';
+                        echo '<button type = "submit" name = "addToCart" value = 1 class = "addToCart">Add to Cart</button>';
+                    echo '</form>'; 
                 echo '</div>';
             echo '</div>';
 
