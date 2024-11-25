@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/register_page.css">
     <title>Food Ta! Delivery</title>
+    <script type="text/javascript">
+    	function imagePreview(event) {
+        	if(event.target.files.length > 0)
+        	{
+        		var src = URL.createObjectURL(event.target.files[0]);
+            	var preview = document.getElementById("previewImage");
+            	preview.src = src;      
+            	preview.style.display = "block";
+        	}
+    	}	
+    </script>
 </head>
 <body>
     
@@ -36,14 +47,22 @@
         </div>
         
         <div id="storeRegister">
-            <form action="index.php?command=checkRegister&&accType=store" method="POST" id="storeForm">
+            <form action="index.php?command=checkRegister&&accType=store" method="POST" id="storeForm" enctype='multipart/form-data'>
                 <h1 id="formHeader">Ready to sell food?</h1>
 
-                <input type="text" placeholder="Full Name" name="fullname" class="formTxt" autocomplete="off" required>
+                <!-- <input type="text" placeholder="Full Name" name="fullname" class="formTxt" autocomplete="off" required> -->
                 <input type="text" placeholder="Store Name" name="storename" class="formTxt" autocomplete="off" required>
-                <input type="password" placeholder="Password" name="pass" class="formTxt" autocomplete="off" required>
-                <input type="text" placeholder="Location" name="loc" class="formTxt" autocomplete="off" required>
-                <input type="text" placeholder="Contact No." name="contact" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Username" name="store_user" class="formTxt" autocomplete="off" required>
+                <input type="password" placeholder="Password" name="store_pass" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Location" name="store_loc" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Description" name="desc" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Rating" name="rating" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Opening Hour (Ex. Format: 00:00:00)" name="opening_hr" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Closing Hour (Ex. Format: 00:00:00)" name="closing_hr" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Contact No." name="store_contact" class="formTxt" autocomplete="off" required>
+                <img src="img_upload/preview.png" id="previewImage" alt="preview" width="300" height="300">
+                <label for="fileToUpload" class="custom-file-button">Upload Store Image</label>
+				<input type="file" name="fileToUpload" id="fileToUpload" onchange="imagePreview(event)" accept="image/*"></input>
                 
                 <input type="submit" value="Sign up" class="formBtn">
                 <button type="button" id="backBtn" class="backBtn" onclick="goBack()">Back</button>
