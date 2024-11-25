@@ -45,15 +45,30 @@
             return $items;
         }
 
-        function addToCart($user_id, $item_id, $quantity){
-            $stmt = $this->db->prepare("SELECT * FROM cart WHERE user_id = $user_id AND item_quantity");
+        function addToCart($user_id, $item_id, $timestamp){
+            $sql = "INSERT into cart(user_id, item_id, timestamp) VALUES(? , ? , ?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('iis', $user_id, $item_id, $timestamp);
+            
+            if($stmt->execute()){
+                return "Item Added!";
+            }
+            else{
+                return "Error adding item!";
+            }
         }
 
         function checkLoginInfo($username, $password){
-            $sql = mysqli_query($this->db, "SELECT * FROM customer WHERE username = '$username' AND password = '$password'");
+            $sql = "SELECT * FROM customer WHERE username = ? AND password = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('ss',$username, $password);
+            $stmt->execute();
+            //$stmt->bind_result($user);
+            //$stmt->fetch();
 
-            if($sql->num_rows>0){
+            if($stmt->num_rows>0){
                 $_SESSION['logState'] = true;
+               // return $user->user_id;
             }
             else{
                 echo "error";
@@ -67,6 +82,5 @@
         function createAccount($account_type, $username, $password){
             $sql = mysqli_query($this->db, "INSERT INTO '$account_type'(username, password) VALUES ()");
         }
-
     }
 ?>

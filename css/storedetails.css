@@ -121,4 +121,5 @@ body {
     border: none;
     background-color: #003c25;
     color: white;
+    cursor: pointer;
 }

@@ -27,3 +27,7 @@ function goBack() {
         buttons[i].style.display = "flex";
     }
 }
+
+function displayError($error) {
+    alert($error);
+}

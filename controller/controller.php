@@ -18,6 +18,7 @@ class Controller
     public function getWeb()
     {       
         $command = null;
+        $currentUser = null;
 
         if (isset($_REQUEST['command'])) {
             $command = $_REQUEST['command'];
@@ -36,7 +37,7 @@ class Controller
                     $_SESSION['username'] = $username;
                     $_SESSION['password'] = $password;
 
-                    $this->db->checkLogInInfo($username, $password);
+                    $currentUser = $this->db->checkLogInInfo($username, $password);
                 }
 
                 //Proceed to LogIn page
@@ -92,6 +93,11 @@ class Controller
                     default:
                         break;
                 }
+            case 'addToCart':   
+                $itemID = $_POST['id'];
+                $result = $this->db->addToCart($itemID, $currentUser, date("Y-m-d H:i:s"));
+                echo "<script>alert($result)</script>";
+                break;
             default:
                 include('html/home_page.php');
                 break;

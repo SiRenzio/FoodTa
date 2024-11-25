@@ -21,7 +21,7 @@
                     echo '<h3>' . htmlspecialchars($storeItems->item_name) . '</h3>';
                     echo '<p>₱' . htmlspecialchars($storeItems->price) . '</p>';
                     echo '<form method="POST" action ="">';
-                        echo '<button type = "submit" name = "addToCart" value = 1 class = "addToCart">Add to Cart</button>';
+                        echo '<button type = "submit" formaction = "index.php?addToCart&id='. $storeItems->item_id .'" class = "addToCart">Add to Cart</button>';   
                     echo '</form>'; 
                 echo '</div>';
             echo '</div>';
