@@ -74,22 +74,59 @@ class Controller
                 $credential = null;
                 $credential_value = null;
 
-                $fullname = $_POST['fullname'];
-                $password = $_POST['password'];
-                $location = $_POST['location'];
-                $contact = $_POST['contact'];
-                $account_type = $_POST['accType'];
+                // $fullname = $_POST['fullname'];
+                // $password = $_POST['password'];
+                // $location = $_POST['location'];
+                // $contact = $_POST['contact'];
+                $account_type = $_GET['accType'];
 
                 switch($account_type){
                     case 'customer':
-                        $credential = 'username';
-                        $credential_value = $_POST['username'];
+                        $fullname = $_REQUEST['fullname'];
+                        $username = $_REQUEST['user'];
+                        $password = $_REQUEST['pass'];
+                        $location = $_REQUEST['loc'];
+                        $contact = $_REQUEST['contact'];
+
+                        if($result = $this->db->createUserAccount($fullname, $username, $password, $location, $contact)){
+                            echo "<script> alert('Account Created Successfully'); window.location.href='index.php?command=order' </script>";
+                        }
+                        else{
+                            echo "<script> alert('Wrong Input. Please Try Again'); window.location.href='index.php?command=checkRegister&account_type=customer </script>";
+                        }
+                        // $credential = 'username';
+                        // $credential_value = $_POST['username'];
                         break;
                     case 'store':
-                        $credential = 'store_name';
-                        $credential_value = $_POST['storename'];
-                        break;
-                    default:
+                        $storeName = $_REQUEST['storename'];
+                        $storeUsername = $_REQUEST['store_user'];
+                        $storePassword = $_REQUEST['store_pass'];
+                        $storeLocation = $_REQUEST['store_loc'];
+                        $storeDescription = $_REQUEST['desc'];
+                        $storeRating = $_REQUEST['rating'];
+                        $storeOpeningHr = $_REQUEST['opening_hr'];
+                        $storeClosingHr = $_REQUEST['closing_hr'];
+                        $storeContact = $_REQUEST['store_contact'];
+
+                        $image = basename($_FILES["fileToUpload"]["name"]);
+                        $imageFileType = strtolower(pathinfo($image,PATHINFO_EXTENSION));
+                        $imageSize = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+
+                        $check = $this->db->checkImage($image, $imageFileType, $imageSize);
+                        if($check == "OK"){
+                            if($result = $this->db->createStoreAccount($storeName, $storeUsername, $storePassword, $storeLocation, $storeDescription, $storeRating, $storeOpeningHr, $storeClosingHr, $storeContact
+                            , $image)){
+                                echo "<script> alert('Account Created Successfully'); window.location.href='index.php?command=order' </script>";
+                            }
+                            else{
+                                echo "<script> alert('Wrong Input. Please Try Again'); window.location.href='index.php?command=checkRegister&account_type=store </script>";
+                            }
+                        }
+                        else{
+                            echo "<script> alert('Error'); window.location.href='index.php?command=checkRegister&account_type=store </script>";
+                        }
+                        // $credential = 'store_name';
+                        // $credential_value = $_POST['storename'];
                         break;
                 }
             default:

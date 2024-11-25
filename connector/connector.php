@@ -50,7 +50,7 @@
         }
 
         function checkLoginInfo($username, $password){
-            $sql = mysqli_query($this->db, "SELECT * FROM customer WHERE username = '$username' AND password = '$password'");
+            $sql = mysqli_query($this->db, "SELECT * FROM customer WHERE username = '$username' AND user_password = '$password'");
 
             if($sql->num_rows>0){
                 $_SESSION['logState'] = true;
@@ -58,6 +58,57 @@
             else{
                 echo "error";
             }
+        }
+
+        function createUserAccount($fullname, $username, $password, $location, $contact){
+            $sql = "INSERT INTO customer(full_name, customer_address, contact_no, username, user_password) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("sssss", $fullname, $location, $contact, $username, $password);
+
+            if($stmt->execute()){
+                return true;
+            }
+
+            $stmt->close();
+        }
+
+        function createStoreAccount($storeName, $storeUsername, $storePassword, $storeLocation, $storeDescription, $storeRating, $storeOpeningHr, $storeClosingHr, $storeContact
+        , $image){
+            $sql = "INSERT INTO store(store_name, store_address, contact_no, opening_hr, closing_hr, rating, coverphoto, store_description, username, store_password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("ssssssssss", $storeName, $storeLocation, $storeOpeningHr, $storeClosingHr, $storeRating, $storeRating, $image, $storeDescription, $storeUsername
+            , $storePassword);
+
+            if($stmt->execute()){
+                return true;
+            }
+
+            $stmt->close();
+        }
+
+        function checkImage($image, $imageFileType, $imageSize){
+            $status = 1;
+            $errMessage = "";
+
+            if($imageSize !== false){
+                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif"){
+                    $errMessage = "Only JPG, JPEG, PNG & GIF files are allowed.";
+                    $status = 0;
+                }
+            }
+            else{
+                $errMessage = "File is not an Image.";
+                $status = 0;
+            }
+
+            if($status == 0){
+                $errMessage = $errMessage;
+            }
+            else{
+                $errMessage = "OK";
+            }
+
+            return $errMessage;
         }
         
         function checkSignUpInfo($account_type, $credential, $credential_value){
