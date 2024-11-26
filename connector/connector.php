@@ -59,16 +59,17 @@
         }
 
         function checkLoginInfo($username, $password){
-            $sql = "SELECT * FROM customer WHERE username = ? AND password = ?";
+            $sql = "SELECT customer_id FROM customer WHERE username = ? AND password = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('ss',$username, $password);
             $stmt->execute();
-            //$stmt->bind_result($user);
-            //$stmt->fetch();
+            $stmt->store_result();
+            $stmt->bind_result($user);
+            $stmt->fetch();
 
             if($stmt->num_rows>0){
                 $_SESSION['logState'] = true;
-               // return $user->user_id;
+                return $user;
             }
             else{
                 echo "error";
