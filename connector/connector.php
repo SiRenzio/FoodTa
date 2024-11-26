@@ -73,17 +73,43 @@
             $sql = "SELECT customer_id FROM customer WHERE username = ? AND user_password = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('ss',$username, $password);
-            $stmt->execute();
-            $stmt->store_result();
-            $stmt->bind_result($user);
-            $stmt->fetch();
 
-            if($stmt->num_rows>0){
-                $_SESSION['logState'] = true;
-                $_SESSION['user_id'] = $user;
+            if($stmt->execute()){
+                $stmt->store_result();
+                $stmt->bind_result($user);
+                $stmt->fetch();
+
+                if($stmt->num_rows>0){
+                    $_SESSION['logState'] = true;
+                    $_SESSION['user_id'] = $user;
+                    $_SESSION['account_type'] = "customer";
+                }
+                else{
+                    echo "error";
+                }
+                $stmt->close();
+            }
+            
+            $sql2 = "SELECT store_id FROM store WHERE username = ? AND store_password = ?";
+            $stmt2 = $this->db->prepare($sql2);
+            $stmt2->bind_param('ss', $username, $password);
+            if($stmt2->execute()){
+                $stmt2->store_result();
+                $stmt2->bind_result($user);
+                $stmt2->fetch();
+
+                if($stmt2->num_rows>0){
+                    $_SESSION['logState'] = true;
+                    $_SESSION['user_id'] = $user;
+                    $_SESSION['account_type'] = "store";
+                }
+                else{
+                    echo "error";
+                }
+                $stmt2->close();
             }
             else{
-                echo "error";
+                echo "There was an error";
             }
         }
 
