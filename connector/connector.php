@@ -45,21 +45,32 @@
             return $items;
         }
 
-        function addToCart($user_id, $item_id, $timestamp){
-            $sql = "INSERT into cart(user_id, item_id, timestamp) VALUES(? , ? , ?)";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bind_param('iis', $user_id, $item_id, $timestamp);
+        function addToCart($user_id, $item_id){
+            $sql = "INSERT INTO cart(user_id, item_id) VALUES(?, ?)";
             
-            if($stmt->execute()){
-                return "Item Added!";
+            // Prepare statement
+            $stmt = $this->db->prepare($sql);
+            
+            // Check if prepare failed
+            if (!$stmt) {
+                return "Error in preparing query: " . $this->db->error;
             }
-            else{
-                return "Error adding item!";
+        
+            // Bind parameters
+            $stmt->bind_param('ii', $user_id, $item_id);
+        
+            // Execute the query
+            if ($stmt->execute()) {
+                return "Item Added!";
+            } else {
+                // Error if execution fails
+                return "Error in execution: " . $stmt->error;
             }
         }
+        
 
         function checkLoginInfo($username, $password){
-            $sql = "SELECT customer_id FROM customer WHERE username = ? AND password = ?";
+            $sql = "SELECT customer_id FROM customer WHERE username = ? AND user_password = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('ss',$username, $password);
             $stmt->execute();

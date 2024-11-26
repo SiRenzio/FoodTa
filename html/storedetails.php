@@ -20,44 +20,14 @@
                 echo '<div class="product-details">';
                     echo '<h3>' . htmlspecialchars($storeItems->item_name) . '</h3>';
                     echo '<p>₱' . htmlspecialchars($storeItems->price) . '</p>';
-                    echo '<form method="POST" action ="">';
-                        echo '<button type = "submit" formaction = "index.php?addToCart&id='. $storeItems->item_id .'" class = "addToCart">Add to Cart</button>';   
+                    echo '<form method="POST" action ="index.php?command=addToCart">';  
+                        echo '<input type="hidden" name="id" value="'.$storeItems->item_id.'">';
+                        echo '<input type="hidden" name="storeID" value="'.$storeItems->store_id.'">';
+                        echo '<button type = "submit" class="addToCart">Add to Cart</button>';   
                     echo '</form>'; 
                 echo '</div>';
             echo '</div>';
-
-            if(isset($_POST['quantity'])){
-                $quantity = $_POST['quantity'];
-                // addToCart($storeItems->item_id, $quantity, $storeItems->name, $storeItems->price);
-            }
-
         }
-        
-        // function addToCart($item_id, $quantity, $name, $price){
-        //     session_start();
-
-        //     if (!isset($_SESSION['cart'])){
-        //         $_SESSION['cart'] = [];
-        //     }
-
-        //     $itemExists = false;
-
-        //     foreach($_SESSION['cart'] as $items){
-        //         if ($items['id'] == $item_id){
-        //             $items['quantity'] += $quantity;
-        //             $itemExists = true;
-        //         }
-        //     }
-
-        //     if (!$itemExists){
-        //         $_SESSION['cart'][] = [
-        //             'id' => $item_id,
-        //             'name' => $name,
-        //             'price' => $price,
-        //             'quantity' => $quantity
-        //         ];
-        //     }
-        // }
         ?>
     </section>
 </body>

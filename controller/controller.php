@@ -18,7 +18,7 @@ class Controller
     public function getWeb()
     {       
         $command = null;
-        $currentUser = null;
+        $currentUser = 1;
 
         if (isset($_REQUEST['command'])) {
             $command = $_REQUEST['command'];
@@ -130,10 +130,12 @@ class Controller
                         // $credential_value = $_POST['storename'];
                         break;
                 }
+                break;
             case 'addToCart':   
                 $itemID = $_POST['id'];
-                $result = $this->db->addToCart($itemID, $currentUser, date("Y-m-d H:i:s"));
-                echo "<script>alert($result)</script>";
+                $storeID = $_POST['storeID'];
+                $result = $this->db->addToCart($currentUser, $itemID);
+                echo "<script> alert('$result'); window.location.href='index.php?command=storeDetails&store_id=$storeID';</script>";
                 break;
             default:
                 include('html/home_page.php');
