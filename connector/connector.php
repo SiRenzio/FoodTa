@@ -68,7 +68,6 @@
             }
         }
         
-
         function checkLoginInfo($username, $password){
             $sql = "SELECT customer_id FROM customer WHERE username = ? AND user_password = ?";
             $stmt = $this->db->prepare($sql);
