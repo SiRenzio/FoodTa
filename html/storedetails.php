@@ -1,3 +1,14 @@
+<?php
+    include_once('connector/connector.php');
+    $db = new Connector();
+
+    if($_POST){
+        $item_id = $_POST['id'];
+        $result = $db->addToCart($_SESSION['user_id'],$item_id);
+        echo "<script>alert('$result');</script>";
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,9 +31,8 @@
                 echo '<div class="product-details">';
                     echo '<h3>' . htmlspecialchars($storeItems->item_name) . '</h3>';
                     echo '<p>₱' . htmlspecialchars($storeItems->price) . '</p>';
-                    echo '<form method="POST" action ="index.php?command=addToCart">';  
+                    echo '<form method="POST" action ="">';  
                         echo '<input type="hidden" name="id" value="'.$storeItems->item_id.'">';
-                        echo '<input type="hidden" name="storeID" value="'.$storeItems->store_id.'">';
                         echo '<button type = "submit" class="addToCart">Add to Cart</button>';   
                     echo '</form>'; 
                 echo '</div>';
@@ -32,3 +42,4 @@
     </section>
 </body>
 </html>
+

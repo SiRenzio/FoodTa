@@ -80,7 +80,7 @@
 
             if($stmt->num_rows>0){
                 $_SESSION['logState'] = true;
-                return $user;
+                $_SESSION['user_id'] = $user;
             }
             else{
                 echo "error";
