@@ -44,7 +44,7 @@
                     }
 
                     //Proceed to Order page
-                    else{
+                    else {
                         $stores=$this->db->retrieveStores();
                         include('html/order.php');
                     }

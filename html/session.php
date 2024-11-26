@@ -8,6 +8,7 @@
             $_SESSION['username'];
             $_SESSION['password'];
             $_SESSION['user_id'];
+            $_SESSION['account_type'];
         }
     }
 ?>
