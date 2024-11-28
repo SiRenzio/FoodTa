@@ -2,7 +2,7 @@
     echo '<title>FOOD TA!</title>';
 
     echo "<div";
-    include_once('html/header.html');
+    include('html/header.php');
     echo "</div>";
 
     echo "<div>";                

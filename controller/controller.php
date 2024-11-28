@@ -21,6 +21,7 @@
             if (isset($_REQUEST['command'])) {
                 $command = $_REQUEST['command'];
             }
+            include('html/header.php');
 
             switch ($command) {
                 case 'home':
@@ -29,6 +30,7 @@
 
                 case 'order':
                     //input from login form
+                    $account = $_SESSION['account_type'];
                     if($_POST){
                         $username = $_POST['user'];
                         $password = $_POST['pass'];
@@ -42,18 +44,30 @@
                     if($_SESSION['logState'] === false){
                         include('html/login_page.php');
                     }
-
-                    //Proceed to Order page
-                    else {
-                        $stores=$this->db->retrieveStores();
-                        include('html/order.php');
+                    else{
+                        if($account === "customer"){
+                            include('html/header.php');
+                            $stores=$this->db->retrieveStores();
+                            include('html/order.php');
+                        }
+                        else if($account === "store"){
+                            include('html/header.php');
+                            $store_id = $_SESSION['user_id'];
+                            $items=$this->db->retrieveStoreItems($store_id);
+                            include('html/storeInterface.php');
+                        }
+                        else{
+                            echo "<script> alert('Incorrect Username or Password'); window.location.href='index.php?command=order' </script>";
+                        }
                     }
+                    //Proceed to Order page
                     
                     break;
-
+                    
                 case 'logout': 
                     $_SESSION['logState'] = false;
                     include('html/home_page.php');
+                    include('html/header.php');
                     break;
 
                 case 'storeDetails':
