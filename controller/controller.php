@@ -129,6 +129,11 @@
                             break;
                     }
                     break;
+                    case 'cart':
+                        $store_id = $_POST['storeID'];
+                        $cartItems = $this->db->checkCart();
+                        include('html/cart.php');
+                        break;
                 default:
                     include('html/home_page.php');
                     break;
