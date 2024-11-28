@@ -37,7 +37,7 @@
                         // Overlay for hover effect
                         echo "<div class='overlay'>";
                             echo "<div class='order-container'>";
-                                echo "<a href='index.php?command=storeDetails&&store_id=$storeTable->store_id' class='orderBtn'>Order Now</a>";
+                                echo "<a href='index.php?command=storeDetails&store_id=$storeTable->store_id' class='orderBtn'>Order Now</a>";
                             echo "</div>";
                         echo "</div>";
 

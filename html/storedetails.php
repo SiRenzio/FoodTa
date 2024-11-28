@@ -3,9 +3,14 @@
     $db = new Connector();
 
     if($_POST){
-        $item_id = $_POST['id'];
-        $result = $db->addToCart($_SESSION['user_id'],$item_id);
+        $item_id = $_POST['item_id'];
+        $store_id = $_POST['store_id'];
+        $result = $db->addToCart($_SESSION['user_id'],$store_id ,$item_id);
         echo "<script>alert('$result');</script>";
+        
+    }
+    if ($items > 0){
+        echo "<a href='index.php?command=cart&store_id=".$items[0]->store_id."'>Cart</a>";
     }
 ?>
 
@@ -32,7 +37,8 @@
                     echo '<h3>' . htmlspecialchars($storeItems->item_name) . '</h3>';
                     echo '<p>₱' . htmlspecialchars($storeItems->price) . '</p>';
                     echo '<form method="POST" action ="">';  
-                        echo '<input type="hidden" name="id" value="'.$storeItems->item_id.'">';
+                        echo '<input type="hidden" name="item_id" value="'.$storeItems->item_id.'">';
+                        echo '<input type="hidden" name="store_id" value="'.$storeItems->store_id.'">';
                         echo '<button type = "submit" class="addToCart">Add to Cart</button>';   
                     echo '</form>'; 
                 echo '</div>';

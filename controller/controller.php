@@ -130,8 +130,8 @@
                     }
                     break;
                     case 'cart':
-                        $store_id = $_POST['storeID'];
-                        $cartItems = $this->db->checkCart();
+                        $store_id = $_REQUEST['store_id'];
+                        $cartItems = $this->db->checkCart($store_id, $_SESSION['user_id']);
                         include('html/cart.php');
                         break;
                 default:

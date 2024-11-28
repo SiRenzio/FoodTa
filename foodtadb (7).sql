@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2024 at 05:14 AM
+-- Generation Time: Nov 28, 2024 at 03:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,22 +45,11 @@ CREATE TABLE `card_payment` (
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`cart_id`, `user_id`, `store_id`, `item_id`, `timestamp`) VALUES
-(1, 1, 0, 4, '2024-11-26 01:16:44'),
-(2, 1, 0, 2, '2024-11-26 04:04:42'),
-(3, 1, 0, 2, '2024-11-26 04:06:42'),
-(4, 1, 0, 1, '2024-11-26 04:06:48'),
-(5, 1, 0, 1, '2024-11-26 04:07:46');
 
 -- --------------------------------------------------------
 
@@ -244,9 +233,10 @@ ALTER TABLE `card_payment`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `user_id` (`user_id`),
+  ADD KEY `user_id` (`customer_id`),
   ADD KEY `item_id` (`item_id`),
-  ADD KEY `store_id` (`store_id`);
+  ADD KEY `store_id` (`store_id`),
+  ADD KEY `customer_id` (`customer_id`);
 
 --
 -- Indexes for table `cod`
@@ -320,7 +310,7 @@ ALTER TABLE `card_payment`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `cod`
@@ -379,6 +369,14 @@ ALTER TABLE `store`
 --
 ALTER TABLE `card_payment`
   ADD CONSTRAINT `sales_id_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `order` (`sales_id`);
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `customer_id_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
+  ADD CONSTRAINT `item_id_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`),
+  ADD CONSTRAINT `store_id_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`);
 
 --
 -- Constraints for table `cod`

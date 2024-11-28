@@ -45,8 +45,8 @@
             return $items;
         }
 
-        function addToCart($user_id, $item_id){
-            $sql = "INSERT INTO cart(user_id, item_id) VALUES(?, ?)";
+        function addToCart($user_id, $store_id, $item_id,){
+            $sql = "INSERT INTO cart(customer_id, store_id, item_id) VALUES(?, ?, ?)";
             
             // Prepare statement
             $stmt = $this->db->prepare($sql);
@@ -57,7 +57,7 @@
             }
         
             // Bind parameters
-            $stmt->bind_param('ii', $user_id, $item_id);
+            $stmt->bind_param('iii', $user_id, $store_id, $item_id);
         
             // Execute the query
             if ($stmt->execute()) {
@@ -168,7 +168,8 @@
             $data = array();
             $sql = "SELECT 
                 store.store_name, 
-                inventory.item_name, 
+                inventory.item_name,
+                inventory.item_img, 
                 inventory.price 
             FROM 
                 cart 
