@@ -68,6 +68,7 @@
             }
         }
         
+
         function checkLoginInfo($username, $password){
             $sql = "SELECT customer_id FROM customer WHERE username = ? AND user_password = ?";
             $stmt = $this->db->prepare($sql);
@@ -83,10 +84,9 @@
                     $_SESSION['user_id'] = $user;
                     $_SESSION['account_type'] = "customer";
                 }
-                else{
-                    echo "error";
-                }
+
                 $stmt->close();
+                return;
             }
             
             $sql2 = "SELECT store_id FROM store WHERE username = ? AND store_password = ?";
@@ -102,13 +102,10 @@
                     $_SESSION['user_id'] = $user;
                     $_SESSION['account_type'] = "store";
                 }
-                else{
-                    echo "error";
-                }
                 $stmt2->close();
             }
             else{
-                echo "There was an error";
+                echo "<script> alert('Incorrect Username or Password'); window.location.href='index.php?command=order' </script>";
             }
         }
 

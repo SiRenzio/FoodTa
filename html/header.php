@@ -1,3 +1,9 @@
+<?php
+    if(!isset($_SESSION['logState'])){
+        $_SESSION['logState'] = false;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +19,15 @@
                 <a class="home" href="index.php?command=home">Home</a>
                 <a class="order" href="index.php?command=order">Order</a>
                 <a class="about" href="index.php?command=about">About Us</a>
+                <?php
+                    if($_SESSION['logState'] === false){
+                        echo "<a class='about' href='index.php?command=order'>Log In</a>";
+                        echo "<a class='about' href='index.php?command=register'>Register</a>";
+                    }
+                    else{
+                        echo "<a class='about' href='index.php?command=logout'>Logout</a>";
+                    }
+                ?>
             </div>
         </nav>
     </header>
