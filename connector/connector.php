@@ -92,6 +92,7 @@
             $sql2 = "SELECT store_id FROM store WHERE username = ? AND store_password = ?";
             $stmt2 = $this->db->prepare($sql2);
             $stmt2->bind_param('ss', $username, $password);
+            
             if($stmt2->execute()){
                 $stmt2->store_result();
                 $stmt2->bind_result($user);
@@ -160,12 +161,35 @@
             return $errMessage;
         }
         
-        function checkSignUpInfo($account_type, $credential, $credential_value){
-            $sql = mysqli_query($this->db, "SELECT * FROM '$account_type' WHERE '$credential' = '$credential_value'");
-        }
-
-        function createAccount($account_type, $username, $password){
-            $sql = mysqli_query($this->db, "INSERT INTO '$account_type'(username, password) VALUES ()");
+        function checkCart($store_id, $customer_id){
+            $data = array();
+            $sql = "SELECT 
+                store.store_name, 
+                inventory.item_name, 
+                inventory.price 
+            FROM 
+                cart 
+            JOIN 
+                store 
+            ON 
+                cart.store_id = store.store_id 
+            JOIN 
+                inventory
+            ON 
+                cart.item_id = inventory.item_id 
+            WHERE 
+                cart.store_id = ? AND cart.customer_id = ?";
+                
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('ii', $store_id, $customer_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while($row = $result->fetch_object())    		
+            {    			
+                $data[] = $row;
+            }
+            $stmt->close();
+            return $data; 
         }
     }
 ?>

@@ -72,6 +72,12 @@ body {
     background-color: #005e40;
     transform: scale(1.05);
 }
+
+#cart{
+   position: absolute;
+   left: 10px;
+   top: 90px;
+}
 .ftSecLogo {
     max-height: 130px;
 }
