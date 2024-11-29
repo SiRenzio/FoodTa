@@ -41,7 +41,7 @@
                 case 'delete':
                     include('html/StoreInterface/deleteProducts.php');
                     break;
-                //---------------------------------------------------------
+                //------------------------end-------------------------------//
 
                 case 'order':
                     if (isset($_SESSION['account_type'])){
