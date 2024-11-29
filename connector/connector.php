@@ -45,26 +45,50 @@
             return $items;
         }
 
-        function addToCart($user_id, $store_id, $item_id,){
-            $sql = "INSERT INTO cart(customer_id, store_id, item_id) VALUES(?, ?, ?)";
+        function addToCart($user_id, $store_id, $item_id) {
+            $checkSql = "SELECT quantity FROM cart WHERE customer_id = ? AND store_id = ? AND item_id = ?";
+            $checkStmt = $this->db->prepare($checkSql);
             
-            // Prepare statement
-            $stmt = $this->db->prepare($sql);
-            
-            // Check if prepare failed
-            if (!$stmt) {
+            if (!$checkStmt) {
                 return "Error in preparing query: " . $this->db->error;
             }
         
-            // Bind parameters
-            $stmt->bind_param('iii', $user_id, $store_id, $item_id);
+            $checkStmt->bind_param('iii', $user_id, $store_id, $item_id);
+            $checkStmt->execute();
+            $result = $checkStmt->get_result();
         
-            // Execute the query
-            if ($stmt->execute()) {
-                return "Item Added!";
+            if ($result->num_rows > 0) {
+                // Item exists: Update quantity
+                $updateSql = "UPDATE cart SET quantity = quantity + 1 WHERE customer_id = ? AND store_id = ? AND item_id = ?";
+                $updateStmt = $this->db->prepare($updateSql);
+        
+                if (!$updateStmt) {
+                    return "Error in preparing update query: " . $this->db->error;
+                }
+        
+                $updateStmt->bind_param('iii', $user_id, $store_id, $item_id);
+                
+                if ($updateStmt->execute()) {
+                    return "Item quantity updated in cart!";
+                } else {
+                    return "Error in execution: " . $updateStmt->error;
+                }
             } else {
-                // Error if execution fails
-                return "Error in execution: " . $stmt->error;
+                // Item does not exist: Insert new row
+                $insertSql = "INSERT INTO cart(customer_id, store_id, item_id, quantity) VALUES(?, ?, ?, 1)";
+                $insertStmt = $this->db->prepare($insertSql);
+        
+                if (!$insertStmt) {
+                    return "Error in preparing insert query: " . $this->db->error;
+                }
+        
+                $insertStmt->bind_param('iii', $user_id, $store_id, $item_id);
+        
+                if ($insertStmt->execute()) {
+                    return "Item added to cart!";
+                } else {
+                    return "Error in execution: " . $insertStmt->error;
+                }
             }
         }
         
@@ -164,38 +188,99 @@
 
             return $errMessage;
         }
-        
-        function checkCart($store_id, $customer_id){
-            $data = array();
-            $sql = "SELECT 
-                store.store_name, 
-                inventory.item_name,
-                inventory.item_img, 
-                inventory.price 
-            FROM 
-                cart 
-            JOIN 
-                store 
-            ON 
-                cart.store_id = store.store_id 
-            JOIN 
-                inventory
-            ON 
-                cart.item_id = inventory.item_id 
-            WHERE 
-                cart.store_id = ? AND cart.customer_id = ?";
+
+        function checkAllCart($customer_id){
+                $data = array();
+                $sql = "
+                    SELECT 
+                        store.store_name, 
+                        inventory.item_name, 
+                        inventory.item_img, 
+                        inventory.price, 
+                        cart.quantity, 
+                        (cart.quantity * inventory.price) AS total_price 
+                    FROM 
+                        cart 
+                    JOIN 
+                        store 
+                    ON 
+                        cart.store_id = store.store_id 
+                    JOIN 
+                        inventory 
+                    ON 
+                        cart.item_id = inventory.item_id 
+                    WHERE 
+                        cart.store_id = ? AND cart.customer_id = ?
+                ";
                 
+                // Prepare statement
+                $stmt = $this->db->prepare($sql);
+                if (!$stmt) {
+                    return "Error in preparing query: " . $this->db->error;
+                }
+            
+                // Bind parameters
+                $stmt->bind_param('ii', $store_id, $customer_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+            
+                while ($row = $result->fetch_object()) {
+                    $data[] = $row;
+                }
+            
+                $stmt->close();
+                return $data; 
+            }
+            
+
+        function checkCart($store_id, $customer_id) {
+            $data = array();
+            $total = 0; // Initialize total price
+            $sql = "
+                SELECT 
+                    store.store_name, 
+                    inventory.item_name, 
+                    inventory.item_img, 
+                    inventory.price, 
+                    cart.quantity, 
+                    (cart.quantity * inventory.price) AS subtotal 
+                FROM 
+                    cart 
+                JOIN 
+                    store 
+                ON 
+                    cart.store_id = store.store_id 
+                JOIN 
+                    inventory 
+                ON 
+                    cart.item_id = inventory.item_id 
+                WHERE 
+                    cart.store_id = ? AND cart.customer_id = ?
+            ";
+            
             $stmt = $this->db->prepare($sql);
+            if (!$stmt) {
+                return "Error in preparing query: " . $this->db->error;
+            }
+        
             $stmt->bind_param('ii', $store_id, $customer_id);
             $stmt->execute();
             $result = $stmt->get_result();
-            while($row = $result->fetch_object())    		
-            {    			
+        
+            while ($row = $result->fetch_object()) {
                 $data[] = $row;
+                $total += $row->subtotal; // Accumulate total price
             }
+        
             $stmt->close();
-            return $data; 
+        
+            // Return data and total
+            return [
+                'items' => $data,
+                'total' => $total
+            ]; 
         }
+        
 
         function addItems()
         {
