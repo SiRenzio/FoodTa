@@ -10,7 +10,9 @@
         
     }
     if ($items > 0){
-        echo "<a href='index.php?command=cart&store_id=".$items[0]->store_id."'>Cart</a>";
+        echo "<a class='addToCartBTN' href='index.php?command=cart&store_id=".$items[0]->store_id."'>";
+            echo "<img src='images/cart.png' alt='Add to Cart'>";
+        echo "</a>";
     }
 ?>
 
@@ -21,7 +23,10 @@
 </head>
 <body>
     <section class="storeProducts">
-    <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
+        <a class="backBTN" href="index.php?command=order">Back
+            <img src="images/backButton.png" alt="Back Icon">
+        </a>
+        <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <?php 
         if ($storeName && count($storeName) > 0) {
             echo "<h2 class='storeName'>Welcome to " . htmlspecialchars($storeName[0]->store_name) . "</h2>";
