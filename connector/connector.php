@@ -69,43 +69,45 @@
         }
         
 
-        function checkLoginInfo($username, $password){
+        function checkLoginInfo($username, $password){  
+            $accType = null;
             $sql = "SELECT customer_id FROM customer WHERE username = ? AND user_password = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('ss',$username, $password);
-
             if($stmt->execute()){
                 $stmt->store_result();
                 $stmt->bind_result($user);
                 $stmt->fetch();
-
-                if($stmt->num_rows>0){
+                if ($user){
                     $_SESSION['logState'] = true;
                     $_SESSION['user_id'] = $user;
                     $_SESSION['account_type'] = "customer";
+                    $accType = 'customer';
+                    return $accType;
+                    $stmt->close();
                 }
-
-                $stmt->close();
-                return;
             }
-            
+
             $sql2 = "SELECT store_id FROM store WHERE username = ? AND store_password = ?";
             $stmt2 = $this->db->prepare($sql2);
             $stmt2->bind_param('ss', $username, $password);
             
             if($stmt2->execute()){
                 $stmt2->store_result();
-                $stmt2->bind_result($user);
+                $stmt2->bind_result($store);
                 $stmt2->fetch();
 
-                if($stmt2->num_rows>0){
+                if($store){
                     $_SESSION['logState'] = true;
-                    $_SESSION['user_id'] = $user;
+                    $_SESSION['user_id'] = $store;
                     $_SESSION['account_type'] = "store";
+                    $accType = 'store';
+                    return $accType;
+                    $stmt2->close();
                 }
-                $stmt2->close();
             }
-            else{
+            
+            if ($accType == null){
                 echo "<script> alert('Incorrect Username or Password'); window.location.href='index.php?command=order' </script>";
             }
         }

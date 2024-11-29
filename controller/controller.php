@@ -16,6 +16,7 @@
 
         public function getWeb()
         {       
+            
             $command = null;
 
             if (isset($_REQUEST['command'])) {
@@ -28,44 +29,78 @@
                     include('html/home_page.php');
                     break;
 
+                //store interface
+                case 'update':
+                    include('html/StoreInterface/updateProducts.php');
+                    break;
+                
+                case 'add':
+                    include('html/StoreInterface/addProducts.php');
+                    break;
+
+                case 'delete':
+                    include('html/StoreInterface/deleteProducts.php');
+                    break;
+                //---------------------------------------------------------
+
                 case 'order':
-                    //input from login form
-                    $account = $_SESSION['account_type'];
-                    if($_POST){
-                        $username = $_POST['user'];
-                        $password = $_POST['pass'];
-                        $_SESSION['username'] = $username;
-                        $_SESSION['password'] = $password;
-
-                        $this->db->checkLogInInfo($username, $password);
+                    if (isset($_SESSION['account_type'])){
+                        $accType = $_SESSION['account_type'];
                     }
-
                     //Proceed to LogIn page
                     if($_SESSION['logState'] === false){
                         include('html/login_page.php');
                     }
                     else{
-                        if($account === "customer"){
+                        if($accType === "customer"){
                             include('html/header.php');
                             $stores=$this->db->retrieveStores();
                             include('html/order.php');
                         }
-                        else if($account === "store"){
+                        else if($accType === "store"){
                             include('html/header.php');
-                            $store_id = $_SESSION['user_id'];
-                            $items=$this->db->retrieveStoreItems($store_id);
-                            include('html/storeInterface.php');
-                        }
-                        else{
-                            echo "<script> alert('Incorrect Username or Password'); window.location.href='index.php?command=order' </script>";
+                            echo "<script> window.location.href='index.php?command=update' </script>";
                         }
                     }
                     //Proceed to Order page
                     
                     break;
+
+                case 'login':
+                        //input from login form
+                        if($_POST){
+                            $username = $_POST['user'];
+                            $password = $_POST['pass'];
+                            $_SESSION['username'] = $username;
+                            $_SESSION['password'] = $password;
+    
+                            $accType = $this->db->checkLogInInfo($username, $password);
+                        }
+    
+                        //Proceed to LogIn page
+                        if($_SESSION['logState'] === false){
+                            include('html/login_page.php');
+                        }
+                        else{
+                            if($accType === "customer"){
+                                include('html/header.php');
+                                $stores=$this->db->retrieveStores();
+                                include('html/order.php');
+                            }
+                            else if($accType === "store"){
+                                include('html/header.php');
+                                echo "<script> window.location.href='index.php?command=update' </script>";
+                            }
+                        }
+                        //Proceed to Order page
+                        
+                        break;
                     
                 case 'logout': 
                     $_SESSION['logState'] = false;
+                    $_SESSION['account_type'] = null;
+                    $_SESSION['user_id'] = null;
+                    $accType = null;
                     include('html/home_page.php');
                     include('html/header.php');
                     break;

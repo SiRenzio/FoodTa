@@ -8,7 +8,7 @@
 <body>
     <section class="logInPage">
             <div class="wrapper">
-                <form action="index.php?command=order" method="post">
+                <form action="index.php?command=login" method="post">
                     <h1>Login</h1>
                     <div class="input-field">
                         <input type="text" placeholder="Username" name="user" autocomplete="off" required>

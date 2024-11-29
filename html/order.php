@@ -8,7 +8,6 @@
 </head>
 <body>
     <section class="container">
-        <a href='index.php?command=logout' class='logOutBTN'>Log Out</a>
         <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <h1 class="serTitle">FOOD TA! Restaurants</h1>
         <div class="store-list">
