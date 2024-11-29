@@ -194,5 +194,53 @@
             $stmt->close();
             return $data; 
         }
+
+        function addItems()
+        {
+            $sql = "INSERT INTO inventory(store_id, item_name, quantity, price, category, item_img) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('isssss', );
+            if($stmt->execute())
+            {
+                return "Item Added Successfully";
+            }
+            else
+            {
+                return "Error";
+            }
+            $stmt->close();
+        }
+
+        function updateItems()
+        {
+            $sql = "UPDATE inventory SET store_id = ?, item_name = ?, quantity = ?, price = ?, category = ?, item_img = ? WHERE item_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('isssss', );
+            if($stmt->execute())
+            {
+                return "Item Updated Successfully";
+            }
+            else
+            {
+                return "Error";
+            }
+            $stmt->close();
+        }
+
+        function deleteItem()
+        {
+    	    $sql = "DELETE FROM inventory WHERE item_id = ?";
+		    $stmt = $this->db->prepare($sql);
+		    $stmt->bind_param('i',);
+		    if($stmt->execute())
+            {
+                return "Item Deleted Successfully";
+            }
+            else
+            {
+                return "Error";
+            }
+            $stmt->close();
+        }
     }
 ?>
