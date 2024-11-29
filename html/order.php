@@ -18,7 +18,7 @@
 
                         // Image at the top
                         echo "<div class='image-section'>";
-                            echo "<img class='coverphoto' src='data:image/jpeg;base64," . base64_encode($storeTable->coverphoto) . "' alt='Store Cover'>";
+                            echo "<img class='coverphoto' src='" . $storeTable->coverphoto . "' alt='Store Cover'>";
                         echo "</div>";
 
                         // Details at the bottom

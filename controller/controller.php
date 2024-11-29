@@ -157,13 +157,14 @@
                             $storeContact = $_REQUEST['store_contact'];
 
                             $image = basename($_FILES["fileToUpload"]["name"]);
+                            $imagePath = "uploads/" . $image;
                             $imageFileType = strtolower(pathinfo($image,PATHINFO_EXTENSION));
                             $imageSize = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 
-                            $check = $this->db->checkImage($image, $imageFileType, $imageSize);
+                            $check = $this->db->checkImage($imagePath, $imageFileType, $imageSize);
                             if($check == "OK"){
                                 if($result = $this->db->createStoreAccount($storeName, $storeUsername, $storePassword, $storeLocation, $storeDescription, $storeRating, $storeOpeningHr, $storeClosingHr, $storeContact
-                                , $image)){
+                                , $imagePath)){
                                     echo "<script> alert('Account Created Successfully'); window.location.href='index.php?command=order' </script>";
                                 }
                                 else{

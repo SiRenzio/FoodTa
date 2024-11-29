@@ -157,7 +157,9 @@
                 $errMessage = $errMessage;
             }
             else{
-                $errMessage = "OK";
+                if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $image)){
+                    $errMessage = "OK";
+                }
             }
 
             return $errMessage;
