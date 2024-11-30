@@ -15,8 +15,10 @@
                     echo "<div class = 'cartBox'>";
                         echo $ci->item_name;
                         echo "<img src='data:image/jpeg;base64," . base64_encode($ci->item_img). "' class = 'item_img'>";
-                        echo "<input type='text' value='$ci->quantity' class = 'quantity' name = 'quantity'>";
-                        echo "<input type='submit' value='Update Qty.'>";
+                        echo "<form action = 'index.php?command=updateQty&item_id=$ci->item_id' method = 'post'>";
+                            echo "<input type='text' value='$ci->quantity' class = 'quantity' name = 'qty' class = 'qty'>";
+                            echo "<input type='submit' value='Update Qty.'>";
+                        echo "</form>";
                         echo $ci->subtotal;
                     echo "</div>";
                 }

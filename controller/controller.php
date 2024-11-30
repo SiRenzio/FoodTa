@@ -284,6 +284,17 @@
                         $balance = $this->db->checkBalance($_SESSION['user_id']);
                         include('html/wallet.php');
                         break;
+                    case 'cashIn':
+                        $cashInAmt = $_REQUEST['amt'];
+                        $amt = $this->db->checkBalance($_SESSION['user_id']);
+                        $oldAmt = $amt->foodtawallet;
+                        $status = $this->db->cashIn($cashInAmt, $oldAmt, $_SESSION['user_id']);
+                        
+                        echo "<script>alert('". $status ."'); window.location.href='index.php?command=wallet;</script>";
+
+                        $balance = $this->db->checkBalance($_SESSION['user_id']);
+                        include('html/wallet.php');
+                        break;
                     case 'payment':
                         break;
                 default:

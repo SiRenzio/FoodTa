@@ -8,6 +8,10 @@
         <?php
             echo "Food Ta! Wallet Amt: P". $balance->foodtawallet ."";
         ?>
+        <form action="index.php?command=cashIn" method = "post">
+            <input type="number" name="amt">
+            <input type="submit" value ="Cash-in">
+        </form>
     </div>
 </body>
 </html>
