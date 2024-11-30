@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2024 at 06:40 AM
+-- Generation Time: Nov 30, 2024 at 08:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -156,10 +156,16 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`item_id`, `store_id`, `item_name`, `quantity`, `price`, `category`, `item_img`) VALUES
-(1, 1, 'Jolly MocDog', 100, 75, 'Food', ''),
-(2, 2, 'Roarsted Dinosaur', 12, 99, 'Food', ''),
-(3, 1, 'Jolly McBoger', 17, 85, 'Food', ''),
-(4, 1, 'Supaghetti', 10, 99, 'Food', '');
+(1, 1, 'Big Mac', 12, 85, 'Food', 'uploads/Big Mac.jpg'),
+(2, 1, 'Chicken Burger', 21, 75, 'Food', 'uploads/McChicken.jpg'),
+(3, 1, 'Quarter Pounder', 16, 110, 'Food', 'uploads/Quarter Pounder.jpg'),
+(4, 2, 'Caramel Macchiato', 50, 99, 'Coffee', 'uploads/Caramel Macchiato.jpg'),
+(5, 2, 'Espresso', 50, 70, 'Coffee', 'uploads/Espresso.jpg'),
+(6, 2, 'Berry Blast Smoothie', 12, 110, 'Non-Coffee', 'uploads/Berry Blast Smoothie.jpg'),
+(7, 2, 'Iced Matcha', 16, 89, 'Non-Coffee', 'uploads/Iced Matcha.jpg'),
+(8, 3, 'Filet-O-Fish', 21, 75, 'Food', 'uploads/Filet-O-Fish.jpg'),
+(9, 3, 'Crispy Chicken', 16, 65, 'Food', 'uploads/KFC Crispy Chicken.jpg'),
+(10, 3, 'Chicken Bowls', 17, 99, 'Food', 'uploads/KFC Famous Bowls.jpg');
 
 -- --------------------------------------------------------
 
@@ -220,10 +226,9 @@ CREATE TABLE `store` (
 --
 
 INSERT INTO `store` (`store_id`, `store_name`, `store_address`, `contact_no`, `opening_hr`, `closing_hr`, `rating`, `coverphoto`, `store_description`, `username`, `store_password`) VALUES
-(1, 'McDollibee', '#47, 4th Street, Jomsorito Subdivision, Mandurriao, Iloilo City', '09696942096', '00:00:00', '23:59:59', 5, '', 'McDolibee is a vibrant, family-friendly restaurant that blends the best of American fast-food classics with beloved Filipino flavors. With a lively, welcoming atmosphere and a playful bee mascot, McDolibee has become a go-to spot for people of all ages. Its menu offers a unique twist on fast-food staples, featuring crispy fried chicken, juicy burgers, and spaghetti with a sweet, savory Filipino-style sauce. For breakfast, enjoy a hearty longganisa and garlic rice plate, and don\'t miss the halo-halo dessert, topped with colorful layers of fruit, shaved ice, and ube. Each meal is freshly prepared, balancing quality ingredients with flavors that evoke comfort and nostalgia. McDolibee’s friendly staff, fun ambiance, and playful menu make it a community favorite, perfect for a quick bite, family gatherings, or friends looking to enjoy a fusion of familiar and Filipino-inspired fast-food fare.', '', ''),
-(2, 'Tang Inasal', 'Brgy, Di Makita, Hanapin, Nakatago', '09696969696', '08:00:00', '22:00:00', 4, '', 'Manok Na Pinatindig ', 'mitnamit', 'hmmmm'),
-(4, 'aa', 'a', '00:00:00', '00:00:00', '00:00:05', 5, '', 'a', 'aaa', 'a'),
-(6, 'Tub ol\'s Tavern', 't', '11:00:00', '20:00:00', '00:00:05', 5, 'uploads/025.png', 't', 'tt', 't');
+(1, 'McDonald\'s', '#47, 4th Street, Jomsorito Subdivision, Mandurriao, Iloilo City', '09696942096', '00:00:00', '23:59:59', 5, 'uploads/Mcdo.jpg', 'McDolibee is a vibrant, family-friendly restaurant that blends the best of American fast-food classics with beloved Filipino flavors. With a lively, welcoming atmosphere and a playful bee mascot, McDolibee has become a go-to spot for people of all ages. Its menu offers a unique twist on fast-food staples, featuring crispy fried chicken, juicy burgers, and spaghetti with a sweet, savory Filipino-style sauce. For breakfast, enjoy a hearty longganisa and garlic rice plate, and don\'t miss the halo-halo dessert, topped with colorful layers of fruit, shaved ice, and ube. Each meal is freshly prepared, balancing quality ingredients with flavors that evoke comfort and nostalgia. McDolibee’s friendly staff, fun ambiance, and playful menu make it a community favorite, perfect for a quick bite, family gatherings, or friends looking to enjoy a fusion of familiar and Filipino-inspired fast-food fare.', '', ''),
+(2, 'Deja Brew Coffee', 'Brgy. Abong, Carles, Iloilo', '09696969696', '08:00:00', '22:00:00', 4, 'uploads/DejaBrew.jpg', 'The coffee that you had it before, but better.', 'dejaBrow', 'kape'),
+(3, 'Chikhin', 'Burgos St., La Paz, Iloilo City', '09981736521', '08:00:00', '22:00:00', 4, 'uploads/Chikhin.jpg', 'Crispilicious, Juicilicious korean fried chicken with a taste love.', 'chikhen', 'kfc');
 
 --
 -- Indexes for dumped tables
@@ -348,7 +353,7 @@ ALTER TABLE `delivery`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `online_payments`
