@@ -329,13 +329,24 @@
             if ($row = $result->fetch_object()){
                 $amt = $row;
             }
-
+            
             $stmt->close();
             
             return $amt;
         }
-        function cashIn($amt, $customer_id){
-            $sql = "UPDATE ";
+        function cashIn($amt, $oldAmt, $customer_id){
+            $newAmt = $oldAmt + $amt;
+            $sql = "UPDATE customer SET foodtawallet = ? WHERE customer_id = ?";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bind_param('di', $newAmt, $customer_id);
+            
+            if ($stmt->execute()){
+                return 'Cash in succesful';
+            } else {
+                return 'Cash in error';
+            }
+
         }
         function checkPayment($gcash, $card, $subtotal){
             
