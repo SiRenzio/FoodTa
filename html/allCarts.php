@@ -21,7 +21,7 @@
                     echo "</div>";
                 }
                 echo "Subtotal: $totalPrice";
-                echo "<input type='submit' value='Check Out">;
+                echo "<input type='submit' value='Check Out'>";
 
                 //TODO JV:
                 // 1. Islan ang allCarts, kayuhon. Kag ma add sng Button sa order page nga ga link sa allCarts
