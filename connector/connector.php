@@ -289,7 +289,7 @@
         }
         
         function checkBalance($customer_id){
-            $amt = null;
+            $amt = [];
             $sql = "SELECT gcash, card FROM customer WHERE customer_id = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
@@ -297,12 +297,17 @@
             $result = $stmt->get_result();
 
             if ($row = $result->fetch_object()){
-                $amt= $row;
+                $amt = [
+                    'gcash' => $row->gcash,
+                    'card' => $row->card
+                ];
             }
 
             $stmt->close();
             
-            return $amt;
+            return [
+                'balances' => $amt
+            ];
         }
 
         function checkPayment($gcash, $card, $subtotal){
