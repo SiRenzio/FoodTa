@@ -19,7 +19,7 @@
 </head>
 <body>
     <section class="editPage">
-        <form action='index.php?command=updateRec' method='post' enctype='multipart/form-data' class="edit-form">
+        <form action='index.php?command=updateItems&item_id=<?php echo $items[0]->item_id ?>' method='post' enctype='multipart/form-data' class="edit-form">
             <h2>Edit Coffee Details</h2>
             
             <label for="item_name">Coffee Name:</label>
@@ -27,7 +27,7 @@
             
             <div class="image-preview-section">
                 <h3>Please upload coffee photo:</h3>
-                <img src='<?php echo $coffeeRecord[0]->images ?>' id="previewImage" alt='Coffee Image' class="preview-image">
+                <img src='<?php echo $items[0]->item_img ?>' id="previewImage" alt='Coffee Image' class="preview-image">
             </div>
             
             <label for="fileToUpload" class="custom-file-button">Upload Cover Page</label>

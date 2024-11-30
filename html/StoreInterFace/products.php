@@ -34,7 +34,7 @@
                                 echo "<td>". $storeItems->category ."</td>";
                                 if($_SESSION['action'] == "update")
                                 {
-                                    echo "<td><a href='index.php?command=updateItems&item_id=$storeItems->item_id'>Edit</a></td>";
+                                    echo "<td><a href='index.php?command=updateForm&item_id=$storeItems->item_id'>Edit</a></td>";
                                 }
                                 else if($_SESSION['action'] == "delete")
                                 {

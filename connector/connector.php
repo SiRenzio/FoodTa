@@ -45,6 +45,17 @@
             return $items;
         }
 
+        function retrieveStoreItemByID($item_id){
+            $items = array();
+
+            $sql = mysqli_query($this->db, "SELECT * FROM inventory WHERE item_id = '$item_id'");
+
+            while($row = mysqli_fetch_object($sql)){
+                $items[] = $row;
+            }
+            return $items;
+        }
+
         function addToCart($user_id, $store_id, $item_id) {
             $checkSql = "SELECT quantity FROM cart WHERE customer_id = ? AND store_id = ? AND item_id = ?";
             $checkStmt = $this->db->prepare($checkSql);
@@ -349,7 +360,7 @@
         {
             $sql = "UPDATE inventory SET store_id = ?, item_name = ?, quantity = ?, price = ?, category = ?, item_img = ? WHERE item_id = ?";
             $stmt = $this->db->prepare($sql);
-            $stmt->bind_param('isssss', $store_id, $item_name, $quantity, $price, $category, $imagePath, $item_id);
+            $stmt->bind_param('isssssi', $store_id, $item_name, $quantity, $price, $category, $imagePath, $item_id);
             if($stmt->execute())
             {
                 return "Item Updated Successfully";

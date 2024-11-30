@@ -72,13 +72,15 @@
                     include('html/StoreInterface/products.php');
                     break;
 
-                case 'updateItems':
-                    $store_id = $_SESSION['user_id'];
-                    $_SESSION['action'] = "update";
-                    $items = $this->db->retrieveStoreItems($store_id);
-                    include('html/StoreInterface/editForm.php');
+                case 'updateForm':
                     $item_id = $_REQUEST['item_id'];
-                    $store_id = $_REQUEST['store_id'];
+                    $items = $this->db->retrieveStoreItemByID($item_id);
+                    include('html/StoreInterface/editForm.php');
+                    break;
+
+                case 'updateItems':
+                    $item_id = $_REQUEST['item_id'];
+                    $store_id = $_SESSION['user_id'];
                     $item_name = $_REQUEST['item_name'];
                     $quantity = $_REQUEST['quantity'];
                     $price = $_REQUEST['price'];
@@ -108,11 +110,11 @@
                     if($check == "OK")
                     {
                         $result = $this->db->updateItems($item_id, $store_id, $item_name, $quantity, $price, $category, $imagePath);
-                        echo "<script> alert('$result') </script>";
+                        echo "<script> alert('$result'); window.location.href='index.php?command=update'; </script>";
                     }
                     else
                     {
-                        echo "<script> alert('$check') </script>";
+                        echo "<script> alert('$check'); window.location.href='index.php?command=update';</script>";
                     }
 
                 case 'delete':
