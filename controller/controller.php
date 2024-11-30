@@ -35,11 +35,11 @@
                     break;
 
                 case 'addItems':
-                    $store_id = $_REQUEST['store_id'];
+                    $store_id = $_SESSION['user_id'];
                     $item_name = $_REQUEST['item_name'];
-                    $quantity = $_REQUEST['quantity'];
-                    $price = $_REQUEST['price'];
-                    $category = $_REQUEST['category'];
+                    $quantity = $_REQUEST['Quantity'];
+                    $price = $_REQUEST['Price'];
+                    $category = $_REQUEST['Category'];
 
                     if(!empty($_FILES["fileToUpload"]["name"]))
                     {
@@ -62,7 +62,7 @@
                     }
                     else
                     {
-                        echo "<script> alert('$check') </script>"
+                        echo "<script> alert('$check') </script>";
                     }
 
                 case 'update':
