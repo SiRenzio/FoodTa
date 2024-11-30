@@ -191,6 +191,7 @@
 
         function checkAllCart($customer_id){
                 $data = array();
+                $total = 0;
                 $sql = "
                     SELECT 
                         store.store_name, 
@@ -198,7 +199,7 @@
                         inventory.item_img, 
                         inventory.price, 
                         cart.quantity, 
-                        (cart.quantity * inventory.price) AS total_price 
+                        (cart.quantity * inventory.price) AS subtotal 
                     FROM 
                         cart 
                     JOIN 
@@ -210,7 +211,7 @@
                     ON 
                         cart.item_id = inventory.item_id 
                     WHERE 
-                        cart.store_id = ? AND cart.customer_id = ?
+                        cart.customer_id = ?
                 ";
                 
                 // Prepare statement
@@ -220,20 +221,26 @@
                 }
             
                 // Bind parameters
-                $stmt->bind_param('ii', $store_id, $customer_id);
+                $stmt->bind_param('i', $customer_id);
                 $stmt->execute();
                 $result = $stmt->get_result();
             
                 while ($row = $result->fetch_object()) {
                     $data[] = $row;
+                    $total += $row->subtotal; // Accumulate total price
                 }
             
                 $stmt->close();
-                return $data; 
+            
+                // Return data and total
+                return [
+                    'items' => $data,
+                    'total' => $total
+                ];  
             }
             
 
-        function checkCart($store_id, $customer_id) {
+        function checkCart($store_id, $customer_id) { // Single store cart
             $data = array();
             $total = 0; // Initialize total price
             $sql = "
@@ -281,7 +288,26 @@
             ]; 
         }
         
+        function checkBalance($customer_id){
+            $amt = null;
+            $sql = "SELECT gcash, card FROM customer WHERE customer_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
+            if ($row = $result->fetch_object()){
+                $amt= $row;
+            }
+
+            $stmt->close();
+            
+            return $amt;
+        }
+
+        function checkPayment($gcash, $card, $subtotal){
+            
+        }
         function addItems()
         {
             $sql = "INSERT INTO inventory(store_id, item_name, quantity, price, category, item_img) VALUES (?, ?, ?, ?, ?, ?)";

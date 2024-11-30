@@ -182,8 +182,10 @@
                     case 'cart':
                         if ($_REQUEST['cartType'] == 'allCart'){
                             $cartData = $this->db->checkAllCart($_SESSION['user_id']);
+                            $cartItems = $cartData['items'];
+                            $totalPrice = $cartData['total']; // Overall total price
 
-                            include('html/allCarts.php');
+                            include('html/allcarts.php');
                         }
                         else{
                             $store_id = $_REQUEST['store_id'];
@@ -193,6 +195,12 @@
 
                             include('html/cart.php');
                         }
+                        break;
+                    case 'wallet':
+                        $amt = $this->db->checkBalance($_SESSION['user_id']);
+                        include('html/wallet.php');
+                        break;
+                    case 'payment':
                         break;
                 default:
                     include('html/home_page.php');

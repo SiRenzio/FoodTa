@@ -7,6 +7,8 @@
     <title>Food Ta Restaurants</title>
 </head>
 <body>
+    <a href="index.php?command=cart&cartType=allCart">Cart</a>
+    <a href="index.php?command=wallet">Wallet</a>
     <section class="container">
         <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <h1 class="serTitle">FOOD TA! Restaurants</h1>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2024 at 04:29 PM
+-- Generation Time: Nov 30, 2024 at 06:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -60,7 +60,8 @@ INSERT INTO `cart` (`cart_id`, `customer_id`, `store_id`, `item_id`, `quantity`,
 (5, 1, 0, 1, 0, '2024-11-26 04:07:46'),
 (6, 1, 1, 3, 3, '2024-11-29 14:20:40'),
 (7, 1, 1, 1, 1, '2024-11-29 14:31:54'),
-(8, 1, 1, 4, 1, '2024-11-29 14:36:26');
+(8, 1, 1, 4, 1, '2024-11-29 14:36:26'),
+(9, 1, 2, 2, 1, '2024-11-30 02:30:36');
 
 -- --------------------------------------------------------
 
@@ -99,16 +100,18 @@ CREATE TABLE `customer` (
   `customer_address` varchar(75) NOT NULL,
   `contact_no` varchar(11) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `user_password` varchar(50) NOT NULL
+  `user_password` varchar(50) NOT NULL,
+  `gcash` float NOT NULL,
+  `card` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`customer_id`, `full_name`, `customer_address`, `contact_no`, `username`, `user_password`) VALUES
-(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie'),
-(2, 'Clarns Legaspi', 'Earth, Solar System, Milky Way', '9991234567', 'Clarns', 'oogabooga');
+INSERT INTO `customer` (`customer_id`, `full_name`, `customer_address`, `contact_no`, `username`, `user_password`, `gcash`, `card`) VALUES
+(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 5, 0),
+(2, 'Clarns Legaspi', 'Earth, Solar System, Milky Way', '9991234567', 'Clarns', 'oogabooga', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -315,7 +318,7 @@ ALTER TABLE `card_payment`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `cod`

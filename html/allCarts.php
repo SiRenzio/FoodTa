@@ -11,9 +11,8 @@
                         echo "<h3 class = rowHeaderTexts>Quantity</h3>";
                         echo "<h3 class = rowHeaderTexts>Total</h3>";
                     echo "</div>";
-                foreach($cartData as $ci){
+                foreach($cartItems as $ci){
                     echo "<div class = 'cartBox'>";
-                    echo "<h1 id = 'storeName'>Cart for ".$cartItems->store_name."</h1>";
                         echo $ci->item_name;
                         echo "<img src='data:image/jpeg;base64," . base64_encode($ci->item_img). "' class = 'item_img'>";
                         echo "<input type='text' value='$ci->quantity' class = 'quantity' name = 'quantity'>";
@@ -22,7 +21,7 @@
                     echo "</div>";
                 }
                 echo "Subtotal: $totalPrice";
-                echo "<input type='submit' value='Check Out'>";
+                echo "<input type='submit' value='Check Out">;
 
                 //TODO JV:
                 // 1. Islan ang allCarts, kayuhon. Kag ma add sng Button sa order page nga ga link sa allCarts
