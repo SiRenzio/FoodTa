@@ -19,11 +19,11 @@
 </head>
 <body>
     <section class="addingPage">
-        <form action="index.php?command=insertBooks" method="post" enctype="multipart/form-data" class="form-container">
+        <form action="index.php?command=addItems" method="post" enctype="multipart/form-data" class="form-container">
             <h2>Add New Products</h2>
             
             <label for="Name">Product Name:</label>
-            <input type="text" name="Name" id="Name">
+            <input type="text" name="item_name" id="Name">
             
             <p class="form-subheading">Please upload a product picture</p>
             <div class="image-preview">
@@ -32,9 +32,6 @@
             
             <label for="fileToUpload" class="custom-file-button">Upload Photo</label>
             <input type="file" name="fileToUpload" id="fileToUpload" onchange="imagePreview(event)" accept="image/*">
-
-            <label for="Address">Address:</label>
-            <textarea name="Address" id="Address" cols="45" rows="4"></textarea>
             
             <label for="Quantity">Quantity:</label>
             <input type="text" name="Quantity" id="Quantity">
