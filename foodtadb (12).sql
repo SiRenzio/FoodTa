@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2024 at 08:40 AM
+-- Generation Time: Nov 30, 2024 at 12:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,22 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `foodtadb`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `card_payment`
---
-
-CREATE TABLE `card_payment` (
-  `payment_id` int(11) NOT NULL,
-  `ref_no` int(11) NOT NULL,
-  `expiry` date NOT NULL,
-  `security_code` int(11) NOT NULL,
-  `bank_name` int(11) NOT NULL,
-  `amount` int(11) NOT NULL,
-  `sales_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -57,36 +41,9 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `customer_id`, `store_id`, `item_id`, `quantity`, `timestamp`) VALUES
-(5, 1, 0, 1, 0, '2024-11-26 04:07:46'),
-(6, 1, 1, 3, 3, '2024-11-29 14:20:40'),
-(7, 1, 1, 1, 1, '2024-11-29 14:31:54'),
 (8, 1, 1, 4, 1, '2024-11-29 14:36:26'),
-(9, 1, 2, 2, 1, '2024-11-30 02:30:36');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cod`
---
-
-CREATE TABLE `cod` (
-  `payment_id` int(11) NOT NULL,
-  `ref_no` int(11) NOT NULL,
-  `amount` float NOT NULL,
-  `sales_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `crew`
---
-
-CREATE TABLE `crew` (
-  `crew_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(9, 1, 2, 2, 1, '2024-11-30 02:30:36'),
+(11, 1, 1, 3, 2, '2024-11-30 11:08:03');
 
 -- --------------------------------------------------------
 
@@ -101,16 +58,16 @@ CREATE TABLE `customer` (
   `contact_no` varchar(11) NOT NULL,
   `username` varchar(20) NOT NULL,
   `user_password` varchar(50) NOT NULL,
-  `gcash` float NOT NULL,
-  `card` float NOT NULL
+  `foodtawallet` float NOT NULL,
+  `gcash` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`customer_id`, `full_name`, `customer_address`, `contact_no`, `username`, `user_password`, `gcash`, `card`) VALUES
-(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 5, 0),
+INSERT INTO `customer` (`customer_id`, `full_name`, `customer_address`, `contact_no`, `username`, `user_password`, `foodtawallet`, `gcash`) VALUES
+(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 0, 5),
 (2, 'Clarns Legaspi', 'Earth, Solar System, Milky Way', '9991234567', 'Clarns', 'oogabooga', 0, 0);
 
 -- --------------------------------------------------------
@@ -165,21 +122,8 @@ INSERT INTO `inventory` (`item_id`, `store_id`, `item_name`, `quantity`, `price`
 (7, 2, 'Iced Matcha', 16, 89, 'Non-Coffee', 'uploads/Iced Matcha.jpg'),
 (8, 3, 'Filet-O-Fish', 21, 75, 'Food', 'uploads/Filet-O-Fish.jpg'),
 (9, 3, 'Crispy Chicken', 16, 65, 'Food', 'uploads/KFC Crispy Chicken.jpg'),
-(10, 3, 'Chicken Bowls', 17, 99, 'Food', 'uploads/KFC Famous Bowls.jpg');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `online_payments`
---
-
-CREATE TABLE `online_payments` (
-  `payment_id` int(11) NOT NULL,
-  `ref_no` int(11) NOT NULL,
-  `type` varchar(10) NOT NULL,
-  `amount` decimal(10,0) NOT NULL,
-  `sales_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(10, 3, 'Chicken Bowls', 17, 99, 'Food', 'uploads/KFC Famous Bowls.jpg'),
+(11, 3, 'Tae', 10, 69000, 'Soft', 'uploads/tae.jpg');
 
 -- --------------------------------------------------------
 
@@ -235,35 +179,12 @@ INSERT INTO `store` (`store_id`, `store_name`, `store_address`, `contact_no`, `o
 --
 
 --
--- Indexes for table `card_payment`
---
-ALTER TABLE `card_payment`
-  ADD PRIMARY KEY (`payment_id`),
-  ADD UNIQUE KEY `ref_no` (`ref_no`),
-  ADD UNIQUE KEY `ref_no_2` (`ref_no`),
-  ADD KEY `sales_id` (`sales_id`);
-
---
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
   ADD KEY `user_id` (`customer_id`),
   ADD KEY `item_id` (`item_id`),
-  ADD KEY `store_id` (`store_id`);
-
---
--- Indexes for table `cod`
---
-ALTER TABLE `cod`
-  ADD PRIMARY KEY (`payment_id`),
-  ADD KEY `sales_id` (`sales_id`);
-
---
--- Indexes for table `crew`
---
-ALTER TABLE `crew`
-  ADD PRIMARY KEY (`crew_id`),
   ADD KEY `store_id` (`store_id`);
 
 --
@@ -286,15 +207,6 @@ ALTER TABLE `inventory`
   ADD KEY `store_id` (`store_id`);
 
 --
--- Indexes for table `online_payments`
---
-ALTER TABLE `online_payments`
-  ADD PRIMARY KEY (`payment_id`),
-  ADD UNIQUE KEY `ref_no` (`ref_no`),
-  ADD UNIQUE KEY `ref_no_2` (`ref_no`),
-  ADD KEY `sales_id` (`sales_id`);
-
---
 -- Indexes for table `order`
 --
 ALTER TABLE `order`
@@ -314,28 +226,10 @@ ALTER TABLE `store`
 --
 
 --
--- AUTO_INCREMENT for table `card_payment`
---
-ALTER TABLE `card_payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `cod`
---
-ALTER TABLE `cod`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `crew`
---
-ALTER TABLE `crew`
-  MODIFY `crew_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -353,13 +247,7 @@ ALTER TABLE `delivery`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `online_payments`
---
-ALTER TABLE `online_payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `order`
@@ -378,34 +266,10 @@ ALTER TABLE `store`
 --
 
 --
--- Constraints for table `card_payment`
---
-ALTER TABLE `card_payment`
-  ADD CONSTRAINT `sales_id_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `order` (`order_id`);
-
---
--- Constraints for table `cod`
---
-ALTER TABLE `cod`
-  ADD CONSTRAINT `cod_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `order` (`order_id`);
-
---
--- Constraints for table `crew`
---
-ALTER TABLE `crew`
-  ADD CONSTRAINT `crew_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`);
-
---
 -- Constraints for table `inventory`
 --
 ALTER TABLE `inventory`
   ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`);
-
---
--- Constraints for table `online_payments`
---
-ALTER TABLE `online_payments`
-  ADD CONSTRAINT `online_payments_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `order` (`order_id`);
 
 --
 -- Constraints for table `order`

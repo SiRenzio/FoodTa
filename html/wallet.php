@@ -6,8 +6,7 @@
 <body>
     <div id = container>
         <?php
-            echo "Gcash Amt: P". $amt->gcash ."";
-            echo "Card Balance: P". $amt->card ."";
+            echo "Food Ta! Wallet Amt: P". $balance->foodtawallet ."";
         ?>
     </div>
 </body>

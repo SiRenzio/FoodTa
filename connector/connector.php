@@ -195,6 +195,7 @@
                 $sql = "
                     SELECT 
                         store.store_name, 
+                        inventory.item_id,
                         inventory.item_name, 
                         inventory.item_img, 
                         inventory.price, 
@@ -288,44 +289,43 @@
             ]; 
         }
         
-        function updateQuantity($customer_id, $item_id, $qty){
-            if ($qty != 0){
-                $sql = "UPDATE quantity SET = ? FROM cart WHERE customer_id = ? AND item_id = ?";
-            } 
-            else {
+        function updateQuantity($customer_id, $item_id, $qty) {
+            if ($qty != 0) {
+                $sql = "UPDATE cart SET quantity = ? WHERE customer_id = ? AND item_id = ?";
+                $stmt = $this->db->prepare($sql);
+                $stmt->bind_param('iii', $qty, $customer_id, $item_id);
+            } else {
                 $sql = "DELETE FROM cart WHERE customer_id = ? AND item_id = ?";
-            } 
-
-            $stmt = $this->db->prepare($sql);
-
-            if ($stmt->execute()){
+                $stmt = $this->db->prepare($sql);
+                $stmt->bind_param('ii', $customer_id, $item_id);
+            }
+        
+            if ($stmt->execute()) {
                 return "Item Qty. Updated";
             } else {
-                return "Error Updating";
+                return "Error Updating: " . $stmt->error; 
             }
         }
+        
         function checkBalance($customer_id){
-            $amt = [];
-            $sql = "SELECT gcash, card FROM customer WHERE customer_id = ?";
+            $amt = null;
+            $sql = "SELECT foodtawallet FROM customer WHERE customer_id = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($row = $result->fetch_object()){
-                $amt = [
-                    'gcash' => $row->gcash,
-                    'card' => $row->card
-                ];
+                $amt = $row;
             }
 
             $stmt->close();
             
-            return [
-                'balances' => $amt
-            ];
+            return $amt;
         }
-
+        function cashIn($amt, $customer_id){
+            $sql = "UPDATE ";
+        }
         function checkPayment($gcash, $card, $subtotal){
             
         }
