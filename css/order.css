@@ -1,35 +1,4 @@
-@font-face {
-    font-family: 'Open Sans Regular';
-    src: url(font/OpenSans.ttf);
-}
-@font-face {
-    font-family: 'Archivo Black';
-    src: url(font/ArchivoBlack-Regular.ttf);
-}
-@font-face {
-    font-family: 'Sergio Trendy';
-    src: url(font/serge.ttf);
-}
-@font-face {
-    font-family: 'Poppins Bold';
-    src: url(font/Poppins-Bold.ttf);
-}
-@font-face {
-    font-family: 'Poppins ExtraBold';
-    src: url(font/Poppins-ExtraBold.ttf);
-}
-@font-face {
-    font-family: 'Poppins Medium';
-    src: url(font/Poppins-Medium.ttf);
-}
-@font-face {
-    font-family: 'Poppins SemiBold';
-    src: url(font/Poppins-SemiBold.ttf);
-}
-@font-face {
-    font-family: 'Roboto Slab';
-    src: url(font/RobotoSlab.ttf);
-}
+
 * {
     margin: 0;
     padding: 0;
@@ -191,3 +160,36 @@ body {
     background-color: #005e40;
     
 }
+
+/*Cart and Wallet Button*/
+
+.transacBTN {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.transacBTN a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #003c25;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.transacBTN a:hover {
+    background-color: #005e40;
+    transform: scale(1.1);
+}
+
+.transacBTN img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+

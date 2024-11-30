@@ -4,7 +4,8 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 80px;
+    padding: 100px;
+    padding-left: 16%;
     background-image: url("../images/foodTaBrandBG.png");
     background-size: auto;
     background-attachment: fixed;
@@ -39,7 +40,7 @@ label {
 }
 
 .form-container input[type="text"],
-.form-container textarea,
+.form-container input[type="number"],
 .form-container select {
     width: 100%;
     padding: 8px 10px;
@@ -98,14 +99,14 @@ input[type="file"] {
     text-align: center;
     padding: 10px;
     cursor: pointer;
-    background-color: #3b2618;
+    background-color: #044811;
     color: #fff;
     border-radius: 4px;
     margin: 10px 0;
 }
 
 .custom-file-button:hover {
-    background-color: #41200b;
+    background-color: #043608;
 }
 
 .button-group {

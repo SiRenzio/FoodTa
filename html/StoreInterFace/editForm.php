@@ -20,7 +20,7 @@
 <body>
     <section class="editPage">
         <form action='index.php?command=updateItems&item_id=<?php echo $items[0]->item_id ?>' method='post' enctype='multipart/form-data' class="edit-form">
-            <h2>Edit Coffee Details</h2>
+            <h2>Update Product Details</h2>
             
             <label for="item_name">Coffee Name:</label>
             <input type='text' name='item_name' id="item_name" value='<?php echo $items[0]->item_name ?>'>

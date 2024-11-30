@@ -1,0 +1,78 @@
+body {
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 100px;
+    padding-left: 20%;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+
+    background-image: url("../images/foodTaBrandBG.png");
+    background-size: auto;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+table {
+    width: 1500px;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+thead th {
+    background-color: #022704;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-family: "Roboto Slab ExtraBold";
+    font-size: 16px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody td {
+    padding: 5px 10px;
+    text-align: center;
+    vertical-align: middle;
+    font-family: "Roboto Slab";
+    font-weight: 700;
+}
+
+tbody td img {
+    margin: 20px auto;
+    border-radius: 5px;
+}
+
+tfoot td {
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.tableBTN {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-left: 90px;
+    background-color: #044811;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.tableBTN:hover {
+    background-color: #043608;
+    transform: translateY(-2px);
+}

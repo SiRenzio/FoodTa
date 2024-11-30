@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/updateProducts.css">
+    <link rel="stylesheet" href="css/products.css">
     <title>Food Ta Restaurants</title>
 </head>
 <body>
 <section class="container">
-        <!-- <h1 class="serTitle">This is Update Page</h1> -->
             <table>
 				<thead>
 				<tr>
@@ -18,6 +17,7 @@
 					<th align="center">Quantity</th>
 					<th align="center">Price</th>
 					<th align="center">Category</th>
+					<th align="center"></th>
 				</tr>
 				</thead>
 				<tfoot>
@@ -34,11 +34,11 @@
                                 echo "<td>". $storeItems->category ."</td>";
                                 if($_SESSION['action'] == "update")
                                 {
-                                    echo "<td><a href='index.php?command=updateForm&item_id=$storeItems->item_id'>Edit</a></td>";
+                                    echo "<td><a class='tableBTN' href='index.php?command=updateForm&item_id=$storeItems->item_id'>Edit</a></td>";
                                 }
                                 else if($_SESSION['action'] == "delete")
                                 {
-                                    echo "<td><a href='index.php?command=deleteItems&item_id=".$storeItems->item_id."' onclick='return confirm(\"Are you sure you want to do Delete ". $storeItems->item_name."?\")'>Delete</a></td>";
+                                    echo "<td><a class='tableBTN' href='index.php?command=deleteItems&item_id=".$storeItems->item_id."' onclick='return confirm(\"Are you sure you want to do Delete ". $storeItems->item_name."?\")'>Delete</a></td>";
                                 }
 							echo "</tr>";
 						}

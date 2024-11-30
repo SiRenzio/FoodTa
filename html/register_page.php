@@ -60,7 +60,7 @@
                 <input type="text" placeholder="Opening Hour (Ex. Format: 00:00:00)" name="opening_hr" class="formTxt" autocomplete="off" required>
                 <input type="text" placeholder="Closing Hour (Ex. Format: 00:00:00)" name="closing_hr" class="formTxt" autocomplete="off" required>
                 <input type="text" placeholder="Contact No." name="store_contact" class="formTxt" autocomplete="off" required>
-                <img src="img_upload/preview.png" id="previewImage" alt="preview" width="300" height="300">
+                <img src="images/preview.png" id="previewImage" alt="preview" width="300" height="300">
                 <label for="fileToUpload" class="custom-file-button">Upload Store Image</label>
 				<input type="file" name="fileToUpload" id="fileToUpload" onchange="imagePreview(event)" accept="image/*"></input>
                 

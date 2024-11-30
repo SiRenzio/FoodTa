@@ -1,29 +1,3 @@
-@font-face {
-    font-family: 'Open Sans Regular';
-    src: url(font/OpenSans.ttf);
-}
-@font-face {
-    font-family: 'Rundeck';
-    src: url(font/Rundeck.ttf);
-}
-@font-face {
-    font-family: 'Roboto Slab';
-    src: url(font/RobotoSlab.ttf);
-}
-@font-face {
-    font-family: 'Archivo Black';
-    src: url(font/ArchivoBlack-Regular.ttf);
-}
-@font-face {
-    font-family: 'Sergio Trendy';
-    src: url(font/serge.ttf);
-}
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
 
 .editPage {
     display: flex;
@@ -31,14 +5,16 @@
     align-items: center;
     padding: 20px;
     min-height: 100vh;
-    background-image: url("../images/djb_productD.png");
+    padding: 100px;
+    padding-left: 16%;
+    background-image: url("../images/foodTaBrandBG.png");
     background-size: auto;
     background-attachment: fixed;
     background-position: center center;
 }
 
 .edit-form {
-    background-image: url("../images/DejaForm.png");
+    background-color: white;
     color: white;
     padding: 20px 40px;
     width: 750px;
@@ -105,7 +81,7 @@ label {
     padding: 10px 20px;
     width: 100%;
     cursor: pointer;
-    background-color: #3b2618;
+    background-color: #044811;
     color: #fff;
     border-radius: 4px;
     margin-top: 10px;   
@@ -114,7 +90,7 @@ label {
 }
 
 .custom-file-button:hover {
-    background-color: #41200b;
+    background-color: #043608;
 }
 
 input[type="file"] {
