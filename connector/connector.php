@@ -372,20 +372,29 @@
             $stmt->close();
         }
 
-        function deleteItems($item_id, $imagePath)
+        function deleteItems($item_id, $imagePath, $store_id)
         {
     	    $sql = "DELETE FROM inventory WHERE item_id = ?";
 		    $stmt = $this->db->prepare($sql);
-		    $stmt->bind_param('i',);
+		    $stmt->bind_param('i', $item_id);
 		    if($stmt->execute())
             {
                 if(file_exists($imagePath))
                 {
-                    if(unlink($imagePath))
-                    {
-                        return "Item Deleted Successfully";
-                    }
+                    unlink($imagePath);
                 }
+            }
+            else
+            {
+                return "Error";
+            }
+
+            $sql2 = "DELETE FROM cart WHERE store_id = ? AND item_id = ?";
+            $stmt2 = $this->db->prepare($sql2);
+            $stmt2->bind_param("ii", $store_id, $item_id);
+            if($stmt->execute())
+            {
+                return "Item Deleted Successfully";
             }
             else
             {

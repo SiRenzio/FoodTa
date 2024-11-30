@@ -1,0 +1,156 @@
+@font-face {
+    font-family: 'Open Sans Regular';
+    src: url(font/OpenSans.ttf);
+}
+@font-face {
+    font-family: 'Rundeck';
+    src: url(font/Rundeck.ttf);
+}
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url(font/RobotoSlab.ttf);
+}
+@font-face {
+    font-family: 'Archivo Black';
+    src: url(font/ArchivoBlack-Regular.ttf);
+}
+@font-face {
+    font-family: 'Sergio Trendy';
+    src: url(font/serge.ttf);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.editPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+    background-image: url("../images/djb_productD.png");
+    background-size: auto;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+.edit-form {
+    background-image: url("../images/DejaForm.png");
+    color: white;
+    padding: 20px 40px;
+    width: 750px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-form h2 {
+    font-family: "Sergio Trendy";
+    font-size: 1.7rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    text-align: left;
+    font-family: "Roboto Slab";
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    margin-top: 15px;
+    color: #000000;
+    width: 100%;
+}
+
+.edit-form input[type="text"],
+.edit-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.edit-form textarea {
+    resize: none;
+}
+
+.image-preview-section {
+    text-align: center;
+    margin-top: 20px;
+    color: #1f1f1f;
+    font-size: 1.3rem;
+}
+
+.preview-image {
+    width: 336px;
+    height: 436px;
+    object-fit: cover;
+    margin: 10px 0;
+    display: block;
+}
+
+.custom-file-button {
+    display: inline-block;
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px 20px;
+    width: 100%;
+    cursor: pointer;
+    background-color: #3b2618;
+    color: #fff;
+    border-radius: 4px;
+    margin-top: 10px;   
+    margin-bottom: 50px;
+    transition: background 0.3s ease;
+}
+
+.custom-file-button:hover {
+    background-color: #41200b;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.form-buttons input[type="submit"],
+.form-buttons input[type="reset"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.form-buttons input[type="submit"] {
+    background-color: #197909;
+}
+
+.form-buttons input[type="reset"] {
+    background-color: #d9534f;
+}
+
+.form-buttons input[type="submit"]:hover {
+    background-color: #145b07;
+}
+
+.form-buttons input[type="reset"]:hover {
+    background-color: #c9302c;
+}

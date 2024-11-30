@@ -34,10 +34,10 @@
             <input type="file" name="fileToUpload" id="fileToUpload" onchange="imagePreview(event)" accept="image/*">
             
             <label for="Quantity">Quantity:</label>
-            <input type="text" name="Quantity" id="Quantity">
+            <input type="number" name="Quantity" id="Quantity">
 
             <label for="Price">Price:</label>
-            <input type="text" name="Price" id="Price">
+            <input type="number" name="Price" id="Price">
 
             <label for="Category">Category:</label>
             <input type="text" name="Category" id="Category">

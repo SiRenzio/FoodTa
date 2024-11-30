@@ -66,10 +66,17 @@
                     }
 
                 case 'update':
-                    include('html/StoreInterface/updateProducts.php');
+                    $store_id = $_SESSION['user_id'];
+                    $_SESSION['action'] = "update";
+                    $items = $this->db->retrieveStoreItems($store_id);
+                    include('html/StoreInterface/products.php');
                     break;
 
                 case 'updateItems':
+                    $store_id = $_SESSION['user_id'];
+                    $_SESSION['action'] = "update";
+                    $items = $this->db->retrieveStoreItems($store_id);
+                    include('html/StoreInterface/editForm.php');
                     $item_id = $_REQUEST['item_id'];
                     $store_id = $_REQUEST['store_id'];
                     $item_name = $_REQUEST['item_name'];
@@ -109,14 +116,17 @@
                     }
 
                 case 'delete':
-                    include('html/StoreInterface/deleteProducts.php');
+                    $store_id = $_SESSION['user_id'];
+                    $_SESSION['action'] = "delete";
+                    $items = $this->db->retrieveStoreItems($store_id);
+                    include('html/StoreInterface/products.php');
                     break;
 
                 case 'deleteItems':
                     $item_id = $_REQUEST['item_id'];	
-
+                    $store_id = $_SESSION['user_id'];
                     $imagePath = $this->db->getExistingItemImage($item_id);
-                    $result = $this->db->deleteItems($item_id, $imagePath);
+                    $result = $this->db->deleteItems($item_id, $imagePath, $store_id);
                     echo "<script> alert ('$result') </script>";
                 //------------------------end-------------------------------//
 
@@ -177,6 +187,7 @@
                     $_SESSION['logState'] = false;
                     $_SESSION['account_type'] = null;
                     $_SESSION['user_id'] = null;
+                    $_SESSION['action'] = null;
                     $accType = null;
                     include('html/home_page.php');
                     include('html/header.php');
