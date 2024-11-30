@@ -73,7 +73,10 @@
                     break;
 
                 case 'updateItems':
-                    include('html/StoreInterface/updateProducts.php');
+                    $store_id = $_SESSION['user_id'];
+                    $_SESSION['action'] = "update";
+                    $items = $this->db->retrieveStoreItems($store_id);
+                    include('html/StoreInterface/editForm.php');
                     $item_id = $_REQUEST['item_id'];
                     $store_id = $_REQUEST['store_id'];
                     $item_name = $_REQUEST['item_name'];
