@@ -281,10 +281,15 @@
                             include('html/cart.php');
                         }
                         break;
+                    case 'updateQty':
+                        $qty = $_REQUEST['qty'];
+                        $item_id = $_REQUEST['item_id'];
+                        $status = $this->db->updateQuantity($_SESSION['user_id'], $item_id, $qty);
+
+                        echo "<script>alert('". $status ."'); window.location.href='index.php?command=cart&cartType=allCart';</script>";
+                        break;
                     case 'wallet':
-                        $data = $this->db->checkBalance($_SESSION['user_id']);
-                        $gcash = $data['gcash'];
-                        $card = $data['card'];
+                        $balance = $this->db->checkBalance($_SESSION['user_id']);
                         include('html/wallet.php');
                         break;
                     case 'payment':
