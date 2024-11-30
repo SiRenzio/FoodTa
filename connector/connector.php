@@ -308,11 +308,11 @@
         function checkPayment($gcash, $card, $subtotal){
             
         }
-        function addItems()
+        function addItems($store_id, $item_name, $quantity, $price, $category, $imagePath)
         {
             $sql = "INSERT INTO inventory(store_id, item_name, quantity, price, category, item_img) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $this->db->prepare($sql);
-            $stmt->bind_param('isssss', );
+            $stmt->bind_param('isssss', $store_id, $item_name, $quantity, $price, $category, $imagePath);
             if($stmt->execute())
             {
                 return "Item Added Successfully";
@@ -324,11 +324,11 @@
             $stmt->close();
         }
 
-        function updateItems()
+        function updateItems($item_id, $store_id, $item_name, $quantity, $price, $category, $imagePath)
         {
             $sql = "UPDATE inventory SET store_id = ?, item_name = ?, quantity = ?, price = ?, category = ?, item_img = ? WHERE item_id = ?";
             $stmt = $this->db->prepare($sql);
-            $stmt->bind_param('isssss', );
+            $stmt->bind_param('isssss', $store_id, $item_name, $quantity, $price, $category, $imagePath, $item_id);
             if($stmt->execute())
             {
                 return "Item Updated Successfully";
@@ -340,20 +340,38 @@
             $stmt->close();
         }
 
-        function deleteItem()
+        function deleteItems($item_id, $imagePath)
         {
     	    $sql = "DELETE FROM inventory WHERE item_id = ?";
 		    $stmt = $this->db->prepare($sql);
 		    $stmt->bind_param('i',);
 		    if($stmt->execute())
             {
-                return "Item Deleted Successfully";
+                if(file_exists($imagePath))
+                {
+                    if(unlink($imagePath))
+                    {
+                        return "Item Deleted Successfully";
+                    }
+                }
             }
             else
             {
                 return "Error";
             }
             $stmt->close();
+        }
+
+        function getExistingItemImage($item_id)
+        {
+            $sql = "SELECT item_img FROM inventory WHERE item_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("i", $item_id);
+            $stmt->execute();
+		    $stmt->bind_result($imagePath);
+		    $stmt->fetch();
+		    $stmt->close();
+		    return $imagePath;
         }
     }
 ?>

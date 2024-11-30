@@ -30,17 +30,94 @@
                     break;
 
                 //store interface
-                case 'update':
-                    include('html/StoreInterface/updateProducts.php');
-                    break;
-                
                 case 'add':
                     include('html/StoreInterface/addProducts.php');
                     break;
 
+                case 'addItems':
+                    $store_id = $_REQUEST['store_id'];
+                    $item_name = $_REQUEST['item_name'];
+                    $quantity = $_REQUEST['quantity'];
+                    $price = $_REQUEST['price'];
+                    $category = $_REQUEST['category'];
+
+                    if(!empty($_FILES["fileToUpload"]["name"]))
+                    {
+                        $image = basename($_FILES["fileToUpload"]["name"]);
+                        $imagePath = "uploads/" . $image;
+                        $imageFileType = strtolower(pathinfo($image,PATHINFO_EXTENSION));
+                        $imageSize = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+
+                        $check = $this->db->checkImage($imagePath, $imageFileType, $imageSize);
+                    }
+                    else
+                    {
+                        $check = "No Images Selected";
+                    }
+
+                    if($check == "OK")
+                    {
+                        $result = $this->db->addItems($store_id, $item_name, $quantity, $price, $category, $imagePath);
+                        echo "<script> alert('$result') </script>";
+                    }
+                    else
+                    {
+                        echo "<script> alert('$check') </script>"
+                    }
+
+                case 'update':
+                    include('html/StoreInterface/updateProducts.php');
+                    break;
+
+                case 'updateItems':
+                    $item_id = $_REQUEST['item_id'];
+                    $store_id = $_REQUEST['store_id'];
+                    $item_name = $_REQUEST['item_name'];
+                    $quantity = $_REQUEST['quantity'];
+                    $price = $_REQUEST['price'];
+                    $category = $_REQUEST['category'];
+
+                    if(!empty($_FILES["fileToUpload"]["name"]))
+                    {
+                        $image = basename($_FILES["fileToUpload"]["name"]);
+                        $imagePath = "uploads/" . $image;
+                        $imageFileType = strtolower(pathinfo($image,PATHINFO_EXTENSION));
+                        $imageSize = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+
+                        $check = $this->db->checkImage($imagePath, $imageFileType, $imageSize);
+
+                        if($imagePath != $this->db->getExistingItemImage($item_id))
+                        {
+                            $existingImage = $this->db->getExistingItemImage($item_id);
+                            unlink($existingImage);
+                        }
+                    }
+                    else
+                    {
+                        $imagePath = $this->db->getExistingItemImage($item_id);
+                        $check = "OK";
+                    }
+
+                    if($check == "OK")
+                    {
+                        $result = $this->db->updateItems($item_id, $store_id, $item_name, $quantity, $price, $category, $imagePath);
+                        echo "<script> alert('$result') </script>";
+                    }
+                    else
+                    {
+                        echo "<script> alert('$check') </script>";
+                    }
+
                 case 'delete':
                     include('html/StoreInterface/deleteProducts.php');
                     break;
+
+                case 'deleteItems':
+                    $item_id = $_REQUEST['item_id'];	
+
+                    $imagePath = $this->db->getExistingItemImage($item_id);
+                    $result = $this->db->deleteItems($item_id, $imagePath);
+                    echo "<script> alert ('$result') </script>";
                 //------------------------end-------------------------------//
 
                 case 'order':
