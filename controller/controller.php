@@ -62,7 +62,7 @@
                     }
                     else
                     {
-                        echo "<script> alert('$check') </script>"
+                        echo "<script> alert('$check') </script>";
                     }
 
                 case 'update':
@@ -274,7 +274,7 @@
                         }
                         break;
                     case 'wallet':
-                        $data = $this->db->checkBalance($_SESSION['user_id']);\
+                        $data = $this->db->checkBalance($_SESSION['user_id']);
                         $gcash = $data['gcash'];
                         $card = $data['card'];
                         include('html/wallet.php');

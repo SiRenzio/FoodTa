@@ -288,6 +288,22 @@
             ]; 
         }
         
+        function updateQuantity($customer_id, $item_id, $qty){
+            if ($qty != 0){
+                $sql = "UPDATE quantity SET = ? FROM cart WHERE customer_id = ? AND item_id = ?";
+            } 
+            else {
+                $sql = "DELETE FROM cart WHERE customer_id = ? AND item_id = ?";
+            } 
+
+            $stmt = $this->db->prepare($sql);
+
+            if ($stmt->execute()){
+                return "Item Qty. Updated";
+            } else {
+                return "Error Updating";
+            }
+        }
         function checkBalance($customer_id){
             $amt = [];
             $sql = "SELECT gcash, card FROM customer WHERE customer_id = ?";
