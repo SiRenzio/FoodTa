@@ -35,7 +35,7 @@
         foreach ($items as $storeItems) {
             echo '<div class="productCard">';
                 echo '<div class="product-image">';
-                    echo '<img src="data:image/jpeg;base64,' . base64_encode($storeItems->item_img) . '" alt="' . htmlspecialchars($storeItems->item_name) . '">';
+                    echo '<img src="' . htmlspecialchars($storeItems->item_img) . '" alt="' . htmlspecialchars($storeItems->item_name) . '">';
                 echo '</div>';
 
                 echo '<div class="product-details">';

@@ -21,7 +21,7 @@
                 <a class="about" href="index.php?command=about">About Us</a>
                 <?php
                     if($_SESSION['logState'] === false){
-                        echo "<a class='about' href='index.php?command=order'>Log In</a>";
+                        echo "<a class='about' href='index.php?command=order'>Admin</a>";
                         echo "<a class='about' href='index.php?command=register'>Register</a>";
                     }
                     else{
