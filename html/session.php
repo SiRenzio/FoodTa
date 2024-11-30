@@ -10,6 +10,7 @@
             $_SESSION['user_id'];
             $_SESSION['selectedStore'];
             $_SESSION['account_type'];
+            $_SESSION['action'];
         }
     }
 ?>
