@@ -309,6 +309,7 @@
                         include('html/wallet.php');
                         break;
                     case 'payment':
+                        
                         break;
                 default:
                     include('html/home_page.php');
