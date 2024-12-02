@@ -22,7 +22,9 @@
                         echo $ci->subtotal;
                     echo "</div>";
                 }
-                echo "Subtotal: $totalPrice";
+                echo "<form action = 'index.php?command=payment method = 'post'>";
+                    echo "Subtotal: $totalPrice";
+                    echo "<input type ='hidden' value='$totalPrice' name = 'subTotal'>";
                 echo "<input type='submit' value='Check Out'>";
 
                 //TODO JV:

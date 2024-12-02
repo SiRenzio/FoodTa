@@ -309,7 +309,9 @@
                         include('html/wallet.php');
                         break;
                     case 'payment':
-                        
+                        $balance = $this->db->checkBalance($_SESSION['user_id']);
+                        $subTotal = $_REQUEST['subTotal'];
+                        include('html/payment.php');
                         break;
                 default:
                     include('html/home_page.php');

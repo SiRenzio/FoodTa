@@ -4,6 +4,9 @@
     
 </head>
 <body>
-    
+    <?php
+        echo "Payment = $subTotal";
+        echo "Balance = $balance";
+    ?>
 </body>
 </html>
