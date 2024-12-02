@@ -38,9 +38,9 @@
                     echo "<hr class='divider'>";
                 }
                 echo "<div class='cartFooter'>";
-                    echo "<form action = 'index.php?command=payment method = 'post'>";
-                    echo "<p>Subtotal: " . htmlspecialchars($totalPrice) . "</p>";
-                    echo "<button type = 'submit' onclick=\"location.href='checkout.php'\" class='checkoutBtn'>Check Out</button>";
+                    echo"<form action='index.php?command=payment&subTotal=$totalPrice' method='post'>";
+                        echo "<p>Subtotal: " . htmlspecialchars($totalPrice) . "</p>";
+                        echo "<button type = 'submit' class='checkoutBtn'>Check Out</button>";
                 echo "</div>";
 
                 //TODO JV:
