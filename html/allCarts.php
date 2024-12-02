@@ -39,8 +39,10 @@
                 }
                 echo "<div class='cartFooter'>";
                     echo"<form action='index.php?command=payment&subTotal=$totalPrice' method='post'>";
-                        echo "<p>Subtotal: " . htmlspecialchars($totalPrice) . "</p>";
-                        echo "<button type = 'submit' class='checkoutBtn'>Check Out</button>";
+                        if ($totalPrice >= 1){
+                            echo "<p>Subtotal: " . htmlspecialchars($totalPrice) . "</p>";
+                            echo "<button type = 'submit' class='checkoutBtn'>Check Out</button>";
+                        }
                 echo "</div>";
 
                 //TODO JV:

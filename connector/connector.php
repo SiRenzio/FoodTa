@@ -232,55 +232,55 @@
         }
 
         function checkAllCart($customer_id){
-                $data = array();
-                $total = 0;
-                $sql = "
-                    SELECT 
-                        store.store_name, 
-                        inventory.item_id,
-                        inventory.item_name, 
-                        inventory.item_img, 
-                        inventory.price, 
-                        cart.quantity, 
-                        (cart.quantity * inventory.price) AS subtotal 
-                    FROM 
-                        cart 
-                    JOIN 
-                        store 
-                    ON 
-                        cart.store_id = store.store_id 
-                    JOIN 
-                        inventory 
-                    ON 
-                        cart.item_id = inventory.item_id 
-                    WHERE 
-                        cart.customer_id = ?
-                ";
-                
-                // Prepare statement
-                $stmt = $this->db->prepare($sql);
-                if (!$stmt) {
-                    return "Error in preparing query: " . $this->db->error;
-                }
+            $data = array();
+            $total = 0;
+            $sql = "
+                SELECT 
+                    store.store_name, 
+                    inventory.item_id,
+                    inventory.item_name, 
+                    inventory.item_img, 
+                    inventory.price, 
+                    cart.quantity, 
+                    (cart.quantity * inventory.price) AS subtotal 
+                FROM 
+                    cart 
+                JOIN 
+                    store 
+                ON 
+                    cart.store_id = store.store_id 
+                JOIN 
+                    inventory 
+                ON 
+                    cart.item_id = inventory.item_id 
+                WHERE 
+                    cart.customer_id = ? AND cart.status = 'UNORDERED'
+            ";
             
-                // Bind parameters
-                $stmt->bind_param('i', $customer_id);
-                $stmt->execute();
-                $result = $stmt->get_result();
-            
-                while ($row = $result->fetch_object()) {
-                    $data[] = $row;
-                    $total += $row->subtotal; // Accumulate total price
-                }
-            
-                $stmt->close();
-            
-                // Return data and total
-                return [
-                    'items' => $data,
-                    'total' => $total
-                ];  
+            // Prepare statement
+            $stmt = $this->db->prepare($sql);
+            if (!$stmt) {
+                return "Error in preparing query: " . $this->db->error;
             }
+        
+            // Bind parameters
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        
+            while ($row = $result->fetch_object()) {
+                $data[] = $row;
+                $total += $row->subtotal; // Accumulate total price
+            }
+        
+            $stmt->close();
+        
+            // Return data and total
+            return [
+                'items' => $data,
+                'total' => $total
+            ];  
+        }
         
         function updateQuantity($customer_id, $item_id, $qty) {
             if ($qty != 0) {
@@ -333,7 +333,7 @@
         }
 
         function checkPayment($foodtaWallet, $subtotal, $options){
-            $status = "Payment cannot be process";
+            $status = "Payment cannot be processed";
             if ($foodtaWallet >= $subtotal && $options == 4) {
                 $status ="Sufficient Balance! Let's find a driver!";
             }
@@ -364,14 +364,89 @@
             } else {
                 return 'Cash in error';
             }
-
         }
-        function pendingItems($customer_id){
+
+        function pendingItems($customer_id){ 
             $sql = "UPDATE cart SET status = 'PENDING' WHERE customer_id = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
             $stmt->execute();
             $stmt->close();
+        }
+
+        function unorderItems($customer_id){
+            $sql = "UPDATE cart SET status = 'UNORDERED' WHERE customer_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        function tbdItems($customer_id){
+            $sql = "UPDATE cart SET status = 'TBD' WHERE customer_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        function deliverItems($customer_id, $transaction_id){ 
+            $sql = "UPDATE cart SET transaction_id = ? WHERE customer_id = ? AND status = TBD";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('ii', $customer_id, $transaction_id);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        function viewCustomerOrder($customer_id){
+            $data = array();
+                $total = 0;
+                $sql = "
+                    SELECT 
+                        store.store_name, 
+                        inventory.item_id,
+                        inventory.item_name, 
+                        inventory.item_img, 
+                        inventory.price, 
+                        cart.quantity, 
+                        (cart.quantity * inventory.price) AS subtotal 
+                    FROM 
+                        cart 
+                    JOIN 
+                        store 
+                    ON 
+                        cart.store_id = store.store_id 
+                    JOIN 
+                        inventory 
+                    ON 
+                        cart.item_id = inventory.item_id 
+                    WHERE 
+                        cart.customer_id = ? AND cart.status = 'PENDING'
+                ";
+                
+                // Prepare statement
+                $stmt = $this->db->prepare($sql);
+                if (!$stmt) {
+                    return "Error in preparing query: " . $this->db->error;
+                }
+            
+                // Bind parameters
+                $stmt->bind_param('i', $customer_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+            
+                while ($row = $result->fetch_object()) {
+                    $data[] = $row;
+                    $total += $row->subtotal; // Accumulate total price
+                }
+            
+                $stmt->close();
+            
+                // Return data and total
+                return [
+                    'items' => $data,
+                    'total' => $total
+                ];  
         }
 
         function findDriver(){
