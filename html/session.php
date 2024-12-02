@@ -11,6 +11,9 @@
             $_SESSION['selectedStore'];
             $_SESSION['account_type'];
             $_SESSION['action'];
+
+            $_SESSION['subTotal'];
+            $_SESSION['foodtaWalletBal'];
         }
     }
 ?>

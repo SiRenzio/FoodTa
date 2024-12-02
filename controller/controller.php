@@ -289,14 +289,7 @@
 
                             include('html/allcarts.php');
                         }
-                        else{
-                            $store_id = $_REQUEST['store_id'];
-                            $cartData = $this->db->checkCart($store_id, $_SESSION['user_id']);
-                            $cartItems = $cartData['items'];
-                            $totalPrice = $cartData['total']; // Overall total price
 
-                            include('html/cart.php');
-                        }
                         break;
                     case 'updateQty':
                         $qty = $_REQUEST['qty'];
@@ -324,6 +317,39 @@
                         $balance = $this->db->checkBalance($_SESSION['user_id']);
                         $subTotal = $_REQUEST['subTotal'];
                         include('html/payment.php');
+                        break;
+                    case 'processPayment':
+                        if ($_POST) {
+                            if (isset($_REQUEST['options'])) {
+                                $options = $_REQUEST['options'];
+                            } else {
+                                $options = 1; // Default to null if not set
+                            }
+                        
+                            switch ($options) {	
+                                case 'Cash':
+                                    $options = 1;
+                                    break;
+                                case 'GCash': // Match dropdown case exactly
+                                    $options = 2;
+                                    break;
+                                case 'Card':
+                                    $options = 3;
+                                    break;
+                                case 'FoodtaWallet':
+                                    $options = 4;
+                                    break;
+                                default:
+                                    $options = 1; // Default value for unrecognized options
+                            }
+                        }
+                        $status = $this->db->checkPayment($_SESSION['foodtaWalletBal'], $_SESSION['subTotal'], $options);
+                        $this->db->pendingItems($_SESSION['user_id']);
+                        echo '<script> alert("'.$status.'"); window.location.href="index.php?command=findDriver&option="'.$options.'"";</script>';
+                        break;  
+                    case 'findDriver':
+
+                        include('html/finddriver.php');
                         break;
                 default:
                     include('html/home_page.php');
