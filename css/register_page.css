@@ -74,7 +74,7 @@ button:hover {
     margin-bottom: 50px;
 }
 
-#customerRegister, #storeRegister {
+#customerRegister, #storeRegister, #deliveryRegister {
     display: none;
     justify-content: center;
     align-items: center;
@@ -89,7 +89,7 @@ button:hover {
     padding-top: 42em;
 }
 
-#customerForm, #storeForm {
+#customerForm, #storeForm, #deliveryForm {
     display: flex;
     flex-direction: column;
     align-items: center;
