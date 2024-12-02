@@ -1,3 +1,65 @@
-#container{
-    margin-top: 5em;
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("../images/foodTaBrandBG.png");
+    background-attachment: fixed;
+    background-position: center;
+    background-size: contain;
+    font-family: Arial, sans-serif;
+}
+
+.wallet {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    top: 50px;
+}
+
+.ftSecLogo {
+    max-height: 100px;
+    display: block;
+    margin: 0 auto 20px auto; /* Centers logo and adds bottom margin */
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="number"],
+input[type="submit"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838;
 }
