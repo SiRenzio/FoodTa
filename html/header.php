@@ -37,7 +37,6 @@
                         echo "<a class='about' href='index.php?command=logout'>Logout</a>";
                     }
                 ?>
-                <a class="about" href="index.php?command=about">About Us</a>
             </div>
         </nav>
     </header>

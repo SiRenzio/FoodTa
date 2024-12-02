@@ -91,7 +91,7 @@
                 <input type="text" placeholder="Username" name="rider_username" class="formTxt" autocomplete="off" required>
                 <input type="text" placeholder="Password" name="rider_password" class="formTxt" autocomplete="off" required>
                 <img src="images/preview.png" id="previewImage2" alt="preview" width="300" height="300">
-                <label for="fileToUpload" class="custom-file-button">Upload Store Image</label>
+                <label for="fileToUpload" class="custom-file-button">Upload Profile Picture</label>
 				<input type="file" name="fileToUpload" id="fileToUpload" onchange="imagePreview2(event)" accept="image/*"></input>
 
                 <input type="submit" value="Sign up" class="formBtn">
