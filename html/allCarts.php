@@ -31,7 +31,7 @@
                         echo "</div>";
                         echo "<form action='index.php?command=updateQty&item_id=" . htmlspecialchars($ci->item_id) . "' method='post'>";
                             echo "<div class='quantityWrapper'>";
-                                echo "<input type='number' value='" . htmlspecialchars($ci->quantity) . "' class='quantity' name='qty'>";
+                                echo "<input type='number' min='0' value='" . htmlspecialchars($ci->quantity) . "' class='quantity' name='qty'>";
                             echo "</div>";
                             echo "<input type='submit' value='Update Qty' class='updateBtn'>";
                         echo "</form>";
