@@ -89,6 +89,10 @@ button:hover {
     padding-top: 42em;
 }
 
+#deliveryRegister {
+    padding-top: 38em;
+}
+
 #customerForm, #storeForm, #deliveryForm {
     display: flex;
     flex-direction: column;

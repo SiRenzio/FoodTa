@@ -15,6 +15,15 @@
             	preview.style.display = "block";
         	}
     	}	
+        function imagePreview2(event) {
+        	if(event.target.files.length > 0)
+        	{
+        		var src = URL.createObjectURL(event.target.files[0]);
+            	var preview2 = document.getElementById("previewImage2");
+            	preview2.src = src;      
+            	preview2.style.display = "block";
+        	}
+    	}	
     </script>
 </head>
 <body>
@@ -53,7 +62,6 @@
             <form action="index.php?command=checkRegister&&accType=store" method="POST" id="storeForm" enctype='multipart/form-data'>
                 <h1 id="formHeader">Ready to sell food?</h1>
 
-                <!-- <input type="text" placeholder="Full Name" name="fullname" class="formTxt" autocomplete="off" required> -->
                 <input type="text" placeholder="Store Name" name="storename" class="formTxt" autocomplete="off" required>
                 <input type="text" placeholder="Username" name="store_user" class="formTxt" autocomplete="off" required>
                 <input type="password" placeholder="Password" name="store_pass" class="formTxt" autocomplete="off" required>
@@ -75,6 +83,17 @@
             <form action="index.php?command=checkRegister&&accType=delivery" method="POST" id="deliveryForm" enctype='multipart/form-data'>
                 <h1 id="formHeader">Ready to deliver food?</h1>
                 
+                <input type="text" placeholder="Full Name" name="ridername" class="formTxt" autocomplete="off" required>
+                <input type="number" placeholder="Contact Number" name="rider_contact" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Vehicle Plate" name="riderplate" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Vehicle Name" name="ridervehicle" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Status" name="riderstatus" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Username" name="rider_username" class="formTxt" autocomplete="off" required>
+                <input type="text" placeholder="Password" name="rider_password" class="formTxt" autocomplete="off" required>
+                <img src="images/preview.png" id="previewImage2" alt="preview" width="300" height="300">
+                <label for="fileToUpload" class="custom-file-button">Upload Store Image</label>
+				<input type="file" name="fileToUpload" id="fileToUpload" onchange="imagePreview2(event)" accept="image/*"></input>
+
                 <input type="submit" value="Sign up" class="formBtn">
                 <button type="button" id="backBtn" class="backBtn" onclick="goBack()">Back</button>
             </form>
