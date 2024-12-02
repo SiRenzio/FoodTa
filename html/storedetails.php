@@ -1,3 +1,16 @@
+<?php
+    include_once('connector/connector.php');
+    $db = new Connector();
+
+    if($_POST){
+        $item_id = $_POST['item_id'];
+        $store_id = $_POST['store_id'];
+        $result = $db->addToCart($_SESSION['user_id'],$store_id ,$item_id);
+        echo "<script>alert('$result');</script>";
+        
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
