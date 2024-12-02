@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2024 at 06:04 AM
+-- Generation Time: Dec 02, 2024 at 04:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `transaction_id`, `customer_id`, `store_id`, `item_id`, `quantity`, `timestamp`, `status`) VALUES
-(13, NULL, 1, 1, 1, 1, '2024-12-02 01:59:45', 'UNORDERED');
+(13, NULL, 1, 1, 1, 3, '2024-12-02 13:57:57', 'PENDING'),
+(14, NULL, 1, 2, 6, 1, '2024-12-02 15:03:12', 'PENDING');
 
 -- --------------------------------------------------------
 
@@ -58,17 +59,16 @@ CREATE TABLE `customer` (
   `contact_no` varchar(11) NOT NULL,
   `username` varchar(20) NOT NULL,
   `user_password` varchar(50) NOT NULL,
-  `foodtawallet` float NOT NULL,
-  `gcash` float NOT NULL
+  `foodtawallet` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`customer_id`, `full_name`, `customer_address`, `contact_no`, `username`, `user_password`, `foodtawallet`, `gcash`) VALUES
-(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 703, 5),
-(2, 'Clarns Legaspi', 'Earth, Solar System, Milky Way', '9991234567', 'Clarns', 'oogabooga', 0, 0);
+INSERT INTO `customer` (`customer_id`, `full_name`, `customer_address`, `contact_no`, `username`, `user_password`, `foodtawallet`) VALUES
+(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 448),
+(2, 'Clarns Legaspi', 'Earth, Solar System, Milky Way', '9991234567', 'Clarns', 'oogabooga', 0);
 
 -- --------------------------------------------------------
 
@@ -85,15 +85,16 @@ CREATE TABLE `delivery` (
   `status` tinyint(1) NOT NULL,
   `rider_username` varchar(100) NOT NULL,
   `rider_password` varchar(100) NOT NULL,
-  `rider_img` text NOT NULL
+  `rider_img` text NOT NULL,
+  `rating` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `delivery`
 --
 
-INSERT INTO `delivery` (`deliveryPerson_id`, `full_name`, `contact_no`, `vehicle_plate`, `vehicle_name`, `status`, `rider_username`, `rider_password`, `rider_img`) VALUES
-(1, 'Jom Christian Novy Salinas', '09123123123', '123FKX', 'Honda N-Max', 1, 'hawk', 'tuah', '');
+INSERT INTO `delivery` (`deliveryPerson_id`, `full_name`, `contact_no`, `vehicle_plate`, `vehicle_name`, `status`, `rider_username`, `rider_password`, `rider_img`, `rating`) VALUES
+(1, 'Jom Christian Novy Salinas', '09123123123', '123FKX', 'Honda N-Max', 1, 'hawk', 'tuah', '', 0);
 
 -- --------------------------------------------------------
 
@@ -126,6 +127,30 @@ INSERT INTO `inventory` (`item_id`, `store_id`, `item_name`, `quantity`, `price`
 (8, 3, 'Filet-O-Fish', 21, 75, 'Food', 'uploads/Filet-O-Fish.jpg'),
 (9, 3, 'Crispy Chicken', 16, 65, 'Food', 'uploads/KFC Crispy Chicken.jpg'),
 (10, 3, 'Chicken Bowls', 17, 99, 'Food', 'uploads/KFC Famous Bowls.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order`
+--
+
+CREATE TABLE `order` (
+  `cart_id` int(11) NOT NULL,
+  `transaction_id` int(11) DEFAULT NULL,
+  `customer_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` varchar(9) NOT NULL DEFAULT 'UNORDERED'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`cart_id`, `transaction_id`, `customer_id`, `store_id`, `item_id`, `quantity`, `timestamp`, `status`) VALUES
+(13, NULL, 1, 1, 1, 2, '2024-12-02 05:26:33', 'UNORDERED');
 
 -- --------------------------------------------------------
 
@@ -210,6 +235,17 @@ ALTER TABLE `inventory`
   ADD KEY `store_id` (`store_id`);
 
 --
+-- Indexes for table `order`
+--
+ALTER TABLE `order`
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `user_id` (`customer_id`),
+  ADD KEY `item_id` (`item_id`),
+  ADD KEY `store_id` (`store_id`),
+  ADD KEY `order_id` (`transaction_id`),
+  ADD KEY `transaction_id` (`transaction_id`);
+
+--
 -- Indexes for table `store`
 --
 ALTER TABLE `store`
@@ -232,7 +268,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -251,6 +287,12 @@ ALTER TABLE `delivery`
 --
 ALTER TABLE `inventory`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `order`
+--
+ALTER TABLE `order`
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `store`

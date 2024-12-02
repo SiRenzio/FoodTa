@@ -419,13 +419,19 @@
                             }
                         }
                         $status = $this->db->checkPayment($_SESSION['foodtaWalletBal'], $_SESSION['subTotal'], $options);
-                        $this->db->pendingItems($_SESSION['user_id']);
-                        echo '<script> alert("'.$status.'"); window.location.href="index.php?command=findDriver&option="'.$options.'"";</script>';
+                        if ($status != "You have insufficient balance, please Cash-in"){
+                            $this->db->pendingItems($_SESSION['user_id']);
+                            echo '<script> alert("'.$status.'"); window.location.href="index.php?command=findDriver&option='.$options.'";</script>';
+                        }else {
+                            echo '<script> alert("'.$status.'"); window.location.href="index.php?command=wallet";</script>';
+                        }
                         break;  
                     case 'findDriver':
-
+                        $drivers = $this->db->findDriver();
                         include('html/finddriver.php');
                         break;
+                    case 'selectDriver':
+                        
                 default:
                     include('html/home_page.php');
                     break;
