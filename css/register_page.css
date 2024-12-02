@@ -9,7 +9,7 @@ html, body {
 body {
     background-image: url('../images/foodTaBrandBG.png');
     background-attachment: fixed;
-    background-size: cover;
+    background-size: contain;
 }
 
 #selection {
@@ -104,6 +104,25 @@ button:hover {
     font-size: 3em;
     color: white;
     margin-bottom: 12px;
+}
+
+.custom-file-button {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 1em 9em;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.custom-file-button:hover {
+    background-color: #b4b6b5;
+}
+#fileToUpload{
+    display: none;
 }
 
 .formTxt {
