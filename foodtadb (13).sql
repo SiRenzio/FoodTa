@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2024 at 12:28 PM
+-- Generation Time: Dec 01, 2024 at 02:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,21 +29,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
+  `transaction_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` varchar(9) NOT NULL DEFAULT 'UNORDERED'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`cart_id`, `customer_id`, `store_id`, `item_id`, `quantity`, `timestamp`) VALUES
-(8, 1, 1, 4, 1, '2024-11-29 14:36:26'),
-(9, 1, 2, 2, 1, '2024-11-30 02:30:36'),
-(11, 1, 1, 3, 2, '2024-11-30 11:08:03');
 
 -- --------------------------------------------------------
 
@@ -67,7 +60,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `full_name`, `customer_address`, `contact_no`, `username`, `user_password`, `foodtawallet`, `gcash`) VALUES
-(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 0, 5),
+(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 703, 5),
 (2, 'Clarns Legaspi', 'Earth, Solar System, Milky Way', '9991234567', 'Clarns', 'oogabooga', 0, 0);
 
 -- --------------------------------------------------------
@@ -122,28 +115,7 @@ INSERT INTO `inventory` (`item_id`, `store_id`, `item_name`, `quantity`, `price`
 (7, 2, 'Iced Matcha', 16, 89, 'Non-Coffee', 'uploads/Iced Matcha.jpg'),
 (8, 3, 'Filet-O-Fish', 21, 75, 'Food', 'uploads/Filet-O-Fish.jpg'),
 (9, 3, 'Crispy Chicken', 16, 65, 'Food', 'uploads/KFC Crispy Chicken.jpg'),
-(10, 3, 'Chicken Bowls', 17, 99, 'Food', 'uploads/KFC Famous Bowls.jpg'),
-(11, 3, 'Tae', 10, 69000, 'Soft', 'uploads/tae.jpg');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order`
---
-
-CREATE TABLE `order` (
-  `order_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
-  `deliveryPerson_id` int(11) NOT NULL,
-  `pickup_Time` time NOT NULL,
-  `dropoff_Time` time NOT NULL,
-  `date` date NOT NULL,
-  `subtotal` float NOT NULL,
-  `delivery_fee` float NOT NULL,
-  `discount` float NOT NULL,
-  `tax` float NOT NULL,
-  `net` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(10, 3, 'Chicken Bowls', 17, 99, 'Food', 'uploads/KFC Famous Bowls.jpg');
 
 -- --------------------------------------------------------
 
@@ -174,6 +146,25 @@ INSERT INTO `store` (`store_id`, `store_name`, `store_address`, `contact_no`, `o
 (2, 'Deja Brew Coffee', 'Brgy. Abong, Carles, Iloilo', '09696969696', '08:00:00', '22:00:00', 4, 'uploads/DejaBrew.jpg', 'The coffee that you had it before, but better.', 'dejaBrow', 'kape'),
 (3, 'Chikhin', 'Burgos St., La Paz, Iloilo City', '09981736521', '08:00:00', '22:00:00', 4, 'uploads/Chikhin.jpg', 'Crispilicious, Juicilicious korean fried chicken with a taste love.', 'chikhen', 'kfc');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction`
+--
+
+CREATE TABLE `transaction` (
+  `transaction_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `deliveryPerson_id` int(11) NOT NULL,
+  `pickup_Time` time NOT NULL,
+  `dropoff_Time` time NOT NULL,
+  `subtotal` float NOT NULL,
+  `delivery_fee` float NOT NULL,
+  `discount` float NOT NULL,
+  `tax` float NOT NULL,
+  `net` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -185,7 +176,9 @@ ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
   ADD KEY `user_id` (`customer_id`),
   ADD KEY `item_id` (`item_id`),
-  ADD KEY `store_id` (`store_id`);
+  ADD KEY `store_id` (`store_id`),
+  ADD KEY `order_id` (`transaction_id`),
+  ADD KEY `transaction_id` (`transaction_id`);
 
 --
 -- Indexes for table `customer`
@@ -207,19 +200,19 @@ ALTER TABLE `inventory`
   ADD KEY `store_id` (`store_id`);
 
 --
--- Indexes for table `order`
---
-ALTER TABLE `order`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `store_id` (`customer_id`,`deliveryPerson_id`),
-  ADD KEY `sales_summary_ibfk_3` (`customer_id`),
-  ADD KEY `sales_summary_ibfk_4` (`deliveryPerson_id`);
-
---
 -- Indexes for table `store`
 --
 ALTER TABLE `store`
   ADD PRIMARY KEY (`store_id`);
+
+--
+-- Indexes for table `transaction`
+--
+ALTER TABLE `transaction`
+  ADD PRIMARY KEY (`transaction_id`),
+  ADD KEY `store_id` (`customer_id`,`deliveryPerson_id`),
+  ADD KEY `sales_summary_ibfk_3` (`customer_id`),
+  ADD KEY `sales_summary_ibfk_4` (`deliveryPerson_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -250,33 +243,42 @@ ALTER TABLE `inventory`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `order`
---
-ALTER TABLE `order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `store`
 --
 ALTER TABLE `store`
   MODIFY `store_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `transaction`
+--
+ALTER TABLE `transaction`
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`transaction_id`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`),
+  ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
+  ADD CONSTRAINT `cart_ibfk_4` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`);
 
 --
 -- Constraints for table `inventory`
 --
 ALTER TABLE `inventory`
-  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`);
+  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `order`
+-- Constraints for table `transaction`
 --
-ALTER TABLE `order`
-  ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
-  ADD CONSTRAINT `order_ibfk_4` FOREIGN KEY (`deliveryPerson_id`) REFERENCES `delivery` (`deliveryPerson_id`);
+ALTER TABLE `transaction`
+  ADD CONSTRAINT `transaction_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
+  ADD CONSTRAINT `transaction_ibfk_4` FOREIGN KEY (`deliveryPerson_id`) REFERENCES `delivery` (`deliveryPerson_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

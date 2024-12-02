@@ -348,8 +348,10 @@
             }
 
         }
-        function checkPayment($gcash, $card, $subtotal){
-            
+        function checkPayment($foodtaWallet, $subtotal){
+            if ($foodtaWallet >= $subtotal){
+                
+            }
         }
         function addItems($store_id, $item_name, $quantity, $price, $category, $imagePath)
         {
