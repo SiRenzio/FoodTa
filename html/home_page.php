@@ -14,7 +14,7 @@
 <body>
     <div id="container">
         <section class="home" id="home">
-            <image class="ktHomeLogo" src="images/deliveryLogo.png"></image>
+            <image class="ktHomeLogo" src="images/foodTaSectionLogo(Green).png"></image>
             <div class="brandname">
                 <h1 class="mainTitle">FOOD TA!</h1>
                 <h3 class="subTitle">Delivery</h3>

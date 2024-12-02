@@ -101,6 +101,9 @@ body {
 }
 
 .details-section h2 {
+    font-family: "Poppins";
+    font-weight: 720;
+    font-size: 1.5rem;
     margin-bottom: 5px;
 }
 

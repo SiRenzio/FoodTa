@@ -318,55 +318,6 @@
                     'total' => $total
                 ];  
             }
-            
-
-        function checkCart($store_id, $customer_id) { // Single store cart
-            $data = array();
-            $total = 0; // Initialize total price
-            $sql = "
-                SELECT 
-                    store.store_name, 
-                    inventory.item_name, 
-                    inventory.item_img, 
-                    inventory.price, 
-                    cart.quantity, 
-                    (cart.quantity * inventory.price) AS subtotal 
-                FROM 
-                    cart 
-                JOIN 
-                    store 
-                ON 
-                    cart.store_id = store.store_id 
-                JOIN 
-                    inventory 
-                ON 
-                    cart.item_id = inventory.item_id 
-                WHERE 
-                    cart.store_id = ? AND cart.customer_id = ?
-            ";
-            
-            $stmt = $this->db->prepare($sql);
-            if (!$stmt) {
-                return "Error in preparing query: " . $this->db->error;
-            }
-        
-            $stmt->bind_param('ii', $store_id, $customer_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-        
-            while ($row = $result->fetch_object()) {
-                $data[] = $row;
-                $total += $row->subtotal; // Accumulate total price
-            }
-        
-            $stmt->close();
-        
-            // Return data and total
-            return [
-                'items' => $data,
-                'total' => $total
-            ]; 
-        }
         
         function updateQuantity($customer_id, $item_id, $qty) {
             if ($qty != 0) {
@@ -402,6 +353,7 @@
             
             return $amt;
         }
+
         function cashIn($amt, $oldAmt, $customer_id){
             $newAmt = $oldAmt + $amt;
             $sql = "UPDATE customer SET foodtawallet = ? WHERE customer_id = ?";
@@ -416,14 +368,63 @@
             }
 
         }
-        function checkPayment($foodtaWallet, $subtotal){
-            if ($foodtaWallet >= $subtotal){
-                return "Sufficient Balance! Let's find a driver!";
+
+        function checkPayment($foodtaWallet, $subtotal, $options){
+            $status = "Payment cannot be process";
+            if ($foodtaWallet >= $subtotal && $options == 4) {
+                $status ="Sufficient Balance! Let's find a driver!";
             }
+            else if ($options == 1){
+                $status = "Let's find a driver!";
+            }
+            else if ($foodtaWallet <= $subtotal){
+                $status = "You have insufficient balance, please Cash-in";
+            }
+            else if ($options == 2 || $options == 3){
+                $status = "Sufficient Balance! Let's find a driver!";
+            } 
             else {
-                return "You have insufficient balance, please Cash-in";
+                $status = $status;
             }
+            return $status;
         }
+
+        function payOrder($subtotal, $oldAmt, $customer_id){
+            $newAmt = $oldAmt - $subtotal;
+            $sql = "UPDATE customer SET foodtawallet = ? WHERE customer_id = ?";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bind_param('di', $newAmt, $customer_id);
+            
+            if ($stmt->execute()){
+                return 'Cash in succesful';
+            } else {
+                return 'Cash in error';
+            }
+
+        }
+        function pendingItems($customer_id){
+            $sql = "UPDATE cart SET status = 'PENDING' WHERE customer_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        function findDriver(){
+            $availableDrivers = array();
+            $sql = "SELECT * FROM delivery WHERE status = 1";
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_object()) {
+                $availableDrivers[] = $row;
+            }
+            return $availableDrivers;
+        }
+
         function addItems($store_id, $item_name, $quantity, $price, $category, $imagePath)
         {
             $sql = "INSERT INTO inventory(store_id, item_name, quantity, price, category, item_img) VALUES (?, ?, ?, ?, ?, ?)";

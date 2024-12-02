@@ -51,6 +51,8 @@ body {
 }
 
 .rowHeaderTexts {
+    font-family: "Roboto Slab";
+    font-size: 1.4rem;
     padding: 0.5em 0;
     font-weight: bold;
 }
@@ -66,6 +68,8 @@ body {
 
 .cartItemName,
 .cartItemTotal {
+    font-family: "Roboto Slab";
+    font-weight: 700;
     text-align: center;
 }
 
@@ -95,7 +99,7 @@ body {
 
 .updateBtn,
 .checkoutBtn {
-    padding: 0.6em 1.2em;
+    padding: 0.8em 1.5em;
     background-color: #006400;
     color: white;
     border: none;
@@ -110,6 +114,10 @@ body {
     background-color: #004d00;
     transform: scale(1.05);
 }
+.checkoutBtn {
+    font-size: 1.2em;
+    padding: 0.8em 4em;
+}
 
 .divider {
     border: 0;
@@ -121,6 +129,10 @@ body {
     margin-top: 2em;
     text-align: center;
     font-weight: bold;
+}
+.cartFooter p{
+    font-size: 1.4rem;
+    font-family: "Poppins";
 }
 
 /* Back Button */
