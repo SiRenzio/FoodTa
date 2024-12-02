@@ -53,6 +53,7 @@ body {
     gap: 30px;
     padding: 20px;
     height: auto;
+    margin-top: 35px;
 }
 
 .ftSecLogo {
@@ -125,58 +126,3 @@ body {
     color: white;
     cursor: pointer;
 }
-/*Back Button*/
-.backBTN {
-    position: absolute;
-    left: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-family: 'Roboto Slab', sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: #ffffff;
-    background-color: #003c25;
-    border-radius: 30px;
-    padding: 5px 15px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.backBTN img {
-    width: 35px;
-    height: 35px;
-}
-
-.backBTN:hover {
-    transform: scale(1.05);
-    opacity: 0.8;
-}
-
-/*Cart Button*/
-.addToCartBTN {
-    position: absolute;
-    top: 80px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    color: #ffffff;
-    background-color: #003c25;
-    border-radius: 18px;
-    padding: 5px 25px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.addToCartBTN img {
-    width: 35px;
-    height: 35px;
-}
-
-.addToCartBTN:hover {
-    transform: scale(1.05);
-    opacity: 0.8;
-}
-

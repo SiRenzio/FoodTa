@@ -8,9 +8,11 @@
 </head>
 <body>
     <section class="allCart">
-        <a class="backBTN" href="index.php?command=order">Back
-            <img src="images/backButton.png" alt="Back Icon">
-        </a>
+        <?php 
+            $backLink = "index.php?command=order";
+            $position = 'right';
+            include 'backBTN.php';
+        ?>
         <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <div id="container">
             <?php

@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="css/wallet.css">
 </head>
 <body>
+    <?php 
+        $backLink = "index.php?command=order";
+        $position = 'right';
+        include 'backBTN.php';
+    ?>
     <section class="wallet">
     <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <div id="container">

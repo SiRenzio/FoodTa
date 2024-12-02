@@ -17,10 +17,12 @@
     <link rel="stylesheet" href="css/storedetails.css">
 </head>
 <body>
+    <?php 
+        $backLink = "index.php?command=order";
+        $position = 'right';
+        include 'backBTN.php';
+    ?>
     <section class="storeProducts">
-        <a class="backBTN" href="index.php?command=order">Back
-            <img src="images/backButton.png" alt="Back Icon">
-        </a>
         <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <?php 
         if ($storeName && count($storeName) > 0) {
