@@ -116,6 +116,7 @@
                     {
                         echo "<script> alert('$check'); window.location.href='index.php?command=update';</script>";
                     }
+                    break;
 
                 case 'delete':
                     $store_id = $_SESSION['user_id'];
@@ -130,6 +131,7 @@
                     $imagePath = $this->db->getExistingItemImage($item_id);
                     $result = $this->db->deleteItems($item_id, $imagePath, $store_id);
                     echo "<script> alert ('$result') </script>";
+                    break;
                 //------------------------end-------------------------------//
 
                 case 'order':
@@ -204,8 +206,53 @@
                     break;
 
                 case 'deliveryRider':
-                    include('html/RiderInterface/rider.php');
+                    if($_SESSION['account_type'] == "delivery"){
+                        $details = $this->db->getDeliveryInfo($_SESSION['user_id']);
+                        include('html/RiderInterface/rider.php');
+                    }
                     break;
+
+                case 'editProfile':
+                    $details = $this->db->getDeliveryInfo($_SESSION['user_id']);
+                    include('html/RiderInterface/editProfile.php');
+                    break;
+
+                case 'updateProfile':
+                    case 'updateItems':
+                        $rider_id = $_SESSION['user_id'];
+                        $user = $_REQUEST['rider_user'];
+    
+                        if(!empty($_FILES["fileToUpload"]["name"]))
+                        {
+                            $image = basename($_FILES["fileToUpload"]["name"]);
+                            $imagePath = "uploads/" . $image;
+                            $imageFileType = strtolower(pathinfo($image,PATHINFO_EXTENSION));
+                            $imageSize = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    
+                            $check = $this->db->checkImage($imagePath, $imageFileType, $imageSize);
+    
+                            if($imagePath != $this->db->getExistingRiderProfile($rider_id))
+                            {
+                                $existingImage = $this->db->getExistingRiderProfile($rider_id);
+                                unlink($existingImage);
+                            }
+                        }
+                        else
+                        {
+                            $imagePath = $this->db->getExistingRiderProfile($rider_id);
+                            $check = "OK";
+                        }
+    
+                        if($check == "OK")
+                        {
+                            $result = $this->db->updateProfile($rider_id, $user, $imagePath);
+                            echo "<script> alert('$result'); window.location.href='index.php?command=deliveryRider'; </script>";
+                        }
+                        else
+                        {
+                            echo "<script> alert('$check'); window.location.href='index.php?command=deliveryRider';</script>";
+                        }
+                        break;
 
                 case 'storeDetails':
                     $store_id = $_GET['store_id'];
@@ -267,7 +314,7 @@
                             if($check == "OK"){
                                 if($result = $this->db->createStoreAccount($storeName, $storeUsername, $storePassword, $storeLocation, $storeDescription, $storeRating, $storeOpeningHr, $storeClosingHr, $storeContact
                                 , $imagePath)){
-                                    echo "<script> alert('Account Created Successfully'); window.location.href='index.php?command=order' </script>";
+                                    echo "<script> alert('Account Created Successfully'); window.location.href='index.php?command=update' </script>";
                                 }
                                 else{
                                     echo "<script> alert('Wrong Input. Please Try Again'); window.location.href='index.php?command=checkRegister&account_type=store </script>";
@@ -297,7 +344,7 @@
                             $check = $this->db->checkImage($imagePath, $imageFileType, $imageSize);
                             if($check == "OK"){
                                 if($result = $this->db->createDeliveryAccount($ridername, $rider_contact, $riderplate, $ridervehicle, $riderstatus, $rider_user, $rider_pass, $imagePath)){
-                                    echo "<script> alert('Account Created Successfully'); window.location.href='index.php?command=order' </script>";
+                                    echo "<script> alert('Account Created Successfully'); window.location.href='index.php?command=deliveryRider' </script>";
                                 }
                                 else{
                                     echo "<script> alert('Wrong Input. Please Try Again'); window.location.href='index.php?command=checkRegister&account_type=delivery </script>";
@@ -308,6 +355,7 @@
                             }
                     }
                     break;
+
                     case 'cart':
                         if ($_REQUEST['cartType'] == 'allCart'){
                             $cartData = $this->db->checkAllCart($_SESSION['user_id']);
