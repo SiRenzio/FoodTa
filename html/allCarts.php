@@ -1,31 +1,47 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="css/cart.css">
-    </head>
-    <body>
-        <div id = container>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="css/allCart.css">
+</head>
+<body>
+    <section class="allCart">
+        <a class="backBTN" href="index.php?command=order">Back
+            <img src="images/backButton.png" alt="Back Icon">
+        </a>
+        <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
+        <div id="container">
             <?php
-                    echo "<div id = rowHeader>";
-                        echo "<h3 class = rowHeaderTexts>Name</h3>";
-                        echo "<h3 class = rowHeaderTexts></h3>";
-                        echo "<h3 class = rowHeaderTexts>Quantity</h3>";
-                        echo "<h3 class = rowHeaderTexts>Total</h3>";
-                    echo "</div>";
-                foreach($cartItems as $ci){
-                    echo "<div class = 'cartBox'>";
-                        echo $ci->item_name;
-                        echo "<img src='data:image/jpeg;base64," . base64_encode($ci->item_img). "' class = 'item_img'>";
-                        echo "<form action = 'index.php?command=updateQty&item_id=$ci->item_id' method = 'post'>";
-                            echo "<input type='text' value='$ci->quantity' class = 'quantity' name = 'qty' class = 'qty'>";
-                            echo "<input type='submit' value='Update Qty.'>";
+                echo "<div id='rowHeader'>";
+                    echo "<h3 class='rowHeaderTexts'>Name</h3>";
+                    echo "<h3 class='rowHeaderTexts'>Image</h3>";
+                    echo "<h3 class='rowHeaderTexts'>Quantity</h3>";
+                    echo "<h3 class='rowHeaderTexts'>Total</h3>";
+                echo "</div>";
+
+                foreach ($cartItems as $ci) {
+                    echo "<div class='cartBox'>";
+                        echo "<div class='cartItemName'>" . htmlspecialchars($ci->item_name) . "</div>";
+                        echo "<div class='cartItemImage'>";
+                            echo "<img src='" . htmlspecialchars($ci->item_img) . "' class='item_img' alt='Item Image'>";
+                        echo "</div>";
+                        echo "<form action='index.php?command=updateQty&item_id=" . htmlspecialchars($ci->item_id) . "' method='post'>";
+                            echo "<div class='quantityWrapper'>";
+                                echo "<input type='number' value='" . htmlspecialchars($ci->quantity) . "' class='quantity' name='qty'>";
+                            echo "</div>";
+                            echo "<input type='submit' value='Update Qty' class='updateBtn'>";
                         echo "</form>";
-                        echo $ci->subtotal;
+                        echo "<div class='cartItemTotal'>" . htmlspecialchars($ci->subtotal) . "</div>";
                     echo "</div>";
+                    echo "<hr class='divider'>";
                 }
-                echo "<form action = 'index.php?command=payment method = 'post'>";
-                    echo "Subtotal: $totalPrice";
-                    echo "<input type ='hidden' value='$totalPrice' name = 'subTotal'>";
-                echo "<input type='submit' value='Check Out'>";
+                echo "<div class='cartFooter'>";
+                    echo "<form action = 'index.php?command=payment method = 'post'>";
+                    echo "<p>Subtotal: " . htmlspecialchars($totalPrice) . "</p>";
+                    echo "<button type = 'submit' onclick=\"location.href='checkout.php'\" class='checkoutBtn'>Check Out</button>";
+                echo "</div>";
 
                 //TODO JV:
                 // 1. Islan ang allCarts, kayuhon. Kag ma add sng Button sa order page nga ga link sa allCarts
@@ -39,5 +55,6 @@
                 // Understand logic of code gid.
             ?>
         </div>
-    </body>
+    </section>
+</body>
 </html>
