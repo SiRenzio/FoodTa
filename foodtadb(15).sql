@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2024 at 03:12 AM
+-- Generation Time: Dec 02, 2024 at 06:04 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -82,15 +82,18 @@ CREATE TABLE `delivery` (
   `contact_no` varchar(11) NOT NULL,
   `vehicle_plate` varchar(6) NOT NULL,
   `vehicle_name` varchar(40) NOT NULL,
-  `status` tinyint(1) NOT NULL
+  `status` tinyint(1) NOT NULL,
+  `rider_username` varchar(100) NOT NULL,
+  `rider_password` varchar(100) NOT NULL,
+  `rider_img` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `delivery`
 --
 
-INSERT INTO `delivery` (`deliveryPerson_id`, `full_name`, `contact_no`, `vehicle_plate`, `vehicle_name`, `status`) VALUES
-(1, 'Jom Christian Novy Salinas', '09123123123', '123FKX', 'Honda N-Max', 1);
+INSERT INTO `delivery` (`deliveryPerson_id`, `full_name`, `contact_no`, `vehicle_plate`, `vehicle_name`, `status`, `rider_username`, `rider_password`, `rider_img`) VALUES
+(1, 'Jom Christian Novy Salinas', '09123123123', '123FKX', 'Honda N-Max', 1, 'hawk', 'tuah', '');
 
 -- --------------------------------------------------------
 
