@@ -30,6 +30,9 @@
             <button id="storeBtn" onclick="displayStoreForm()">
                 <img src="images/sell.png" alt="Sell Food" class="btnImg">Sell food!
             </button>
+            <button id="deliveryBtn" onclick="displayDeliveryForm()">
+                <img src="images/sell.png" alt="Deliver Food" class="btnImg">Deliver food!
+            </button>
         </div>
         <div id="customerRegister">
             <form action="index.php?command=checkRegister&&accType=customer" method="POST" id="customerForm">
@@ -63,6 +66,14 @@
                 <img src="images/preview.png" id="previewImage" alt="preview" width="300" height="300">
                 <label for="fileToUpload" class="custom-file-button">Upload Store Image</label>
 				<input type="file" name="fileToUpload" id="fileToUpload" onchange="imagePreview(event)" accept="image/*"></input>
+                
+                <input type="submit" value="Sign up" class="formBtn">
+                <button type="button" id="backBtn" class="backBtn" onclick="goBack()">Back</button>
+            </form>
+        </div>
+        <div id="deliveryRegister">
+            <form action="index.php?command=checkRegister&&accType=delivery" method="POST" id="deliveryForm" enctype='multipart/form-data'>
+                <h1 id="formHeader">Ready to deliver food?</h1>
                 
                 <input type="submit" value="Sign up" class="formBtn">
                 <button type="button" id="backBtn" class="backBtn" onclick="goBack()">Back</button>

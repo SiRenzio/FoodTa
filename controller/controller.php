@@ -150,6 +150,10 @@
                             include('html/header.php');
                             echo "<script> window.location.href='index.php?command=update' </script>";
                         }
+                        else if($accType === "delivery"){
+                            include('html/header.php');
+                            echo "<script> window.location.href='index.php?command=deliveryRider' </script>";
+                        }
                     }
                     //Proceed to Order page
                     
@@ -180,6 +184,10 @@
                                 include('html/header.php');
                                 echo "<script> window.location.href='index.php?command=update' </script>";
                             }
+                            else if($accType === "delivery"){
+                                include('html/header.php');
+                                echo "<script> window.location.href='index.php?command=deliveryRider' </script>";
+                            }
                         }
                         //Proceed to Order page
                         
@@ -193,6 +201,10 @@
                     $accType = null;
                     include('html/home_page.php');
                     include('html/header.php');
+                    break;
+
+                case 'deliveryRider':
+                    include('html/RiderInterface/rider.php');
                     break;
 
                 case 'storeDetails':

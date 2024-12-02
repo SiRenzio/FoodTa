@@ -1,6 +1,7 @@
 const storeForm = document.getElementById('storeRegister');
 const buttons = document.getElementsByTagName('button');
 const customerForm = document.getElementById('customerRegister');
+const deliveryForm = document.getElementById('deliveryRegister');
 const bckButton = document.getElementById('backBtn');
 
 function displayStoreForm(){
@@ -20,9 +21,18 @@ function displayCustomerForm(){
     }
 }
 
+function displayDeliveryForm(){
+    deliveryForm.style.display = 'flex';
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = "none";
+        bckButton[i].style.display = "block";
+    }
+}
+
 function goBack() {
     customerForm.style.display = 'none';
     storeForm.style.display = 'none';
+    deliveryForm.style.display = 'none';
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].style.display = "flex";
     }

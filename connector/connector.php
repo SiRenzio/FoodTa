@@ -141,6 +141,25 @@
                     $stmt2->close();
                 }
             }
+
+            $sql3 = "SELECT deliveryPerson_id FROM delivery WHERE rider_username = ? AND rider_password = ?";
+            $stmt3 = $this->db->prepare($sql3);
+            $stmt3->bind_param('ss', $username, $password);
+            
+            if($stmt3->execute()){
+                $stmt3->store_result();
+                $stmt3->bind_result($delivery);
+                $stmt3->fetch();
+
+                if($delivery){
+                    $_SESSION['logState'] = true;
+                    $_SESSION['user_id'] = $delivery;
+                    $_SESSION['account_type'] = "delivery";
+                    $accType = 'delivery';
+                    return $accType;
+                    $stmt3->close();
+                }
+            }
             
             if ($accType == null){
                 echo "<script> alert('Incorrect Username or Password'); window.location.href='index.php?command=order' </script>";
