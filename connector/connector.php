@@ -369,7 +369,10 @@
         }
         function checkPayment($foodtaWallet, $subtotal){
             if ($foodtaWallet >= $subtotal){
-                
+                return "Sufficient Balance! Let's find a driver!";
+            }
+            else {
+                return "You have insufficient balance, please Cash-in";
             }
         }
         function addItems($store_id, $item_name, $quantity, $price, $category, $imagePath)
