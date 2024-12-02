@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-image: url("../images/foodTaBrandBG.png");
+    background-attachment: fixed;
+    background-position: center;
+    background-size: contain;
+    height: auto;
+    min-height: 100vh;
+}
+
+#container {
+    background-color: none;
+    padding: 2em;
+    border-radius: 10px;
+    width: 80%;
+    text-align: center;
+}
+
+.ftSecLogo {
+    max-height: 100px;
+    display: block;
+    margin: 0 auto; 
+}
+
+.allCart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 4em;
+    position: relative;
+}
+
+#rowHeader {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    color: rgb(0, 0, 0);
+    padding: 1em 0;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
+    gap: 2em;
+    align-items: center;
+}
+
+.rowHeaderTexts {
+    padding: 0.5em 0;
+    font-weight: bold;
+}
+
+.cartBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    padding: 1em 0;
+    border-bottom: 1px solid #ddd;
+    gap: 2em;
+}
+
+.cartItemName,
+.cartItemTotal {
+    text-align: center;
+}
+
+.cartItemImage {
+    display: flex;
+    justify-content: center;
+}
+
+.item_img {
+    height: 100px;
+    border-radius: 4px;
+}
+
+.quantityWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quantity {
+    width: 100%;
+    padding: 0.5em;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.updateBtn,
+.checkoutBtn {
+    padding: 0.6em 1.2em;
+    background-color: #006400;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1em;
+}
+
+.updateBtn:hover,
+.checkoutBtn:hover {
+    background-color: #004d00;
+    transform: scale(1.05);
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 1.5em 0;
+}
+
+.cartFooter {
+    margin-top: 2em;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Back Button */
+.backBTN {
+    position: absolute;
+    right: 20px;
+    top: 80px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-family: 'Roboto Slab', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #ffffff;
+    background-color: #003c25;
+    border-radius: 30px;
+    padding: 5px 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.backBTN img {
+    width: 35px;
+    height: 35px;
+}
+
+.backBTN:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
