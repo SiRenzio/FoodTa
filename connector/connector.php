@@ -56,6 +56,43 @@
             return $items;
         }
 
+        function getDeliveryInfo($user_id){
+            $data = array();
+
+            $sql = mysqli_query($this->db, "SELECT * FROM delivery WHERE deliveryPerson_id = $user_id");
+
+            while($row = mysqli_fetch_object($sql)){
+                $data[] = $row;
+            }
+            return $data;
+        }
+
+        function getExistingRiderProfile($user_id){
+            $sql = "SELECT rider_img FROM delivery WHERE deliveryPerson_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+		    $stmt->bind_result($imagePath);
+		    $stmt->fetch();
+		    $stmt->close();
+		    return $imagePath;
+        }
+
+        function updateProfile($rider_id, $user, $imagePath){
+            $sql = "UPDATE delivery SET rider_username = ?, rider_img = ? WHERE deliveryPerson_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("ssi", $user, $imagePath, $rider_id);
+            if($stmt->execute())
+            {
+                return "Profile Updated Successfully";
+            }
+            else
+            {
+                return "Error";
+            }
+            $stmt->close();
+        }
+
         function addToCart($user_id, $store_id, $item_id) {
             $checkSql = "SELECT quantity FROM cart WHERE customer_id = ? AND store_id = ? AND item_id = ?";
             $checkStmt = $this->db->prepare($checkSql);
