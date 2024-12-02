@@ -1,21 +1,3 @@
-<?php
-    include_once('connector/connector.php');
-    $db = new Connector();
-
-    if($_POST){
-        $item_id = $_POST['item_id'];
-        $store_id = $_POST['store_id'];
-        $result = $db->addToCart($_SESSION['user_id'],$store_id ,$item_id);
-        echo "<script>alert('$result');</script>";
-        
-    }
-    if ($items > 0){
-        echo "<a class='addToCartBTN' href='index.php?command=cart&store_id=".$items[0]->store_id."'>";
-            echo "<img src='images/cart.png' alt='Add to Cart'>";
-        echo "</a>";
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

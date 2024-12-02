@@ -192,6 +192,18 @@
             $stmt->close();
         }
 
+        function createDeliveryAccount($ridername, $rider_contact, $riderplate, $ridervehicle, $riderstatus, $rider_user, $rider_pass, $imagePath){
+            $sql = "INSERT INTO delivery(full_name, contact_no, vehicle_plate, vehicle_name, status, rider_username, rider_password, rider_img) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("ssssssss", $ridername, $rider_contact, $riderplate, $ridervehicle, $riderstatus, $rider_user, $rider_pass, $imagePath);
+            
+            if($stmt->execute()){
+                return true;
+            }
+
+            $stmt->close();
+        }
+
         function checkImage($image, $imageFileType, $imageSize){
             $status = 1;
             $errMessage = "";

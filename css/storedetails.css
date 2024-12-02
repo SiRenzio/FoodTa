@@ -100,8 +100,10 @@ body {
 }
 
 .product-details p {
-    font-size: 1.4rem;
-    font-family: 'Poppins';
+    font-size: 1.2rem;
+    font-family: 'Open Sans';
+    font-weight: 700;
+    color: #5f6261;
 }
 
 .product-details .quantity {

@@ -2,6 +2,9 @@
     if(!isset($_SESSION['logState'])){
         $_SESSION['logState'] = false;
     }
+    if(!isset($_SESSION['account_type'])){
+        $_SESSION['account_type'] = "";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -17,8 +20,15 @@
             <img class="brand_logo" src="images/foodTaSectionLogo(White).png" alt="Deja Brew Logo">
             <div class="header_button">
                 <a class="home" href="index.php?command=home">Home</a>
-                <a class="order" href="index.php?command=order">Order</a>
+                <!-- <a class="order" href="index.php?command=order">Order</a> -->
                 <?php
+                    if($_SESSION['account_type'] == "store"){
+                        echo "<a class='about' href='index.php?command=order'>Store</a>";
+                    }
+                    else{
+                        echo "<a class='about' href='index.php?command=order'>Order</a>";
+                    }
+
                     if($_SESSION['logState'] === false){
                         echo "<a class='about' href='index.php?command=order'>Store</a>";
                         echo "<a class='about' href='index.php?command=register'>Register</a>";
@@ -27,7 +37,6 @@
                         echo "<a class='about' href='index.php?command=logout'>Logout</a>";
                     }
                 ?>
-                <a class="about" href="index.php?command=about">About Us</a>
             </div>
         </nav>
     </header>

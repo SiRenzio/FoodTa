@@ -279,6 +279,33 @@
                             // $credential = 'store_name';
                             // $credential_value = $_POST['storename'];
                             break;
+
+                        case 'delivery':
+                            $ridername = $_REQUEST['ridername'];
+                            $rider_contact = $_REQUEST['rider_contact'];
+                            $riderplate = $_REQUEST['riderplate'];
+                            $ridervehicle = $_REQUEST['ridervehicle'];
+                            $riderstatus = $_REQUEST['riderstatus'];
+                            $rider_user = $_REQUEST['rider_username'];
+                            $rider_pass = $_REQUEST['rider_password'];
+
+                            $image = basename($_FILES["fileToUpload"]["name"]);
+                            $imagePath = "uploads/" . $image;
+                            $imageFileType = strtolower(pathinfo($image,PATHINFO_EXTENSION));
+                            $imageSize = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+
+                            $check = $this->db->checkImage($imagePath, $imageFileType, $imageSize);
+                            if($check == "OK"){
+                                if($result = $this->db->createDeliveryAccount($ridername, $rider_contact, $riderplate, $ridervehicle, $riderstatus, $rider_user, $rider_pass, $imagePath)){
+                                    echo "<script> alert('Account Created Successfully'); window.location.href='index.php?command=order' </script>";
+                                }
+                                else{
+                                    echo "<script> alert('Wrong Input. Please Try Again'); window.location.href='index.php?command=checkRegister&account_type=delivery </script>";
+                                }
+                            }
+                            else{
+                                echo "<script> alert('Error'); window.location.href='index.php?command=checkRegister&account_type=delivery </script>";
+                            }
                     }
                     break;
                     case 'cart':

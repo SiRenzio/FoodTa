@@ -77,7 +77,7 @@ section{
 }
 
 .ktHomeLogo {
-    max-height: 140px;
+    max-height: 120px;
     margin-bottom: -30px;
 }
 
@@ -86,16 +86,14 @@ section{
 }
 .mainTitle{
     font-family: 'Poppins ExtraBold';
-    font-style: italic;
-    font-size: 4rem;
-    color: #ffffef;
+    font-size: 3.8rem;
+    color: #003c25;
     margin-bottom: -30px;
 }
 .subTitle{
     font-family: 'Poppins';
-    font-style: italic;
     font-size: 1.8rem;
-    color: #ffffef;
+    color: #003c25;
 }
 
 

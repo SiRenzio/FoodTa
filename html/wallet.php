@@ -15,7 +15,7 @@
                 echo "<p>Current Amount: P" . htmlspecialchars($balance->foodtawallet) . "</p>";
             ?>
             <form action="index.php?command=cashIn" method="post">
-                <input type="number" name="amt" placeholder="Enter amount" required>
+                <input type="number" name="amt" min="0" placeholder="Enter amount" required>
                 <input type="submit" value="Cash In">
             </form>
         </div>
