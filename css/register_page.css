@@ -110,6 +110,13 @@ button:hover {
     margin-bottom: 12px;
 }
 
+#preview-image2 {
+    width: 336px;
+    height: 436px;
+    object-fit: cover;
+    margin: 10px 0;
+    display: block;
+}
 .custom-file-button {
     background-color: #ffffff;
     color: rgb(0, 0, 0);
@@ -125,7 +132,7 @@ button:hover {
 .custom-file-button:hover {
     background-color: #b4b6b5;
 }
-#fileToUpload{
+input[type="file"] {
     display: none;
 }
 

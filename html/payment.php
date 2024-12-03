@@ -18,9 +18,15 @@
         <div id="container">
             <div class="payment-info">
                 <?php
+                    $shippingFee = 39;
                     $_SESSION['subTotal'] = $subTotal;  
                     $_SESSION['foodtaWalletBal'] = $balance->foodtawallet; 
-                    echo "<div class='payment-line'><span>Payment</span><span class='line'></span>$subTotal</span></div>";
+
+                    $total = $subTotal + $shippingFee;
+                    echo "<div class='payment-line'><span class='total'>Sub-total</span><span class='line'></span>$subTotal</span></div>";
+                    echo "<div class='payment-line'><span>Shipping Fee</span><span class='line'></span>$shippingFee</span></div>";
+                    echo "<hr>";
+                    echo "<div class='payment-line'><span class='total'>Total</span><span class='line'></span>$total</span></div>";
                     echo "<div class='payment-line'><span>Balance</span><span class='line'></span>$balance->foodtawallet</span></div>";
                 ?>
             </div>

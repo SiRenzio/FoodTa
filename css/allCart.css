@@ -7,19 +7,20 @@
 body {
     font-family: Arial, sans-serif;
     color: #333;
+    background-color: transparent;
+    min-height: 100vh;
+
     background-image: url("../images/foodTaBrandBG.png");
     background-attachment: fixed;
     background-position: center;
     background-size: contain;
-    height: auto;
-    min-height: 100vh;
 }
 
 #container {
     background-color: none;
-    padding: 2em;
+    padding: 2em 2em;
     border-radius: 10px;
-    width: 80%;
+    width: 75%;
     text-align: center;
 }
 
