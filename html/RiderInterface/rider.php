@@ -9,7 +9,7 @@
 <body>
     <section class="container">
         <div id="order">
-            <h1>0 delivery orders found!</h1>
+            <h1><?php echo $orderCount ?> delivery orders found!</h1>
             <a href="">View Details ></a>
         </div>
         <div id="profile">

@@ -500,6 +500,10 @@
             return $availableDrivers;
         }
 
+        function findOrders(){
+            
+        }
+
         function addItems($store_id, $item_name, $quantity, $price, $category, $imagePath)
         {
             $sql = "INSERT INTO inventory(store_id, item_name, quantity, price, category, item_img) VALUES (?, ?, ?, ?, ?, ?)";
