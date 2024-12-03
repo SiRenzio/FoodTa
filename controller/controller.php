@@ -382,8 +382,14 @@
                         include('html/wallet.php');
                         break;
                     case 'payment':
-                        $balance = $this->db->checkBalance($_SESSION['user_id']);
-                        $subTotal = $_REQUEST['subTotal'];
+                        if ($_REQUEST['revertStatus'] != 'true'){
+                            $balance = $this->db->checkBalance($_SESSION['user_id']);
+                            $subTotal = $_REQUEST['subTotal'];
+                        } else {
+                            $balance = $this->db->checkBalance($_SESSION['user_id']);
+                            $subTotal = $_REQUEST['subTotal'];
+                            $this->db->unorderItems($_SESSION['user_id']);
+                        }
                         include('html/payment.php');
                         break;
                     case 'processPayment':
@@ -415,7 +421,7 @@
                         if ($status != "You have insufficient balance, please Cash-in"){
                             $this->db->pendingItems($_SESSION['user_id']);
                             echo '<script> alert("'.$status.'"); window.location.href="index.php?command=findDriver&option='.$options.'";</script>';
-                        }else {
+                        } else {
                             echo '<script> alert("'.$status.'"); window.location.href="index.php?command=wallet";</script>';
                         }
                         break;  

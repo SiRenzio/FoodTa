@@ -6,6 +6,7 @@
 <body>
     <div id = "container" style="margin-top: 4em;">
         <?php
+        echo "<a href='index.php?command=payment&subTotal=".$_SESSION['subTotal']."&revertStatus=true'>Back</a>";
             foreach($drivers as $dr){
                 echo "Driver Name: " . $dr->full_name;
                 echo "Vehicle: " . $dr->vehicle_name;
