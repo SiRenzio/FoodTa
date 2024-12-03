@@ -77,7 +77,7 @@
 		    $stmt->close();
 		    return $imagePath;
         }
-
+        
         function updateProfile($rider_id, $user, $imagePath){
             $sql = "UPDATE delivery SET rider_username = ?, rider_img = ? WHERE deliveryPerson_id = ?";
             $stmt = $this->db->prepare($sql);
@@ -139,7 +139,6 @@
                 }
             }
         }
-        
 
         function checkLoginInfo($username, $password){  
             $accType = null;
@@ -319,7 +318,7 @@
             ];  
         }
         
-        function updateQuantity($customer_id, $item_id, $qty) {
+        function updateCartQuantity($customer_id, $item_id, $qty) { // Cart
             if ($qty != 0) {
                 $sql = "UPDATE cart SET quantity = ? WHERE customer_id = ? AND item_id = ?";
                 $stmt = $this->db->prepare($sql);
@@ -336,7 +335,12 @@
                 return "Error Updating: " . $stmt->error; 
             }
         }
-        
+
+        function updateStoreQuantity($qtyOrdered, $qty, $store_id){ // Store
+            $newQty = $qty - $qtyOrdered;
+            $sql = "UPDATE cart SET quantity = ? WHERE store_id = ?";
+        }
+
         function checkBalance($customer_id){
             $amt = null;
             $sql = "SELECT foodtawallet FROM customer WHERE customer_id = ?";

@@ -38,11 +38,19 @@
                 echo '<div class="product-details">';
                     echo '<h3>' . htmlspecialchars($storeItems->item_name) . '</h3>';
                     echo '<p>₱' . htmlspecialchars($storeItems->price) . '</p>';
-                    echo '<form method="POST" action ="">';  
-                        echo '<input type="hidden" name="item_id" value="'.$storeItems->item_id.'">';
-                        echo '<input type="hidden" name="store_id" value="'.$storeItems->store_id.'">';
-                        echo '<button type = "submit" class="addToCart">Add to Cart</button>';   
-                    echo '</form>'; 
+                    if ($storeItems->quantity > 0){
+                        echo '<form method="POST" action ="">';  
+                            echo '<input type="hidden" name="item_id" value="'.$storeItems->item_id.'">';
+                            echo '<input type="hidden" name="store_id" value="'.$storeItems->store_id.'">';
+                            echo '<button type = "submit" class="addToCart">Add to Cart</button>';   
+                        echo '</form>'; 
+                    }
+                    else if ($storeItems->quantity < 1){
+                        echo '<button type = "submit" class="addToCartUnavail" disabled>Unavailable</button>';
+                    }
+                    else if ($storeItems->status == 'PENDING'){
+                        echo '<button type = "submit" class="addToCartUnavail" disabled>Cannot Order Yet</button>';
+                    }
                 echo '</div>';
             echo '</div>';
         }
