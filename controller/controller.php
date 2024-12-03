@@ -208,6 +208,7 @@
                 case 'deliveryRider':
                     if($_SESSION['account_type'] == "delivery"){
                         $details = $this->db->getDeliveryInfo($_SESSION['user_id']);
+                        $orderCount = $this->db->findOrders();
                         include('html/RiderInterface/rider.php');
                     }
                     break;
@@ -271,10 +272,6 @@
                     $credential = null;
                     $credential_value = null;
 
-                    // $fullname = $_POST['fullname'];
-                    // $password = $_POST['password'];
-                    // $location = $_POST['location'];
-                    // $contact = $_POST['contact'];
                     $account_type = $_GET['accType'];
 
                     switch($account_type){
@@ -291,8 +288,6 @@
                             else{
                                 echo "<script> alert('Wrong Input. Please Try Again'); window.location.href='index.php?command=checkRegister&account_type=customer </script>";
                             }
-                            // $credential = 'username';
-                            // $credential_value = $_POST['username'];
                             break;
                         case 'store':
                             $storeName = $_REQUEST['storename'];
@@ -323,8 +318,6 @@
                             else{
                                 echo "<script> alert('Error'); window.location.href='index.php?command=checkRegister&account_type=store </script>";
                             }
-                            // $credential = 'store_name';
-                            // $credential_value = $_POST['storename'];
                             break;
 
                         case 'delivery':
