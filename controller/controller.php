@@ -208,6 +208,7 @@
                 case 'deliveryRider':
                     if($_SESSION['account_type'] == "delivery"){
                         $details = $this->db->getDeliveryInfo($_SESSION['user_id']);
+                        $orderCount = $this->db->findOrders();
                         include('html/RiderInterface/rider.php');
                     }
                     break;
@@ -271,10 +272,6 @@
                     $credential = null;
                     $credential_value = null;
 
-                    // $fullname = $_POST['fullname'];
-                    // $password = $_POST['password'];
-                    // $location = $_POST['location'];
-                    // $contact = $_POST['contact'];
                     $account_type = $_GET['accType'];
 
                     switch($account_type){
@@ -291,8 +288,6 @@
                             else{
                                 echo "<script> alert('Wrong Input. Please Try Again'); window.location.href='index.php?command=checkRegister&account_type=customer </script>";
                             }
-                            // $credential = 'username';
-                            // $credential_value = $_POST['username'];
                             break;
                         case 'store':
                             $storeName = $_REQUEST['storename'];
@@ -323,8 +318,6 @@
                             else{
                                 echo "<script> alert('Error'); window.location.href='index.php?command=checkRegister&account_type=store </script>";
                             }
-                            // $credential = 'store_name';
-                            // $credential_value = $_POST['storename'];
                             break;
 
                         case 'delivery':
@@ -369,7 +362,7 @@
                     case 'updateQty':
                         $qty = $_REQUEST['qty'];
                         $item_id = $_REQUEST['item_id'];
-                        $status = $this->db->updateQuantity($_SESSION['user_id'], $item_id, $qty);
+                        $status = $this->db->updateCartQuantity($_SESSION['user_id'], $item_id, $qty);
 
                         echo "<script>alert('". $status ."'); window.location.href='index.php?command=cart&cartType=allCart';</script>";
                         break;
@@ -389,8 +382,14 @@
                         include('html/wallet.php');
                         break;
                     case 'payment':
-                        $balance = $this->db->checkBalance($_SESSION['user_id']);
-                        $subTotal = $_REQUEST['subTotal'];
+                        if ($_REQUEST['revertStatus'] != 'true'){
+                            $balance = $this->db->checkBalance($_SESSION['user_id']);
+                            $subTotal = $_REQUEST['subTotal'];
+                        } else {
+                            $balance = $this->db->checkBalance($_SESSION['user_id']);
+                            $subTotal = $_REQUEST['subTotal'];
+                            $this->db->unorderItems($_SESSION['user_id']);
+                        }
                         include('html/payment.php');
                         break;
                     case 'processPayment':
@@ -422,7 +421,7 @@
                         if ($status != "You have insufficient balance, please Cash-in"){
                             $this->db->pendingItems($_SESSION['user_id']);
                             echo '<script> alert("'.$status.'"); window.location.href="index.php?command=findDriver&option='.$options.'";</script>';
-                        }else {
+                        } else {
                             echo '<script> alert("'.$status.'"); window.location.href="index.php?command=wallet";</script>';
                         }
                         break;  

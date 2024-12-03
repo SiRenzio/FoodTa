@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2024 at 04:55 PM
+-- Generation Time: Dec 03, 2024 at 06:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,12 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
-  `transaction_id` int(11) DEFAULT NULL,
   `customer_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` varchar(9) NOT NULL DEFAULT 'UNORDERED'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -42,9 +40,24 @@ CREATE TABLE `cart` (
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`cart_id`, `transaction_id`, `customer_id`, `store_id`, `item_id`, `quantity`, `timestamp`, `status`) VALUES
-(13, NULL, 1, 1, 1, 3, '2024-12-02 13:57:57', 'PENDING'),
-(14, NULL, 1, 2, 6, 1, '2024-12-02 15:03:12', 'PENDING');
+INSERT INTO `cart` (`cart_id`, `customer_id`, `store_id`, `item_id`, `quantity`, `status`) VALUES
+(13, 1, 1, 1, 3, 'PENDING'),
+(14, 1, 2, 6, 3, 'PENDING'),
+(15, 1, 1, 3, 7, 'PENDING'),
+(16, 1, 3, 10, 5, 'PENDING'),
+(17, 2, 1, 3, 1, 'PENDING');
+
+--
+-- Triggers `cart`
+--
+DELIMITER $$
+CREATE TRIGGER `TransferOrder` AFTER INSERT ON `cart` FOR EACH ROW IF NEW.status = 'TBD' THEN
+	INSERT INTO `order` (customer_id, store_id, quantity, status) VALUES (NEW.customer_id, NEW.store_id, NEW.quantity, NEW.status);
+    
+DELETE FROM cart WHERE cart_id = NEW.cart_id;
+END IF
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -67,7 +80,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `full_name`, `customer_address`, `contact_no`, `username`, `user_password`, `foodtawallet`) VALUES
-(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 448),
+(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 1448),
 (2, 'Clarns Legaspi', 'Earth, Solar System, Milky Way', '9991234567', 'Clarns', 'oogabooga', 0);
 
 -- --------------------------------------------------------
@@ -135,7 +148,7 @@ INSERT INTO `inventory` (`item_id`, `store_id`, `item_name`, `quantity`, `price`
 --
 
 CREATE TABLE `order` (
-  `cart_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
   `transaction_id` int(11) DEFAULT NULL,
   `customer_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
@@ -144,13 +157,6 @@ CREATE TABLE `order` (
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` varchar(9) NOT NULL DEFAULT 'UNORDERED'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `order`
---
-
-INSERT INTO `order` (`cart_id`, `transaction_id`, `customer_id`, `store_id`, `item_id`, `quantity`, `timestamp`, `status`) VALUES
-(13, NULL, 1, 1, 1, 2, '2024-12-02 05:26:33', 'UNORDERED');
 
 -- --------------------------------------------------------
 
@@ -211,9 +217,7 @@ ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
   ADD KEY `user_id` (`customer_id`),
   ADD KEY `item_id` (`item_id`),
-  ADD KEY `store_id` (`store_id`),
-  ADD KEY `order_id` (`transaction_id`),
-  ADD KEY `transaction_id` (`transaction_id`);
+  ADD KEY `store_id` (`store_id`);
 
 --
 -- Indexes for table `customer`
@@ -238,7 +242,7 @@ ALTER TABLE `inventory`
 -- Indexes for table `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`cart_id`),
+  ADD PRIMARY KEY (`order_id`),
   ADD KEY `user_id` (`customer_id`),
   ADD KEY `item_id` (`item_id`),
   ADD KEY `store_id` (`store_id`),
@@ -268,7 +272,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -292,7 +296,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `store`
@@ -314,7 +318,6 @@ ALTER TABLE `transaction`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`transaction_id`),
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`),
   ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
   ADD CONSTRAINT `cart_ibfk_4` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`);
@@ -324,6 +327,15 @@ ALTER TABLE `cart`
 --
 ALTER TABLE `inventory`
   ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `order`
+--
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`transaction_id`),
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
+  ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
+  ADD CONSTRAINT `order_ibfk_4` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`);
 
 --
 -- Constraints for table `transaction`

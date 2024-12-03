@@ -54,6 +54,7 @@ body {
     padding: 20px;
     height: auto;
     margin-top: 35px;
+    margin-bottom: 35px;
 }
 
 .ftSecLogo {
@@ -125,4 +126,15 @@ body {
     background-color: #003c25;
     color: white;
     cursor: pointer;
+}
+
+.product-details .addToCartUnavail {
+    width: 80%;
+    padding: 5px 10px;
+    font-size: 1rem;
+    font-family: 'Poppins';
+    border-radius: 5px;
+    border: none;
+    background-color: #8b8b8b;
+    color: white;
 }

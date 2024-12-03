@@ -7,12 +7,8 @@
     <title>Select Drivers</title>
 </head>
 <body>
-    <section class="foodTaRiders">
-        <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
-        <h1 class="riderHeader">Select Drivers</h1>
-
-        <div class="driverProfiles">
-            <?php
+    <div id = "container" style="margin-top: 4em;">
+        <?php
             foreach($drivers as $dr){
                 echo "<div class='driverCard'>";
                     echo "<div class='profilePic'>";
