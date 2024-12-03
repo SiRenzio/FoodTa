@@ -505,7 +505,17 @@
         }
 
         function findOrders(){
-            
+            $orders = null;
+            $sql = "SELECT COUNT(DISTINCT customer_id) AS order_count FROM cart WHERE status = 'PENDING'";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();   
+            $result = $stmt->get_result();
+
+            if ($row = $result->fetch_object()) {
+                $orders = $row;
+            }
+            return $orders;
+
         }
 
         function addItems($store_id, $item_name, $quantity, $price, $category, $imagePath)

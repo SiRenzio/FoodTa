@@ -362,7 +362,7 @@
                     case 'updateQty':
                         $qty = $_REQUEST['qty'];
                         $item_id = $_REQUEST['item_id'];
-                        $status = $this->db->updateQuantity($_SESSION['user_id'], $item_id, $qty);
+                        $status = $this->db->updateCartQuantity($_SESSION['user_id'], $item_id, $qty);
 
                         echo "<script>alert('". $status ."'); window.location.href='index.php?command=cart&cartType=allCart';</script>";
                         break;
