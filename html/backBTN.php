@@ -29,6 +29,7 @@
             cursor: pointer;
             text-decoration: none;
             transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 50;
         }
 
         .backBTN img {

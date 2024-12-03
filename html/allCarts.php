@@ -1,3 +1,8 @@
+<?php 
+            $backLink = "index.php?command=order";
+            $position = 'right';
+            include 'backBTN.php';
+        ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,11 +13,7 @@
 </head>
 <body>
     <section class="allCart">
-        <?php 
-            $backLink = "index.php?command=order";
-            $position = 'right';
-            include 'backBTN.php';
-        ?>
+        
         <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <div id="container">
             <?php

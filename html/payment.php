@@ -7,12 +7,12 @@
     <title>Payment</title>
 </head>
 <body>
-    <section class="paymentInfo">
     <?php 
         $backLink = "index.php?command=cart&cartType=allCart";
         $position = 'right';
         include 'backBTN.php';
     ?>
+    <section class="paymentInfo">
         <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <h2>Pay Your Order</h2>
         <div id="container">

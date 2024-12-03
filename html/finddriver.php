@@ -7,8 +7,17 @@
     <title>Select Drivers</title>
 </head>
 <body>
-    <div id = "container" style="margin-top: 4em;">
-        <?php
+    <?php 
+        $backLink = "index.php?command=payment&subTotal=".$_SESSION['subTotal']."&revertStatus=true";
+        $position = 'right';
+        include 'backBTN.php';
+    ?>
+    <section class="foodTaRiders">
+        <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
+        <h1 class="riderHeader">Select Drivers</h1>
+
+        <div class="driverProfiles">
+            <?php
             foreach($drivers as $dr){
                 echo "<div class='driverCard'>";
                     echo "<div class='profilePic'>";

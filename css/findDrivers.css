@@ -6,19 +6,10 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    padding-top: 60px;
     padding-bottom: 40px;
     background-image: url("../images/foodTaBrandBG.png");
     background-attachment: fixed;
     background-position: center;
-}
-
-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
 }
 
 .foodTaRiders {
@@ -26,7 +17,8 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 50px;
+    
+    padding-top: 60px;
 }
 
 .ftSecLogo {

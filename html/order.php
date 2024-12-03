@@ -14,7 +14,6 @@
     </div>
     
     <section class="container">
-    <span class="close" onclick="closePopup()">&times;</span>
         <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <h1 class="serTitle">FOOD TA! Restaurants</h1>
         <div class="store-list">
@@ -63,6 +62,5 @@
             ?>
         </div>
     </section>
-    <script src="js/index.js"></script>
 </body>
 </html>
