@@ -407,6 +407,14 @@
             return $status;
         }
 
+        function updatefoodtaWallet($foodtaWallet, $user){
+            $sql = "UPDATE customer SET foodtawallet = ? WHERE customer_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("ii", $foodtaWallet, $user);
+            $stmt->execute();
+            $stmt->close();
+        }
+
         function payOrder($subtotal, $oldAmt, $customer_id){
             $newAmt = $oldAmt - $subtotal;
             $sql = "UPDATE customer SET foodtawallet = ? WHERE customer_id = ?";
