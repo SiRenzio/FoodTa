@@ -10,7 +10,7 @@
     <section class="container">
         <div id="order">
             <h1><?php echo $orderCount->order_count ?> delivery orders found!</h1>
-            <a href="">View Details ></a>
+            <a href="index.php?command=viewOrderDetailsForDeliveryPerson">View Details ></a>
         </div>
         <div id="profile">
             <div class="profile-contents">
