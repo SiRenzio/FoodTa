@@ -24,15 +24,17 @@
                     echo "<img src='" . $od->item_img . "' alt='product_image' width='100' height='100'" . "<br><br>";
                     echo "Price: " . $od->price . "<br>";
                     echo "Quantity: " . $od->quantity . "<br>";
+
                 }
+                echo '<form action="index.php?orderStarted" method="post">';
+                    echo '<input type="hidden" >';
+                    echo '<input type="submit" value="Accept Order" class="btn">';
+                echo '</form>';
             }
             else{
                 echo "<h1>No Orders at the moment.</h1>";
             }
         ?>
-        <form action="" method="post">
-            <input type="submit" value="Accept Order" class="btn">
-        </form>
     </section>
 </body>
 </html>

@@ -14,7 +14,7 @@
 
         function getDriverStatus($customer_id){
             $driverStatus = null;
-            $sql = "SELECT driver_status FROM cart WHERE customer_id = ? LIMIT 1";
+            $sql = "SELECT * FROM cart WHERE customer_id = ? LIMIT 1";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
             $stmt->execute();
@@ -505,7 +505,7 @@
         }
 
         function selectDriver($driver_id, $customer_id){
-            $sql = "UPDATE cart SET deliveryPerson_id = ? WHERE customer_id = ? AND status = 'PENDING'";
+            $sql = "UPDATE cart SET deliveryPerson_id = ?, driver_status = 'WAITING' WHERE customer_id = ? AND status = 'PENDING'";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('ii', $driver_id, $customer_id);
             if ($stmt->execute()){

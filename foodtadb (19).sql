@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2024 at 05:19 AM
+-- Generation Time: Dec 04, 2024 at 04:58 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,17 +43,22 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `customer_id`, `store_id`, `item_id`, `deliveryPerson_id`, `quantity`, `status`, `driver_status`) VALUES
-(13, 1, 1, 1, NULL, 3, 'PENDING', 'NONE'),
+(13, 1, 1, 1, 1, 3, 'PENDING', 'WAITING'),
 (17, 2, 1, 3, NULL, 1, 'UNORDERED', 'WAITING');
 
 --
 -- Triggers `cart`
 --
 DELIMITER $$
-CREATE TRIGGER `TransferOrder` AFTER INSERT ON `cart` FOR EACH ROW IF NEW.status = 'TBD' THEN
+CREATE TRIGGER `TransferOrder` AFTER UPDATE ON `cart` FOR EACH ROW IF NEW.status = 'TBD' THEN
+	INSERT INTO `transaction` (customer_id, deliveryPerson_id) VALUES (NEW.customer_id, NEW.deliveryPerson_id);
+    
 	INSERT INTO `order` (customer_id, store_id, quantity, status) VALUES (NEW.customer_id, NEW.store_id, NEW.quantity, NEW.status);
     
+    
+    
 DELETE FROM cart WHERE cart_id = NEW.cart_id;
+
 END IF
 $$
 DELIMITER ;
