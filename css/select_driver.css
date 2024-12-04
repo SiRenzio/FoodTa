@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    padding-bottom: 40px;
+    background-image: url("../images/foodTaBrandBG.png");
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.confirmationDisplay {
+    font-family: 'Poppins', sans-serif;
+}
+
+.gifIcon {
+    display: block;
+    margin-bottom: 1em;
+}
+
+.gifAnimation {
+    width: 300px;
+    height: auto;
+}
+
+.fadeIn {
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
