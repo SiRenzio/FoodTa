@@ -24,7 +24,7 @@
                         echo "<img src='" . htmlspecialchars($dr->rider_img) . "' alt='" . htmlspecialchars($dr->full_name) . "'>";
                     echo "</div>";
                     echo "<div class='riderDetails'>";
-                        echo "<div class='drName details'>Name: " . htmlspecialchars($dr->full_name) . "</div>";
+                        echo "<div class='drName details'>" . htmlspecialchars($dr->full_name) . "</div>";
                         echo "<div class='drVehicle details'>Vehicle: " . htmlspecialchars($dr->vehicle_name) . "</div>";
                         echo "<div class='drPlate details'>Plate Number: " . htmlspecialchars($dr->vehicle_plate) . "</div>";
                         echo "<div class='drContact details'>Contact #: " . htmlspecialchars($dr->contact_no) . "</div>";
