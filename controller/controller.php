@@ -430,9 +430,14 @@
                         include('html/find_driver.php');
                         break;
                     case 'selectDriver':
-                        $deliveryPerson_id = $_REQUEST['$deliveryPerson_id'];
+                        $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
                         $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
                         include ('html/select_driver.php');
+                        break;
+
+                    case 'viewOrderDetailsForDeliveryPerson':
+                        $details = $this->db->getOrderDetailsForDeliveryRider($_SESSION['user_id']);
+                        include('html/viewOrderDetails.php');
                         break;
                 default:
                     include('html/home_page.php');

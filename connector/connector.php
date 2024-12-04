@@ -551,6 +551,30 @@
 
         }
 
+        function getOrderDetailsForDeliveryRider($deliveryPerson_id){
+            $details = array();
+            $sql = "SELECT s.store_name, i.item_name, i.price, cu.full_name, cu.customer_address, ca.quantity, i.item_img
+                    FROM
+                    store s
+                    INNER JOIN
+                    cart ca ON s.store_id = ca.store_id
+                    INNER JOIN
+                    customer cu ON cu.customer_id = ca.customer_id
+                    INNER JOIN
+                    inventory i ON i.item_id = ca.item_id
+                    WHERE ca.deliveryPerson_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $deliveryPerson_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while($row = $result->fetch_object()){
+                $details[] = $row;
+            }
+            $stmt->close();
+            return $details;
+        }
+
         function addItems($store_id, $item_name, $quantity, $price, $category, $imagePath)
         {
             $sql = "INSERT INTO inventory(store_id, item_name, quantity, price, category, item_img) VALUES (?, ?, ?, ?, ?, ?)";
