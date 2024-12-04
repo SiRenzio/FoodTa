@@ -11,7 +11,21 @@
                 exit('Error');
             }
         }
+
+        function getDriverStatus($customer_id){
+            $driverStatus = null;
+            $sql = "SELECT driver_status FROM cart WHERE customer_id = ? LIMIT 1";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
         
+            if ($row = $result->fetch_object()) {
+                $driverStatus = $row; 
+            }
+            return $driverStatus;
+        }
+
         function retrieveStores(){
             $stores = array();
 
@@ -490,6 +504,24 @@
                 ];  
         }
 
+        function selectDriver($driver_id, $customer_id){
+            $sql = "UPDATE cart SET deliveryPerson_id = ? WHERE customer_id = ? AND status = 'PENDING'";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('ii', $driver_id, $customer_id);
+            if ($stmt->execute()){
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
+        function unselectDriver($customer_id){
+            $sql = "UPDATE cart SET deliveryPerson_id = NULL WHERE customer_id = ? AND status = 'PENDING'";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+        }
+
         function findDriver(){
             $availableDrivers = array();
             $sql = "SELECT * FROM delivery WHERE status = 1";
@@ -504,10 +536,11 @@
             return $availableDrivers;
         }
 
-        function findOrders(){
+        function findOrders($deliveryPerson_id){
             $orders = null;
-            $sql = "SELECT COUNT(DISTINCT customer_id) AS order_count FROM cart WHERE status = 'PENDING'";
+            $sql = "SELECT COUNT(DISTINCT customer_id) AS order_count FROM cart WHERE status = 'PENDING' AND deliveryPerson_id = ?";
             $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $deliveryPerson_id);
             $stmt->execute();   
             $result = $stmt->get_result();
 

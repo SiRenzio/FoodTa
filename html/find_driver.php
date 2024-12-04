@@ -30,7 +30,9 @@
                         echo "<div class='drContact details'>Contact #: " . htmlspecialchars($dr->contact_no) . "</div>";
                     echo "</div>";
                     echo "<div class='selectBtn'>";
-                        echo "<input type='submit' value='Select Rider'>";
+                        echo "<form action ='index.php?command=selectDriver&deliveryPerson_id=$dr->deliveryPerson_id' method = 'post'>";
+                            echo "<input type='submit' value='Select Rider'>";
+                        echo "</form>";
                     echo "</div>";
                 echo "</div>";
             }

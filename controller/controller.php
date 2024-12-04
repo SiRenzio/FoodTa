@@ -208,7 +208,7 @@
                 case 'deliveryRider':
                     if($_SESSION['account_type'] == "delivery"){
                         $details = $this->db->getDeliveryInfo($_SESSION['user_id']);
-                        $orderCount = $this->db->findOrders();
+                        $orderCount = $this->db->findOrders($_SESSION['user_id']);
                         include('html/RiderInterface/rider.php');
                     }
                     break;
@@ -355,7 +355,7 @@
                             $cartItems = $cartData['items'];
                             $totalPrice = $cartData['total']; // Overall total price
 
-                            include('html/allcarts.php');
+                            include('html/cart.php');
                         }
 
                         break;
@@ -427,10 +427,13 @@
                         break;  
                     case 'findDriver':
                         $drivers = $this->db->findDriver();
-                        include('html/finddriver.php');
+                        include('html/find_driver.php');
                         break;
                     case 'selectDriver':
-                        
+                        $deliveryPerson_id = $_REQUEST['$deliveryPerson_id'];
+                        $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
+                        include ('html/select_driver.php');
+                        break;
                 default:
                     include('html/home_page.php');
                     break;

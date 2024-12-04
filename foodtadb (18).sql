@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2024 at 06:39 AM
+-- Generation Time: Dec 04, 2024 at 05:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,20 +32,19 @@ CREATE TABLE `cart` (
   `customer_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
+  `deliveryPerson_id` int(11) DEFAULT NULL,
   `quantity` int(11) NOT NULL,
-  `status` varchar(9) NOT NULL DEFAULT 'UNORDERED'
+  `status` varchar(9) NOT NULL DEFAULT 'UNORDERED',
+  `driver_status` varchar(8) NOT NULL DEFAULT 'NONE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`cart_id`, `customer_id`, `store_id`, `item_id`, `quantity`, `status`) VALUES
-(13, 1, 1, 1, 3, 'PENDING'),
-(14, 1, 2, 6, 3, 'PENDING'),
-(15, 1, 1, 3, 7, 'PENDING'),
-(16, 1, 3, 10, 5, 'PENDING'),
-(17, 2, 1, 3, 1, 'PENDING');
+INSERT INTO `cart` (`cart_id`, `customer_id`, `store_id`, `item_id`, `deliveryPerson_id`, `quantity`, `status`, `driver_status`) VALUES
+(13, 1, 1, 1, NULL, 3, 'PENDING', 'NONE'),
+(17, 2, 1, 3, NULL, 1, 'UNORDERED', 'WAITING');
 
 --
 -- Triggers `cart`
@@ -217,7 +216,8 @@ ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
   ADD KEY `user_id` (`customer_id`),
   ADD KEY `item_id` (`item_id`),
-  ADD KEY `store_id` (`store_id`);
+  ADD KEY `store_id` (`store_id`),
+  ADD KEY `deliveryPerson_id` (`deliveryPerson_id`);
 
 --
 -- Indexes for table `customer`
@@ -272,7 +272,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `customer`
