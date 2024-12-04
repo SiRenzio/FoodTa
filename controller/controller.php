@@ -430,6 +430,9 @@
                         include('html/find_driver.php');
                         break;
                     case 'selectDriver':
+                        $_SESSION['foodtaWalletBal'] -= $_SESSION['subTotal'];
+                        $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
+
                         $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
                         $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
                         include ('html/select_driver.php');
