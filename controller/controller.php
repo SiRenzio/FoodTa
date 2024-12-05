@@ -448,7 +448,12 @@
                         break;
 
                     case 'orderStarted':
-                        $this->db->toBeDelivered($customer_id);
+                        $customer_id = $_GET['cu_id'];
+                        $store_id = $_GET['s_id'];
+                        $item_id = $_GET['i_id'];
+                        $quantity = $_GET['quantity'];
+
+                        $this->db->toBeDelivered($customer_id, $store_id, $item_id, $quantity);
                         include('html/toBeDeliveredInterface.php');
                         break;
                 default:
