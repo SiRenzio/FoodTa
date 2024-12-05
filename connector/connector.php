@@ -706,6 +706,20 @@
             $stmt4->close();
         }
 
+        function itemDelivered($deliveryPerson_id, $transac_id){
+            $sql = "UPDATE `transaction` SET dropoff_Time = current_time() WHERE deliveryPerson_id = ? AND transaction_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('ii', $deliveryPerson_id, $transac_id);
+            $stmt->execute();
+            $stmt->close();
+
+            $sql2 = "UPDATE `order` SET `status` = 'DELIVERED' WHERE transaction_id = ? AND `status` = 'TBD'";
+            $stmt2 = $this->db->prepare($sql2);
+            $stmt2->bind_param('i', $transac_id);
+            $stmt2->execute();
+            $stmt2->close();
+        }
+
         function cancelFindDriver($customer_id){
             $sql = "UPDATE cart SET deliveryPerson_id = 0 WHERE customer_id = ?";
             $stmt = $this->db->prepare($sql);
