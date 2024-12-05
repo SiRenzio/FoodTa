@@ -718,8 +718,6 @@
             $stmt2->bind_param('i', $transac_id);
             $stmt2->execute();
             $stmt2->close();
-
-            return true;
         }
 
         function cancelFindDriver($customer_id){

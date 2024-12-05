@@ -466,8 +466,13 @@
                         $quantity = $_GET['quantity'];
 
                         $this->db->toBeDelivered($customer_id, $store_id, $item_id, $quantity);
+                        $details = $this->db->getOrderDetailsForDeliveryRider($_SESSION['user_id']);
                         include('html/toBeDeliveredInterface.php');
                         break;
+
+                    case 'itemDelivered':
+                        break;
+
                     case 'history':
                         $history = $this->db->viewOrderHistory($_SESSION['user_id']);
                         include('html/transaction_history.php');
