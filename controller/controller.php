@@ -468,6 +468,10 @@
                         $this->db->toBeDelivered($customer_id, $store_id, $item_id, $quantity);
                         include('html/toBeDeliveredInterface.php');
                         break;
+                    case 'history':
+                        $history = $this->db->viewOrderHistory($_SESSION['user_id']);
+                        include('html/transaction_history.php');
+                        break;
                 default:
                     include('html/home_page.php');
                     break;
