@@ -353,117 +353,125 @@
                     }
                     break;
 
-                case 'cart':
-                    if ($_REQUEST['cartType'] == 'allCart'){
-                        $cartData = $this->db->checkAllCart($_SESSION['user_id']);
-                        $cartItems = $cartData['items'];
-                        $totalPrice = $cartData['total']; // Overall total price
-                        include('html/cart.php');
-                    }
-                    break;
-                case 'updateQty':
-                    $qty = $_REQUEST['qty'];
-                    $item_id = $_REQUEST['item_id'];
-                    $status = $this->db->updateCartQuantity($_SESSION['user_id'], $item_id, $qty);
-                    echo "<script>alert('". $status ."'); window.location.href='index.php?command=cart&cartType=allCart';</script>";
-                    break;
-                case 'wallet':
-                    $balance = $this->db->checkBalance($_SESSION['user_id']);
-                    include('html/wallet.php');
-                    break;
-                case 'cashIn':
-                    $cashInAmt = $_REQUEST['amt'];
-                    $amt = $this->db->checkBalance($_SESSION['user_id']);
-                    $oldAmt = $amt->foodtawallet;
-                    $status = $this->db->cashIn($cashInAmt, $oldAmt, $_SESSION['user_id']);
-                    
-                    echo "<script>alert('". $status ."'); window.location.href='index.php?command=wallet;</script>";
-                    $balance = $this->db->checkBalance($_SESSION['user_id']);
-                    include('html/wallet.php');
-                    break;
-                case 'payment':
-                    if ($_REQUEST['revertStatus'] != 'true'){
-                        $balance = $this->db->checkBalance($_SESSION['user_id']);
-                        $subTotal = $_REQUEST['subTotal'];
-                    } else {
-                        $balance = $this->db->checkBalance($_SESSION['user_id']);
-                        $subTotal = $_REQUEST['subTotal'];
-                        $this->db->unorderItems($_SESSION['user_id']);
-                    }
-                    include('html/payment.php');
-                    break;
-                case 'processPayment':
-                    if ($_POST) {
-                        if (isset($_REQUEST['options'])) {
-                            $options = $_REQUEST['options'];
-                        } else {
-                            $options = 1; // Default to null if not set
-                        }
-                    
-                        switch ($options) {	
-                            case 'Cash':
-                                $options = 1;
-                                break;
-                            case 'GCash': // Match dropdown case exactly
-                                $options = 2;
-                                break;
-                            case 'Card':
-                                $options = 3;
-                                break;
-                            case 'FoodtaWallet':
-                                $options = 4;
-                                break;
-                            default:
-                                $options = 1; // Default value for unrecognized options
-                        }
-                    }
-                    $status = $this->db->checkPayment($_SESSION['foodtaWalletBal'], $_SESSION['subTotal'], $options);
-                    if ($status != "You have insufficient balance, please Cash-in"){
-                        $this->db->pendingItems($_SESSION['user_id']);
-                        echo '<script> alert("'.$status.'"); window.location.href="index.php?command=findDriver&option='.$options.'";</script>';
-                    } else {
-                        echo '<script> alert("'.$status.'"); window.location.href="index.php?command=wallet";</script>';
-                    }
-                    break;  
-                case 'findDriver':
-                    if (isset($_GET['action']) && $_GET['action'] == 'deselectDriver') {
-                        if (isset($_SESSION['user_id'])) {
-                            $this->db->unselectDriver($_SESSION['user_id']);
-                        } else {
-                            echo "<script>alert('User ID is not set in session.');</script>";
-                        }
-                    }
-                    $drivers = $this->db->findDriver();
-                    include('html/find_driver.php');
-                    break;
-                case 'selectDriver':
-                    if ($this->db->checkDeliveryStatus($_SESSION['user_id'])){
-                        $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
-                        $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
-                        $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
-                        include ('html/select_driver.php');
-                    } else {
-                        include ('html/delivery.php');
-                    }
-                    break;
-                case 'viewOrderDetailsForDeliveryPerson':
-                    $details = $this->db->getOrderDetailsForDeliveryRider($_SESSION['user_id']);
-                    include('html/viewOrderDetails.php');
-                    break;
-                case 'orderStarted':
-                    $customer_id = $_GET['cu_id'];
-                    $store_id = $_GET['s_id'];
-                    $item_id = $_GET['i_id'];
-                    $quantity = $_GET['quantity'];
-                    $this->db->toBeDelivered($customer_id, $store_id, $item_id, $quantity);
-                    include('html/toBeDeliveredInterface.php');
-                    break;
+                    case 'cart':
+                        if ($_REQUEST['cartType'] == 'allCart'){
+                            $cartData = $this->db->checkAllCart($_SESSION['user_id']);
+                            $cartItems = $cartData['items'];
+                            $totalPrice = $cartData['total']; // Overall total price
 
-                case 'itemDelivered':
-                    $data = $this->db->getTransactionID($_SESSION['user_id']);
-                    $this->db->itemDelivered($_SESSION['user_id'], $data);
-                    $details = $this->db->getOrderDetailsForDeliveryRider($_SESSION['user_id']);
-                    break;
+                            include('html/cart.php');
+                        }
+
+                        break;
+                    case 'updateQty':
+                        $qty = $_REQUEST['qty'];
+                        $item_id = $_REQUEST['item_id'];
+                        $status = $this->db->updateCartQuantity($_SESSION['user_id'], $item_id, $qty);
+
+                        echo "<script>alert('". $status ."'); window.location.href='index.php?command=cart&cartType=allCart';</script>";
+                        break;
+                    case 'wallet':
+                        $balance = $this->db->checkBalance($_SESSION['user_id']);
+                        include('html/wallet.php');
+                        break;
+                    case 'cashIn':
+                        $cashInAmt = $_REQUEST['amt'];
+                        $amt = $this->db->checkBalance($_SESSION['user_id']);
+                        $oldAmt = $amt->foodtawallet;
+                        $status = $this->db->cashIn($cashInAmt, $oldAmt, $_SESSION['user_id']);
+                        
+                        echo "<script>alert('". $status ."'); window.location.href='index.php?command=wallet;</script>";
+
+                        $balance = $this->db->checkBalance($_SESSION['user_id']);
+                        include('html/wallet.php');
+                        break;
+                    case 'payment':
+                        if ($_REQUEST['revertStatus'] != 'true'){
+                            $balance = $this->db->checkBalance($_SESSION['user_id']);
+                            $subTotal = $_REQUEST['subTotal'];
+                        } else {
+                            $balance = $this->db->checkBalance($_SESSION['user_id']);
+                            $subTotal = $_REQUEST['subTotal'];
+                            $this->db->unorderItems($_SESSION['user_id']);
+                        }
+                        include('html/payment.php');
+                        break;
+                    case 'processPayment':
+                        if ($_POST) {
+                            if (isset($_REQUEST['options'])) {
+                                $options = $_REQUEST['options'];
+                            } else {
+                                $options = 1; // Default to null if not set
+                            }
+                        
+                            switch ($options) {	
+                                case 'Cash':
+                                    $options = 1;
+                                    break;
+                                case 'GCash': // Match dropdown case exactly
+                                    $options = 2;
+                                    break;
+                                case 'Card':
+                                    $options = 3;
+                                    break;
+                                case 'FoodtaWallet':
+                                    $options = 4;
+                                    break;
+                                default:
+                                    $options = 1; // Default value for unrecognized options
+                            }
+                        }
+                        $status = $this->db->checkPayment($_SESSION['foodtaWalletBal'], $_SESSION['subTotal'], $options);
+                        if ($status != "You have insufficient balance, please Cash-in"){
+                            $this->db->pendingItems($_SESSION['user_id']);
+                            echo '<script> alert("'.$status.'"); window.location.href="index.php?command=findDriver&option='.$options.'";</script>';
+                        } else {
+                            echo '<script> alert("'.$status.'"); window.location.href="index.php?command=wallet";</script>';
+                        }
+                        break;  
+
+                    case 'findDriver':
+                        if (isset($_GET['action']) && $_GET['action'] == 'deselectDriver') {
+                            if (isset($_SESSION['user_id'])) {
+                                $this->db->unselectDriver($_SESSION['user_id']);
+                            } else {
+                                echo "<script>alert('User ID is not set in session.');</script>";
+                            }
+                        }
+                        $drivers = $this->db->findDriver();
+                        include('html/find_driver.php');
+                        break;
+
+                    case 'selectDriver':
+                        if ($this->db->checkDeliveryStatus($_SESSION['user_id'])){
+                            $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
+
+                            $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
+                            $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
+                            include ('html/select_driver.php');
+                        } else {
+                            include ('html/delivery.php');
+                        }
+                        break;
+
+                    case 'viewOrderDetailsForDeliveryPerson':
+                        $details = $this->db->getOrderDetailsForDeliveryRider($_SESSION['user_id']);
+                        include('html/viewOrderDetails.php');
+                        break;
+
+                    case 'orderStarted':
+                        $customer_id = $_GET['cu_id'];
+                        $store_id = $_GET['s_id'];
+                        $item_id = $_GET['i_id'];
+                        $quantity = $_GET['quantity'];
+
+                        $this->db->toBeDelivered($customer_id, $store_id, $item_id, $quantity);
+                        include('html/toBeDeliveredInterface.php');
+                        break;
+                    case 'history':
+                        $history = $this->db->viewOrderHistory($_SESSION['user_id']);
+                        include('html/transaction_history.php');
+                        break;
                 default:
                     include('html/home_page.php');
                     break;
@@ -485,6 +493,20 @@
                     return true;
                 }
             }
+            else if ($_SESSION['account_type'] == "delivery"){
+                $transactionStatus = $this->db->getTransactionDetails($_SESSION['user_id']);
+                $customer_id = $transactionStatus->customer_id;
+                $orderDetails = $this->db->getOrderDetailsForDeliveryRider($customer_id);
+                if ($transactionStatus!= null){
+                    if ($transactionStatus->status == "TBD"){
+                        echo "<script>window.location.href='index.php?command=selectDriver&orderStarted=$customer_id&store_id=$'</script>";
+                        exit;
+                    } else {
+                        return true;
+                    }
+                return true;
+                }
+            } 
             else {
                 return true;
             }

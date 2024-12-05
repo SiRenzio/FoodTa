@@ -483,10 +483,6 @@
             }
         }
 
-        function deselectCustomer($deliveryPerson_id){
-            $sql = "UPDATE cart SET deliveryPerson_id = ";
-        }
-
         function viewCustomerOrder($customer_id){
             $data = array();
                 $total = 0;
@@ -585,7 +581,21 @@
 
         }
 
-        function getOrderDetailsForDeliveryRider($deliveryPerson_id){
+        function getTransactionDetails($deliveryPerson_id){
+            $transaction = null;
+            $sql = "SELECT * FROM `transaction` WHERE deliveryPerson_id = ? AND status = 'TBD'";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $deliveryPerson_id);
+            $stmt->execute();   
+            $result = $stmt->get_result();
+
+            if ($row = $result->fetch_object()) {
+                $transaction = $row;
+            }
+            return $transaction;
+        }
+
+        function getOrderDetailsForDeliveryRider($deliveryPerson_id){ // For Cart
             $details = array();
             $sql = "SELECT s.store_id, s.store_name, i.item_id, i.item_name, i.price, cu.customer_id, cu.full_name, cu.customer_address, ca.deliveryPerson_id, ca.quantity, i.item_img
                     FROM
@@ -609,15 +619,65 @@
             return $details;
         }
 
-        function getTransactionID($deliveryPerson_id){
-            $sql = "SELECT transaction_id FROM `transaction` WHERE deliveryPerson_id = ?";
+        function viewOrderHistory($customer_id){
+            $details = array();
+                $sql = "SELECT 
+                    t.transaction_id, 
+                    t.subtotal, 
+                    s.store_id, 
+                    s.store_name, 
+                    i.item_id, 
+                    i.item_name, 
+                    i.price, 
+                    o.quantity, 
+                    (i.price * o.quantity) AS item_total,
+                    cu.customer_id, 
+                    cu.full_name, 
+                    cu.customer_address, 
+                    i.item_img,
+                    d.full_name
+                FROM 
+                    `transaction` t
+                INNER JOIN 
+                    `order` o ON o.transaction_id = t.transaction_id 
+                INNER JOIN 
+                    store s ON s.store_id = o.store_id
+                INNER JOIN 
+                    inventory i ON i.item_id = o.item_id
+                INNER JOIN 
+                    customer cu ON cu.customer_id = o.customer_id
+                INNER JOIN 
+                    delivery d ON d.deliveryPerson_id = t.deliveryPerson_id   
+                WHERE 
+                    cu.customer_id = ? 
+                    AND o.status = 'TBD';
+                    ";
             $stmt = $this->db->prepare($sql);
-            $stmt->bind_param('i', $deliveryPerson_id);
+            $stmt->bind_param('i', $customer_id);
             $stmt->execute();
-            $stmt->bind_result($transac_id);
-            $stmt->fetch();
+            $result = $stmt->get_result();
+
+            while($row = $result->fetch_object()){
+                $details[] = $row;
+            }
             $stmt->close();
-            return $transac_id;
+            return $details;
+        }
+
+        function getOrderTransactionDetails($customer_id){ // For Cart
+            $details = array();
+            $sql = "SELECT store.store_id, inventory.item_id, `order`.quantity FROM `order` JOIN store ON store.store_id = `order`.store_id JOIN inventory ON inventory.item_id = `order`.item_id WHERE `order`.customer_id = 1 AND `order`.status = 'TBD'";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while($row = $result->fetch_object()){
+                $details[] = $row;
+            }
+            $stmt->close();
+            return $details;
         }
 
         function toBeDelivered($customer_id, $store_id, $item_id, $quantity){
