@@ -489,7 +489,15 @@
                     return true;
                 }
             }
-            else {
+            else if ($_SESSION['account_type'] == "delivery")
+            {
+                if ($deliveryStatus != null){
+                    if ($deliveryStatus->driver_status == "TBD"){
+                        echo "<script>window.location.href='index.php?command=selectDriver&deliveryPerson_id=$deliveryStatus->deliveryPerson_id'</script>";
+                        exit;
+                    } else {
+                        return true;
+                    }
                 return true;
             }
         }
