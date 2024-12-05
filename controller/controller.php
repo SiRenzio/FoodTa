@@ -452,6 +452,11 @@
                         $details = $this->db->getOrderDetailsForDeliveryRider($_SESSION['user_id']);
                         include('html/viewOrderDetails.php');
                         break;
+
+                    case 'orderStarted':
+                        $this->db->toBeDelivered($customer_id);
+                        include('html/toBeDeliveredInterface.php');
+                        break;
                 default:
                     include('html/home_page.php');
                     break;
