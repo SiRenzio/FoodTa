@@ -489,15 +489,21 @@
                     return true;
                 }
             }
-            else if ($_SESSION['account_type'] == "delivery")
-            {
-                if ($deliveryStatus != null){
-                    if ($deliveryStatus->driver_status == "TBD"){
-                        echo "<script>window.location.href='index.php?command=selectDriver&deliveryPerson_id=$deliveryStatus->deliveryPerson_id'</script>";
+            else if ($_SESSION['account_type'] == "delivery"){
+                $transactionStatus = $this->db->getTransactionDetails($_SESSION['user_id']);
+                $customer_id = $transactionStatus->customer_id;
+                $orderDetails = $this->db->getOrderDetailsForDeliveryRider($customer_id);
+                if ($transactionStatus!= null){
+                    if ($transactionStatus->status == "TBD"){
+                        echo "<script>window.location.href='index.php?command=selectDriver&orderStarted=$customer_id&store_id=$'</script>";
                         exit;
                     } else {
                         return true;
                     }
+                return true;
+                }
+            } 
+            else {
                 return true;
             }
         }

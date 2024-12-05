@@ -581,7 +581,21 @@
 
         }
 
-        function getOrderDetailsForDeliveryRider($deliveryPerson_id){
+        function getTransactionDetails($deliveryPerson_id){
+            $transaction = null;
+            $sql = "SELECT * FROM `transaction` WHERE deliveryPerson_id = ? AND status = 'TBD'";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $deliveryPerson_id);
+            $stmt->execute();   
+            $result = $stmt->get_result();
+
+            if ($row = $result->fetch_object()) {
+                $transaction = $row;
+            }
+            return $transaction;
+        }
+
+        function getOrderDetailsForDeliveryRider($deliveryPerson_id){ // For Cart
             $details = array();
             $sql = "SELECT s.store_id, s.store_name, i.item_id, i.item_name, i.price, cu.customer_id, cu.full_name, cu.customer_address, ca.deliveryPerson_id, ca.quantity, i.item_img
                     FROM
@@ -595,6 +609,58 @@
                     WHERE ca.deliveryPerson_id = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $deliveryPerson_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while($row = $result->fetch_object()){
+                $details[] = $row;
+            }
+            $stmt->close();
+            return $details;
+        }
+
+        function viewOrderHistory($customer_id){
+            $details = array();
+                $sql = "SELECT 
+                        s.store_id, 
+                        s.store_name AS store_name_from_store, 
+                        i.item_id, 
+                        i.item_name, 
+                        i.price, 
+                        cu.customer_id, 
+                        cu.full_name, 
+                        cu.customer_address, 
+                        i.item_img
+                    FROM 
+                        `order` o
+                    INNER JOIN 
+                        store s ON s.store_id = o.store_id
+                    INNER JOIN 
+                        inventory i ON i.item_id = o.item_id
+                    INNER JOIN 
+                        customer cu ON cu.customer_id = o.customer_id
+                    WHERE 
+                        cu.customer_id = ? 
+                        AND o.status = 'DELIVERED';
+                    ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $deliveryPerson_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while($row = $result->fetch_object()){
+                $details[] = $row;
+            }
+            $stmt->close();
+            return $details;
+        }
+
+        function getOrderTransactionDetails($customer_id){ // For Cart
+            $details = array();
+            $sql = "SELECT store.store_id, inventory.item_id, `order`.quantity FROM `order` JOIN store ON store.store_id = `order`.store_id JOIN inventory ON inventory.item_id = `order`.item_id WHERE `order`.customer_id = 1 AND `order`.status = 'TBD'";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
             $stmt->execute();
             $result = $stmt->get_result();
 
