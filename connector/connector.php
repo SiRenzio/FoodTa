@@ -584,8 +584,9 @@
         }
 
         function toBeDelivered($customer_id){
-            $sql = "UPDATE cart SET status = 'TBD'";
+            $sql = "UPDATE cart SET status = 'TBD' WHERE customer_id = ?";
             $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
             $stmt->execute();
             $stmt->close();
         }
