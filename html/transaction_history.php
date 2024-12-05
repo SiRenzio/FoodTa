@@ -7,6 +7,11 @@
     <title>Delivery Person</title>
 </head>
 <body>
+    <?php 
+        $backLink = "index.php?command=order";
+        $position = 'right';
+        include 'backBTN.php';
+    ?>
     <section id="history">
         <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
         <h1>Transaction History</h1>

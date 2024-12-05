@@ -443,15 +443,12 @@
                         break;
 
                     case 'selectDriver':
-                        if ($this->db->checkDeliveryStatus($_SESSION['user_id'])){
-                            $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
+                        
+                        $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
 
-                            $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
-                            $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
-                            include ('html/select_driver.php');
-                        } else {
-                            include ('html/delivery.php');
-                        }
+                        $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
+                        $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
+                        include ('html/select_driver.php');
                         break;
 
                     case 'viewOrderDetailsForDeliveryPerson':
