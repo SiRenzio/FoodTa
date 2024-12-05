@@ -434,12 +434,15 @@
                         include('html/find_driver.php');
                         break;
                     case 'selectDriver':
-                        // $_SESSION['foodtaWalletBal'] -= $_SESSION['subTotal'];
-                        $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
+                        if ($this->db->checkDeliveryStatus($_SESSION['user_id'])){
+                            $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
 
-                        $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
-                        $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
-                        include ('html/select_driver.php');
+                            $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
+                            $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
+                            include ('html/select_driver.php');
+                        } else {
+                            include ('html/delivery.php');
+                        }
                         break;
 
                     case 'viewOrderDetailsForDeliveryPerson':

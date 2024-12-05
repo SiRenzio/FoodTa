@@ -463,6 +463,30 @@
             $stmt->close();
         }
 
+        function checkDeliveryStatus($customer_id){
+            $orders = null;
+            $sql = "SELECT status FROM `order` WHERE customer_id = ? AND status = 'TBD' LIMIT 1";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+
+            if ($row = $result->fetch_object()) {
+                $orders = $row;
+            }
+            
+            if ($orders->status == NULL){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function deselectCustomer($deliveryPerson_id){
+            $sql = "UPDATE cart SET deliveryPerson_id = ";
+        }
+
         function viewCustomerOrder($customer_id){
             $data = array();
                 $total = 0;
@@ -526,7 +550,7 @@
         }
 
         function unselectDriver($customer_id){
-            $sql = "UPDATE cart SET deliveryPerson_id = NULL WHERE customer_id = ? AND status = 'PENDING'";
+            $sql = "UPDATE cart SET deliveryPerson_id = NULL WHERE customer_id = ? AND driver_status = 'WAITING'";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
             $stmt->execute();
