@@ -11,7 +11,7 @@
         
         <a href="index.php?command=cart&cartType=allCart"><img class="cart" src="images/cart.png"></a>
         <a href="index.php?command=wallet"><img class="wallet" src="images/e-wallet.png"></a>
-        <a href="index.php?command=history"><img class="" src="">History</a>
+        <a href="index.php?command=history"><img class="" src="images/history.png"></a>
     </div>
     
     <section class="container">
