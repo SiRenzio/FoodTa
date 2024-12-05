@@ -429,10 +429,19 @@
                             echo '<script> alert("'.$status.'"); window.location.href="index.php?command=wallet";</script>';
                         }
                         break;  
+
                     case 'findDriver':
+                        if (isset($_GET['action']) && $_GET['action'] == 'deselectDriver') {
+                            if (isset($_SESSION['user_id'])) {
+                                $this->db->unselectDriver($_SESSION['user_id']);
+                            } else {
+                                echo "<script>alert('User ID is not set in session.');</script>";
+                            }
+                        }
                         $drivers = $this->db->findDriver();
                         include('html/find_driver.php');
                         break;
+
                     case 'selectDriver':
                         if ($this->db->checkDeliveryStatus($_SESSION['user_id'])){
                             $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
@@ -451,7 +460,12 @@
                         break;
 
                     case 'orderStarted':
-                        $this->db->toBeDelivered($customer_id);
+                        $customer_id = $_GET['cu_id'];
+                        $store_id = $_GET['s_id'];
+                        $item_id = $_GET['i_id'];
+                        $quantity = $_GET['quantity'];
+
+                        $this->db->toBeDelivered($customer_id, $store_id, $item_id, $quantity);
                         include('html/toBeDeliveredInterface.php');
                         break;
                 default:

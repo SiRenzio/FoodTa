@@ -9,7 +9,7 @@
 <body>
 
     <?php 
-        $backLink = "index.php?command=findDriver";
+        $backLink = "index.php?command=findDriver&action=deselectDriver";
         $position = 'right';
         include 'backBTN.php';
     ?>
