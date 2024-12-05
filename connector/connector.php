@@ -483,10 +483,6 @@
             }
         }
 
-        function deselectCustomer($deliveryPerson_id){
-            $sql = "UPDATE cart SET deliveryPerson_id = ";
-        }
-
         function viewCustomerOrder($customer_id){
             $data = array();
                 $total = 0;
