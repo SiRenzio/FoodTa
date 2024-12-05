@@ -13,7 +13,16 @@
 </head>
 <body>
     <section class="container">
-        <h1>Hello WOrld</h1>
+        <?php
+            foreach($details as $d){
+                echo 'Customer Name: ' . $d->customer_name . '<br>';
+                echo 'Location: ' . $d->customer_address . '<br>';
+                echo 'Payment: ' . $_SESSION['subTotal'] . '<br>';
+            }
+        ?>
+        <form action="index.php?command=itemDelivered" method="post">
+            <input type="submit" value="Submit">
+        </form>
     </section>
 </body>
 </html>

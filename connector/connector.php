@@ -609,6 +609,17 @@
             return $details;
         }
 
+        function getTransactionID($deliveryPerson_id){
+            $sql = "SELECT transaction_id FROM `transaction` WHERE deliveryPerson_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $deliveryPerson_id);
+            $stmt->execute();
+            $stmt->bind_result($transac_id);
+            $stmt->fetch();
+            $stmt->close();
+            return $transac_id;
+        }
+
         function toBeDelivered($customer_id, $store_id, $item_id, $quantity){
             $sql = "UPDATE cart SET status = 'TBD' WHERE customer_id = ?";
             $stmt = $this->db->prepare($sql);
@@ -633,6 +644,22 @@
             $stmt4->bind_param('i', $customer_id);
             $stmt4->execute();
             $stmt4->close();
+        }
+
+        function itemDelivered($deliveryPerson_id, $transac_id){
+            $sql = "UPDATE `transaction` SET dropoff_Time = current_time() WHERE deliveryPerson_id = ? AND transaction_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('ii', $deliveryPerson_id, $transac_id);
+            $stmt->execute();
+            $stmt->close();
+
+            $sql2 = "UPDATE `order` SET `status` = 'DELIVERED' WHERE transaction_id = ? AND `status` = 'TBD'";
+            $stmt2 = $this->db->prepare($sql2);
+            $stmt2->bind_param('i', $transac_id);
+            $stmt2->execute();
+            $stmt2->close();
+
+            return true;
         }
 
         function cancelFindDriver($customer_id){
