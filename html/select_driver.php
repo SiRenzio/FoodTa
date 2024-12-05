@@ -7,6 +7,12 @@
     <title>Driver Confirmation</title>
 </head>
 <body>
+
+    <?php 
+        $backLink = "index.php?command=findDriver";
+        $position = 'right';
+        include 'backBTN.php';
+    ?>
     <section class="waitingPage">
         <div class="container">
             <div class="confirmationDisplay">
