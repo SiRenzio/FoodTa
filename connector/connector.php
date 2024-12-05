@@ -563,7 +563,7 @@
 
         function getOrderDetailsForDeliveryRider($deliveryPerson_id){
             $details = array();
-            $sql = "SELECT s.store_name, i.item_name, i.price, cu.customer_id, cu.full_name, cu.customer_address, ca.quantity, i.item_img
+            $sql = "SELECT s.store_id, s.store_name, i.item_id, i.item_name, i.price, cu.customer_id, cu.full_name, cu.customer_address, ca.deliveryPerson_id, ca.quantity, i.item_img
                     FROM
                     store s
                     INNER JOIN
@@ -585,12 +585,24 @@
             return $details;
         }
 
-        function toBeDelivered($customer_id){
+        function toBeDelivered($customer_id, $store_id, $item_id, $quantity){
             $sql = "UPDATE cart SET status = 'TBD' WHERE customer_id = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
             $stmt->execute();
             $stmt->close();
+
+            $sql2 = "INSERT INTO `transaction` (customer_id, deliveryPerson_id, pickup_Time, subtotal) VALUES (?, ?, current_time(), ?)";
+            $stmt2 = $this->db->prepare($sql2);
+            $stmt2->bind_param('iii', $customer_id, $store_id, $_SESSION['subTotal']);
+            $stmt2->execute();
+            $stmt2->close();
+
+            $sql3 = "INSERT INTO `order` (customer_id, store_id, item_id, quantity, `timestamp`, `status`) VALUES (?, ?, ?, ?, current_timestamp(), 'TBD')";
+            $stmt3 = $this->db->prepare($sql3);
+            $stmt3->bind_param('iiii', $customer_id, $store_id, $item_id, $quantity);
+            $stmt3->execute();
+            $stmt3->close();
         }
 
         function cancelFindDriver($customer_id){
