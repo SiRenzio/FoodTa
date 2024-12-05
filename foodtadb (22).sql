@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2024 at 08:54 AM
+-- Generation Time: Dec 05, 2024 at 02:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,26 +37,6 @@ CREATE TABLE `cart` (
   `status` varchar(9) NOT NULL DEFAULT 'UNORDERED',
   `driver_status` varchar(8) NOT NULL DEFAULT 'NONE'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`cart_id`, `customer_id`, `store_id`, `item_id`, `deliveryPerson_id`, `quantity`, `status`, `driver_status`) VALUES
-(17, 2, 1, 3, 1, 1, 'PENDING', 'WAITING'),
-(28, 1, 1, 1, 0, 1, 'UNORDERED', 'WAITING');
-
---
--- Triggers `cart`
---
-DELIMITER $$
-CREATE TRIGGER `TransferOrder` AFTER UPDATE ON `cart` FOR EACH ROW IF NEW.status = 'TBD' THEN
-
-	INSERT INTO `order` (customer_id, store_id, item_id, quantity, status) VALUES (NEW.customer_id, NEW.store_id, NEW.item_id, NEW.quantity, NEW.status);
-
-END IF
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -157,6 +137,14 @@ CREATE TABLE `order` (
   `status` varchar(9) NOT NULL DEFAULT 'UNORDERED'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`order_id`, `transaction_id`, `customer_id`, `store_id`, `item_id`, `quantity`, `timestamp`, `status`) VALUES
+(55, 39, 2, 1, 1, 1, '2024-12-05 13:52:36', 'TBD'),
+(56, 39, 2, 1, 2, 1, '2024-12-05 13:52:36', 'TBD');
+
 -- --------------------------------------------------------
 
 --
@@ -204,6 +192,24 @@ CREATE TABLE `transaction` (
   `tax` float NOT NULL,
   `net` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`transaction_id`, `customer_id`, `deliveryPerson_id`, `pickup_Time`, `dropoff_Time`, `subtotal`, `delivery_fee`, `discount`, `tax`, `net`) VALUES
+(39, 2, 1, '21:52:36', '00:00:00', 160, 0, 0, 0, 0);
+
+--
+-- Triggers `transaction`
+--
+DELIMITER $$
+CREATE TRIGGER `TransferTransactionID` AFTER INSERT ON `transaction` FOR EACH ROW UPDATE `order`
+    SET transaction_id = NEW.transaction_id
+    WHERE customer_id = NEW.customer_id
+    AND transaction_id IS NULL
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
@@ -273,7 +279,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -297,7 +303,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `store`
@@ -309,7 +315,7 @@ ALTER TABLE `store`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Constraints for dumped tables

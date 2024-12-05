@@ -616,17 +616,23 @@
             $stmt->execute();
             $stmt->close();
 
-            $sql2 = "INSERT INTO `transaction` (customer_id, deliveryPerson_id, pickup_Time, subtotal) VALUES (?, ?, current_time(), ?)";
+            $sql2 = "INSERT INTO `order` (customer_id, store_id, item_id, quantity, `timestamp`, `status`) SELECT customer_id, store_id, item_id, quantity, current_timestamp(), `status` FROM cart WHERE customer_id = ?";
             $stmt2 = $this->db->prepare($sql2);
-            $stmt2->bind_param('iii', $customer_id, $store_id, $_SESSION['subTotal']);
+            $stmt2->bind_param('i', $customer_id);
             $stmt2->execute();
             $stmt2->close();
 
-            $sql3 = "INSERT INTO `order` (customer_id, store_id, item_id, quantity, `timestamp`, `status`) VALUES (?, ?, ?, ?, current_timestamp(), 'TBD')";
+            $sql3 = "INSERT INTO `transaction` (customer_id, deliveryPerson_id, pickup_Time, subtotal) VALUES (?, ?, current_time(), ?)";
             $stmt3 = $this->db->prepare($sql3);
-            $stmt3->bind_param('iiii', $customer_id, $store_id, $item_id, $quantity);
+            $stmt3->bind_param('iii', $customer_id, $store_id, $_SESSION['subTotal']);
             $stmt3->execute();
             $stmt3->close();
+
+            $sql4 = "DELETE FROM cart WHERE customer_id = ?";
+            $stmt4 = $this->db->prepare($sql4);
+            $stmt4->bind_param('i', $customer_id);
+            $stmt4->execute();
+            $stmt4->close();
         }
 
         function cancelFindDriver($customer_id){
