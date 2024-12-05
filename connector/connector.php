@@ -454,7 +454,7 @@
         }
 
         function deliverItems($customer_id, $transaction_id){ 
-            $sql = "UPDATE cart SET transaction_id = ? WHERE customer_id = ? AND status = TBD";
+            $sql = "UPDATE cart SET transaction_id = ? WHERE customer_id = ? AND status = 'TBD'";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('ii', $customer_id, $transaction_id);
             $stmt->execute();
@@ -561,7 +561,7 @@
 
         function getOrderDetailsForDeliveryRider($deliveryPerson_id){
             $details = array();
-            $sql = "SELECT s.store_name, i.item_name, i.price, cu.full_name, cu.customer_address, ca.quantity, i.item_img
+            $sql = "SELECT s.store_name, i.item_name, i.price, cu.customer_id, cu.full_name, cu.customer_address, ca.quantity, i.item_img
                     FROM
                     store s
                     INNER JOIN
@@ -581,6 +581,13 @@
             }
             $stmt->close();
             return $details;
+        }
+
+        function toBeDelivered($customer_id){
+            $sql = "UPDATE cart SET status = 'TBD'";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $stmt->close();
         }
 
         function addItems($store_id, $item_name, $quantity, $price, $category, $imagePath)
