@@ -17,7 +17,8 @@
                 <?php
                     foreach($details as $riderDetails){
                         echo "<img src='$riderDetails->rider_img' alt='profile pic'>";
-                        echo "<h3>$riderDetails->rider_username</h3>";
+                        echo "<h3>$riderDetails->full_name</h3>";
+                        echo "<h4>$riderDetails->contact_no</h4>";
                     }
                 ?>
                 <a href="index.php?command=editProfile" class="btn">Edit Profile</a>
