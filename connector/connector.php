@@ -526,7 +526,7 @@
         }
 
         function unselectDriver($customer_id){
-            $sql = "UPDATE cart SET deliveryPerson_id = NULL WHERE customer_id = ? AND status = 'PENDING'";
+            $sql = "UPDATE cart SET deliveryPerson_id = NULL, driver_status = 'NONE' WHERE customer_id = ? AND status = 'PENDING'";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
             $stmt->execute();

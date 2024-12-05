@@ -429,9 +429,14 @@
                             echo '<script> alert("'.$status.'"); window.location.href="index.php?command=wallet";</script>';
                         }
                         break;  
+
                     case 'findDriver':
                         if (isset($_GET['action']) && $_GET['action'] == 'deselectDriver') {
-                            $this->db->unselectDriver($_SESSION['user_id']);
+                            if (isset($_SESSION['user_id'])) {
+                                $this->db->unselectDriver($_SESSION['user_id']);
+                            } else {
+                                echo "<script>alert('User ID is not set in session.');</script>";
+                            }
                         }
                         $drivers = $this->db->findDriver();
                         include('html/find_driver.php');
