@@ -23,7 +23,9 @@
             if ($row = $result->fetch_object()) {
                 $driverStatus = $row; 
             }
-            return $driverStatus;
+            if (isset($driverStatus)){
+                return $driverStatus;
+            } 
         }
 
         function retrieveStores(){
@@ -585,6 +587,14 @@
 
         function toBeDelivered($customer_id){
             $sql = "UPDATE cart SET status = 'TBD' WHERE customer_id = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $customer_id);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        function cancelFindDriver($customer_id){
+            $sql = "UPDATE cart SET deliveryPerson_id = 0 WHERE customer_id = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
             $stmt->execute();

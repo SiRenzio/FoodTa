@@ -145,12 +145,10 @@
                         include('html/login_page.php');
                     }
                     else{
-                        if($accType === "customer"){
+                        if($this->checkDeliveryStatus()){
                             include('html/header.php');
-                            if($this->checkDeliveryStatus()){
                                 $stores=$this->db->retrieveStores();
                                 include('html/order.php');
-                            }
                         }
                         else if($accType === "store"){
                             include('html/header.php');
@@ -183,11 +181,7 @@
                         else{
                             if($accType === "customer"){
                                 include('html/header.php');
-                                $deliveryStatus = $this->db->getDriverStatus($_SESSION['user_id']);
-                                if ($deliveryStatus->driver_status == "WAITING"){
-                                    echo "<script>window.location.href='index.php?command=selectDriver&deliveryPerson_id=$deliveryStatus->deliveryPerson_id'</script>";
-                                    exit;
-                                } else {
+                                if ($this->checkDeliveryStatus()){
                                     $stores=$this->db->retrieveStores();
                                     include('html/order.php');
                                 } 
@@ -467,9 +461,13 @@
         function checkDeliveryStatus(){
             if ($_SESSION['account_type'] == "customer"){
                 $deliveryStatus = $this->db->getDriverStatus($_SESSION['user_id']);
-                if ($deliveryStatus->driver_status == "WAITING"){
-                    echo "<script>window.location.href='index.php?command=selectDriver&deliveryPerson_id=$deliveryStatus->deliveryPerson_id'</script>";
-                    exit;
+                if ($deliveryStatus != null){
+                    if ($deliveryStatus->driver_status == "WAITING"){
+                        echo "<script>window.location.href='index.php?command=selectDriver&deliveryPerson_id=$deliveryStatus->deliveryPerson_id'</script>";
+                        exit;
+                    } else {
+                        return true;
+                    }
                 } else {
                     return true;
                 }
