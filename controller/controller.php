@@ -430,9 +430,13 @@
                         }
                         break;  
                     case 'findDriver':
+                        if (isset($_GET['action']) && $_GET['action'] == 'deselectDriver') {
+                            $this->db->unselectDriver($_SESSION['user_id']);
+                        }
                         $drivers = $this->db->findDriver();
                         include('html/find_driver.php');
                         break;
+
                     case 'selectDriver':
                         // $_SESSION['foodtaWalletBal'] -= $_SESSION['subTotal'];
                         $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
