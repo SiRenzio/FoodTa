@@ -440,7 +440,7 @@
                         include('html/find_driver.php');
                         break;
                     case 'selectDriver':
-                        $_SESSION['foodtaWalletBal'] -= $_SESSION['subTotal'];
+                        // $_SESSION['foodtaWalletBal'] -= $_SESSION['subTotal'];
                         $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
 
                         $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
@@ -460,10 +460,14 @@
         }
                 
         function checkDeliveryStatus(){
-            $deliveryStatus = $this->db->getDriverStatus($_SESSION['user_id']);
-            if ($deliveryStatus->driver_status == "WAITING"){
-                echo "<script>window.location.href='index.php?command=selectDriver&deliveryPerson_id=$deliveryStatus->deliveryPerson_id'</script>";
-                exit;
+            if ($_SESSION['account_type'] == "customer"){
+                $deliveryStatus = $this->db->getDriverStatus($_SESSION['user_id']);
+                if ($deliveryStatus->driver_status == "WAITING"){
+                    echo "<script>window.location.href='index.php?command=selectDriver&deliveryPerson_id=$deliveryStatus->deliveryPerson_id'</script>";
+                    exit;
+                } else {
+                    return true;
+                }
             }
             else {
                 return true;

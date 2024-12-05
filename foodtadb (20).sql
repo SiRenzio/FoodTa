@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2024 at 04:58 PM
+-- Generation Time: Dec 05, 2024 at 07:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,7 +44,8 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`cart_id`, `customer_id`, `store_id`, `item_id`, `deliveryPerson_id`, `quantity`, `status`, `driver_status`) VALUES
 (13, 1, 1, 1, 1, 3, 'PENDING', 'WAITING'),
-(17, 2, 1, 3, NULL, 1, 'UNORDERED', 'WAITING');
+(17, 2, 1, 3, 1, 1, 'PENDING', 'WAITING'),
+(19, 1, 2, 1, 1, 2, 'PENDING', 'WAITING');
 
 --
 -- Triggers `cart`
@@ -53,11 +54,7 @@ DELIMITER $$
 CREATE TRIGGER `TransferOrder` AFTER UPDATE ON `cart` FOR EACH ROW IF NEW.status = 'TBD' THEN
 	INSERT INTO `transaction` (customer_id, deliveryPerson_id) VALUES (NEW.customer_id, NEW.deliveryPerson_id);
     
-	INSERT INTO `order` (customer_id, store_id, quantity, status) VALUES (NEW.customer_id, NEW.store_id, NEW.quantity, NEW.status);
-    
-    
-    
-DELETE FROM cart WHERE cart_id = NEW.cart_id;
+	INSERT INTO `order` (customer_id, store_id, item_id, quantity, status) VALUES (NEW.customer_id, NEW.store_id, NEW.item_id, NEW.quantity, NEW.status);
 
 END IF
 $$
@@ -84,7 +81,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `full_name`, `customer_address`, `contact_no`, `username`, `user_password`, `foodtawallet`) VALUES
-(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 1448),
+(1, 'Jan Victor T. Zaldarriaga', '#69, 1st Street, Monggoloid Subdivision, Calumpang, Molo, Iloilo City', '09212223242', 'jantotoextreme', '123asawanimarie', 0),
 (2, 'Clarns Legaspi', 'Earth, Solar System, Milky Way', '9991234567', 'Clarns', 'oogabooga', 0);
 
 -- --------------------------------------------------------
@@ -162,6 +159,25 @@ CREATE TABLE `order` (
   `status` varchar(9) NOT NULL DEFAULT 'UNORDERED'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`order_id`, `transaction_id`, `customer_id`, `store_id`, `item_id`, `quantity`, `timestamp`, `status`) VALUES
+(34, NULL, 1, 1, 1, 3, '2024-12-05 06:31:29', 'TBD');
+
+--
+-- Triggers `order`
+--
+DELIMITER $$
+CREATE TRIGGER `DeleteAccepted` AFTER INSERT ON `order` FOR EACH ROW DELETE FROM `cart`
+    WHERE `cart`.customer_id = NEW.customer_id
+      AND `cart`.store_id = NEW.store_id
+      AND `cart`.item_id = NEW.item_id
+      AND `cart`.quantity = NEW.quantity
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -200,7 +216,7 @@ INSERT INTO `store` (`store_id`, `store_name`, `store_address`, `contact_no`, `o
 CREATE TABLE `transaction` (
   `transaction_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `deliveryPerson_id` int(11) NOT NULL,
+  `deliveryPerson_id` int(11) DEFAULT NULL,
   `pickup_Time` time NOT NULL,
   `dropoff_Time` time NOT NULL,
   `subtotal` float NOT NULL,
@@ -209,6 +225,13 @@ CREATE TABLE `transaction` (
   `tax` float NOT NULL,
   `net` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`transaction_id`, `customer_id`, `deliveryPerson_id`, `pickup_Time`, `dropoff_Time`, `subtotal`, `delivery_fee`, `discount`, `tax`, `net`) VALUES
+(20, 1, 1, '00:00:00', '00:00:00', 0, 0, 0, 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -252,7 +275,8 @@ ALTER TABLE `order`
   ADD KEY `item_id` (`item_id`),
   ADD KEY `store_id` (`store_id`),
   ADD KEY `order_id` (`transaction_id`),
-  ADD KEY `transaction_id` (`transaction_id`);
+  ADD KEY `transaction_id` (`transaction_id`),
+  ADD KEY `item_id_2` (`item_id`);
 
 --
 -- Indexes for table `store`
@@ -277,7 +301,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -301,7 +325,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `store`
@@ -313,7 +337,7 @@ ALTER TABLE `store`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables
@@ -323,24 +347,24 @@ ALTER TABLE `transaction`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`),
-  ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
-  ADD CONSTRAINT `cart_ibfk_4` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`);
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `cart_ibfk_4` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `inventory`
 --
 ALTER TABLE `inventory`
-  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `order`
 --
 ALTER TABLE `order`
-  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`transaction_id`),
-  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
-  ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
-  ADD CONSTRAINT `order_ibfk_4` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`);
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`transaction_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_ibfk_4` FOREIGN KEY (`item_id`) REFERENCES `inventory` (`item_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `transaction`
