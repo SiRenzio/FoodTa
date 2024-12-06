@@ -15,14 +15,14 @@
     <section class="container">
         <?php
             foreach($details as $d){
-                echo 'Customer Name: ' . $d->customer_name . '<br>';
+                echo 'Customer Name: ' . $d->full_name . '<br>';
                 echo 'Location: ' . $d->customer_address . '<br>';
-                echo 'Payment: ' . $_SESSION['subTotal'] . '<br>';
             }
+            echo 'Payment: ' . $_SESSION['subTotal'] . '<br>';
+            echo ' <form action="index.php?command=itemDelivered&t_id=' . $d->transaction_id . '" method="post">';
+            echo '<input type="submit" value="Complete Order">';
+            echo '</form>';
         ?>
-        <form action="index.php?command=itemDelivered" method="post">
-            <input type="submit" value="Submit">
-        </form>
     </section>
 </body>
 </html>

@@ -36,7 +36,7 @@
 
                         if ($index === count($details) - 1 || (isset($details[$index + 1]) && $details[$index + 1]->customer_id != $od->customer_id)) {
                             echo "<div class='accept-button-container'>";
-                            echo "<form action=\"index.php?command=orderStarted&cu_id=" . $od->customer_id . "&s_id=" . $od->store_id . "&i_id=" . $od->item_id . "&quantity=" . $od->quantity . "\" method=\"post\">";
+                            echo "<form action=\"index.php?command=orderStarted&cu_id=" . $od->customer_id . "&i_id=" . $od->item_id . "&quantity=" . $od->quantity . "\" method=\"post\">";
                             echo "<input type=\"submit\" value=\"Accept Order\" class=\"btn\">";
                             echo "</form>";
                             echo "</div>";

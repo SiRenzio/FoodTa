@@ -458,16 +458,21 @@
 
                     case 'orderStarted':
                         $customer_id = $_GET['cu_id'];
-                        $store_id = $_GET['s_id'];
                         $item_id = $_GET['i_id'];
                         $quantity = $_GET['quantity'];
 
-                        $this->db->toBeDelivered($customer_id, $store_id, $item_id, $quantity);
-                        $details = $this->db->getOrderDetailsForDeliveryRider($_SESSION['user_id']);
+                        $this->db->toBeDelivered($customer_id, $_SESSION['user_id'], $item_id, $quantity);
+                        $t_id = $this->db->getTransactionID();
+                        $details = $this->db->getOrderDetailsForDeliveryRider2($t_id);
                         include('html/toBeDeliveredInterface.php');
                         break;
 
                     case 'itemDelivered':
+                        $t_id = $this->db->getTransactionID();
+                        $delivered = $this->db->itemDelivered($_SESSION['user_id'], $t_id);
+                        if($delivered){
+                            echo "<script> window.location.href='index.php?command=deliveryRider' </script>";
+                        }
                         break;
 
                     case 'history':
