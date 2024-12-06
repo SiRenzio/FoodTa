@@ -697,7 +697,7 @@
                     delivery d ON d.deliveryPerson_id = t.deliveryPerson_id   
                 WHERE 
                     cu.customer_id = ? 
-                    AND o.status = 'TBD';
+                    AND o.status = 'DELIVERED';
                     ";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
