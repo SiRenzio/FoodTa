@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/history.css">
+    <title>Delivery Person</title>
 </head>
 <body>
+    <?php 
+        $backLink = "index.php?command=order";
+        $position = 'right';
+        include 'backBTN.php';
+    ?>
     <section id="history">
-        
         <img class="ftSecLogo" src="images/foodTaSectionLogo(Green).png" alt="Food Ta Logo">
+        <h1>Transaction History</h1>
         <div id="container">
             <?php
                 echo "<div id='rowHeader'>";
@@ -14,29 +22,26 @@
                     echo "<h3 class='rowHeaderTexts'>Item Name</h3>";
                     echo "<h3 class='rowHeaderTexts'>Quantity</h3>";
                     echo "<h3 class='rowHeaderTexts'>Item Image</h3>";
-                    echo "<h3 class='rowHeaderTexts'>Item Qty</h3>";
                     echo "<h3 class='rowHeaderTexts'>Item Total</h3>";
                     echo "<h3 class='rowHeaderTexts'>Rider Name</h3>";
                 echo "</div>";
-
-                foreach ($history as $data) {
-                    echo "<div class='cartBox'>";
-                    echo htmlspecialchars($data->store_name);
+                if (!empty($history)){
+                    foreach ($history as $data) {
+                        echo "<div class='cartBox'>";
+                        echo "<div class='cartItemStore'>" . htmlspecialchars($data->store_name) . "</div>";
                         echo "<div class='cartItemName'>" . htmlspecialchars($data->item_name) . "</div>";
-                        echo "<div class='cartItemImage'>";
-                            echo "<img src='" . htmlspecialchars($data->item_img) . "' class='item_img' alt='Item Image'>";
-                        echo "</div>";
-                            echo "<div class='quantityWrapper'>";
-                                echo htmlspecialchars($data->quantity) ;
-                            echo "</div>";
-                        echo "</form>";
+                        echo "<div class='cartItemQty'>" . htmlspecialchars($data->quantity) . "</div>";
+                        echo "<div class='cartItemImage'><img src='" . htmlspecialchars($data->item_img) . "' class='item_img' alt='Item Image'></div>";
                         echo "<div class='cartItemTotal'>" . htmlspecialchars($data->item_total) . "</div>";
-                        echo htmlspecialchars($data->full_name);
-                    echo "</div>";
-                    echo "<hr class='divider'>";
-                    
+                        echo "<div class='cartItemRider'>" . htmlspecialchars($data->full_name) . "</div>";
+                        echo "</div>";
+                        echo "<hr class='divider'>";
+                    }
+                } else {
+                    echo "No Orders Yet.";
                 }
-                echo "Subtotal: <div class='cartItemTotal'>" . htmlspecialchars($data->subtotal) . "</div>";
             ?>
+        </div>
+    </section>
 </body>
 </html>

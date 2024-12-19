@@ -443,15 +443,12 @@
                         break;
 
                     case 'selectDriver':
-                        if ($this->db->checkDeliveryStatus($_SESSION['user_id'])){
-                            $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
+                        
+                        $this->db->updatefoodtaWallet($_SESSION['foodtaWalletBal'], $_SESSION['user_id']);
 
-                            $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
-                            $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
-                            include ('html/select_driver.php');
-                        } else {
-                            include ('html/delivery.php');
-                        }
+                        $deliveryPerson_id = $_REQUEST['deliveryPerson_id'];
+                        $status = $this->db->selectDriver($deliveryPerson_id, $_SESSION['user_id']);
+                        include ('html/select_driver.php');
                         break;
 
                     case 'viewOrderDetailsForDeliveryPerson':
@@ -461,20 +458,21 @@
 
                     case 'orderStarted':
                         $customer_id = $_GET['cu_id'];
-                        $store_id = $_GET['s_id'];
                         $item_id = $_GET['i_id'];
                         $quantity = $_GET['quantity'];
 
-                        $this->db->toBeDelivered($customer_id, $store_id, $item_id, $quantity);
-                        $details = $this->db->getOrderDetailsForDeliveryRider($_SESSION['user_id']);
+                        $this->db->toBeDelivered($customer_id, $_SESSION['user_id'], $item_id, $quantity);
+                        $t_id = $this->db->getTransactionID();
+                        $details = $this->db->getOrderDetailsForDeliveryRider2($t_id);
                         include('html/toBeDeliveredInterface.php');
                         break;
 
                     case 'itemDelivered':
-                        $transactionDetails = $this->db->getTransactionDetails($_SESSION['user_id']);
-                        $transaction_ID = $transactionDetails->transaction_id;
-                        $this->db->itemDelivered($_SESSION['user_id'], $transaction_ID);
-                        
+                        $t_id = $this->db->getTransactionID();
+                        $delivered = $this->db->itemDelivered($_SESSION['user_id'], $t_id);
+                        if($delivered){
+                            echo "<script> window.location.href='index.php?command=deliveryRider' </script>";
+                        }
                         break;
 
                     case 'history':

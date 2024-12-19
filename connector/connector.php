@@ -597,7 +597,17 @@
 
         function getOrderDetailsForDeliveryRider($deliveryPerson_id){ // For Cart
             $details = array();
-            $sql = "SELECT s.store_id, s.store_name, i.item_id, i.item_name, i.price, cu.customer_id, cu.full_name, cu.customer_address, ca.deliveryPerson_id, ca.quantity, i.item_img
+            $sql = "SELECT s.store_id, 
+                           s.store_name, 
+                           i.item_id, 
+                           i.item_name, 
+                           i.price, 
+                           cu.customer_id, 
+                           cu.full_name, 
+                           cu.customer_address, 
+                           ca.deliveryPerson_id, 
+                           ca.quantity, 
+                           i.item_img
                     FROM
                     store s
                     INNER JOIN
@@ -618,6 +628,43 @@
             $stmt->close();
             return $details;
         }
+
+        function getOrderDetailsForDeliveryRider2($transac_id){ // For Cart
+            $details = array();
+            $sql = "SELECT s.store_id, 
+                           s.store_name, 
+                           i.item_id, 
+                           i.item_name, 
+                           i.price, 
+                           cu.customer_id, 
+                           cu.full_name, 
+                           cu.customer_address, 
+                           o.quantity, 
+                           i.item_img,
+                           t.transaction_id
+                    FROM
+                    store s
+                    INNER JOIN
+                    `order` o ON s.store_id = o.store_id
+                    INNER JOIN
+                    customer cu ON cu.customer_id = o.customer_id
+                    INNER JOIN
+                    inventory i ON i.item_id = o.item_id
+                    INNER JOIN
+                    `transaction` t ON t.customer_id = o.customer_id
+                    WHERE o.transaction_id = ? AND `status` = 'TBD'";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param('i', $transac_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while($row = $result->fetch_object()){
+                $details[] = $row;
+            }
+            $stmt->close();
+            return $details;
+        }
+
 
         function viewOrderHistory($customer_id){
             $details = array();
@@ -650,7 +697,7 @@
                     delivery d ON d.deliveryPerson_id = t.deliveryPerson_id   
                 WHERE 
                     cu.customer_id = ? 
-                    AND o.status = 'TBD';
+                    AND o.status = 'DELIVERED';
                     ";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
@@ -680,7 +727,7 @@
             return $details;
         }
 
-        function toBeDelivered($customer_id, $store_id, $item_id, $quantity){
+        function toBeDelivered($customer_id, $dp_id, $item_id, $quantity){
             $sql = "UPDATE cart SET status = 'TBD' WHERE customer_id = ?";
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param('i', $customer_id);
@@ -695,7 +742,7 @@
 
             $sql3 = "INSERT INTO `transaction` (customer_id, deliveryPerson_id, pickup_Time, subtotal) VALUES (?, ?, current_time(), ?)";
             $stmt3 = $this->db->prepare($sql3);
-            $stmt3->bind_param('iii', $customer_id, $store_id, $_SESSION['subTotal']);
+            $stmt3->bind_param('iii', $customer_id, $dp_id, $_SESSION['subTotal']);
             $stmt3->execute();
             $stmt3->close();
 
@@ -718,6 +765,18 @@
             $stmt2->bind_param('i', $transac_id);
             $stmt2->execute();
             $stmt2->close();
+
+            return true;
+        }
+
+        function getTransactionID(){
+            $sql = "SELECT transaction_id FROM `transaction` ORDER BY transaction_id DESC LIMIT 1";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $stmt->bind_result($t_id);
+            $stmt->fetch();
+            $stmt->close();
+            return $t_id;
         }
 
         function cancelFindDriver($customer_id){
