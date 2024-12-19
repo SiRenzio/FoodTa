@@ -471,10 +471,15 @@
                         break;
 
                     case 'itemDelivered':
+                        $transactionDetails = $this->db->getTransactionDetails($_SESSION['user_id']);
+                        $transaction_ID = $transactionDetails->transaction_id;
+                        $this->db->itemDelivered($_SESSION['user_id'], $transaction_ID);
+                        
                         break;
 
                     case 'history':
                         $history = $this->db->viewOrderHistory($_SESSION['user_id']);
+                        
                         include('html/transaction_history.php');
                         break;
                 default:
